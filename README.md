@@ -1,2 +1,2 @@
-# Mule-Drivetrain-2016
-This is the code for the mule drivetrain initially off of the t-shirt cannon code
+# WiredCats2016
+"Just do what must be done. This may not be happiness, but it is greatness."
