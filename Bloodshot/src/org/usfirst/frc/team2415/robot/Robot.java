@@ -3,7 +3,7 @@ package org.usfirst.frc.team2415.robot;
 
 import org.usfirst.frc.team2415.robot.resetcommands.ResetEncodersCommand;
 import org.usfirst.frc.team2415.robot.resetcommands.ResetYawCommand;
-import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
+import org.usfirst.frc.team2415.robot.subsystems.*;
 
 import com.kauailabs.nav6.frc.IMU;
 
@@ -24,6 +24,7 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	
 	public static DriveSubsystem driveSubsystem;
+	public static IntakeSubsystem intakeSubsystem;
 	
 	public static WiredCatGamepad gamepad;
 	
@@ -40,7 +41,9 @@ public class Robot extends IterativeRobot {
 		
 		gamepad = new WiredCatGamepad(0);
 //		compressor = new Compressor(RobotMap.PCM_ID);
+		
 		driveSubsystem = new DriveSubsystem();
+		intakeSubsystem = new IntakeSubsystem();
 		
 		SmartDashboard.putData(Scheduler.getInstance());
 		SmartDashboard.putData("Reset Encoders", new ResetEncodersCommand());
