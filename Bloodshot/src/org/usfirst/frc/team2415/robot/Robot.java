@@ -1,9 +1,13 @@
 
 package org.usfirst.frc.team2415.robot;
 
+import org.usfirst.frc.team2415.robot.intakecommands.IntakeCommand;
+import org.usfirst.frc.team2415.robot.intakecommands.MoveIntakeDownCommand;
+import org.usfirst.frc.team2415.robot.intakecommands.MoveIntakeUpCommand;
 import org.usfirst.frc.team2415.robot.resetcommands.ResetEncodersCommand;
 import org.usfirst.frc.team2415.robot.resetcommands.ResetYawCommand;
 import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
+import org.usfirst.frc.team2415.robot.subsystems.IntakeSubsystem;
 
 import com.kauailabs.nav6.frc.IMU;
 
@@ -24,8 +28,10 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	
 	public static DriveSubsystem driveSubsystem;
+	public static IntakeSubsystem intakeSubsystem;
 	
 	public static WiredCatGamepad gamepad;
+	public static WiredCatJoystick operator;
 	
 	private IMU imu;
 	
@@ -39,14 +45,21 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 		
 		gamepad = new WiredCatGamepad(0);
+		operator = new WiredCatJoystick(1);
 //		compressor = new Compressor(RobotMap.PCM_ID);
+		
 		driveSubsystem = new DriveSubsystem();
+		intakeSubsystem = new IntakeSubsystem();
 		
 		SmartDashboard.putData(Scheduler.getInstance());
 		SmartDashboard.putData("Reset Encoders", new ResetEncodersCommand());
 		SmartDashboard.putData("Reset Yaw", new ResetYawCommand());
 		
 		
+		operator.buttons[6].whileHeld(new MoveIntakeUpCommand());
+		operator.buttons[7].whileHeld(new MoveIntakeDownCommand());
+		operator.buttons[11].whileHeld(new IntakeCommand());
+		operator.buttons[10].whileHeld(new IntakeCommand());
     }
 	
 	public void disabledPeriodic() {
