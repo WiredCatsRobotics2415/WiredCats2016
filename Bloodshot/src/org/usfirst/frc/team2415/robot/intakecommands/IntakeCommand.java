@@ -22,7 +22,13 @@ public class IntakeCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.intakeSubsystem.setSpinMotor(1);
+    	
+    	if(Robot.operator.buttons[11].get() == true){
+    		Robot.intakeSubsystem.setSpinMotor(1);
+    	}
+    	if(Robot.operator.buttons[10].get() == true){
+    		Robot.intakeSubsystem.setSpinMotor(-1);
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()

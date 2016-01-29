@@ -7,15 +7,12 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class MoveIntakeCommand extends Command {
-
-	public static double speed;
+public class MoveIntakeDownCommand extends Command {
 	
-    public MoveIntakeCommand(double speed) {
+    public MoveIntakeDownCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.intakeSubsystem);
-    	this.speed=speed;
     }
 
     // Called just before this Command runs the first time
@@ -25,7 +22,7 @@ public class MoveIntakeCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.intakeSubsystem.setIntakeMotor(speed);
+    	Robot.intakeSubsystem.setIntakeMotor(-0.25);
     }
 
     // Make this return true when this Command no longer needs to run execute()
