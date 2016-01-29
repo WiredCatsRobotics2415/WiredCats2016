@@ -24,10 +24,10 @@ public class IntakeCommand extends Command {
     protected void execute() {
     	
     	if(Robot.operator.buttons[11].get() == true){
-    		Robot.intakeSubsystem.setSpinMotor(1);
+    		Robot.intakeSubsystem.setSpinMotor(-1);
     	}
     	if(Robot.operator.buttons[10].get() == true){
-    		Robot.intakeSubsystem.setSpinMotor(-1);
+    		Robot.intakeSubsystem.setSpinMotor(1);
     	}
     }
 
