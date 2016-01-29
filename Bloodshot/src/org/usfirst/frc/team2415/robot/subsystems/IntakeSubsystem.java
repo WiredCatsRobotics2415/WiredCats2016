@@ -4,6 +4,7 @@ import org.usfirst.frc.team2415.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -38,6 +39,13 @@ public class IntakeSubsystem extends Subsystem {
     }
     public void stopSpinMotor(){
     	SpinMotor.set(0);
+    }
+    
+    public void updateStatus(){
+    	SmartDashboard.putNumber("Intake Motor Speed", SpinMotor.get());
+    	if(SpinMotor.get() < 0)SmartDashboard.putString("Intake Status:", "INTAKING");
+    	if(SpinMotor.get() > 0)SmartDashboard.putString("Intake Status:", "OUTTAKING");
+    	if(SpinMotor.get() == 0)SmartDashboard.putString("Intake Status:", "STASIS");
     }
 }
 
