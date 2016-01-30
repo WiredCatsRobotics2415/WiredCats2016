@@ -17,6 +17,8 @@ public class RobotMap {
     public static final int[] RIGHT_ENCODER = {0,1};
     public static final int[] LEFT_ENCODER = {2,3};
     
+    public static final int[] INTAKE_ENCODER = {8,9};	//RANDOM VALUES MUST BE FIXED
+    
     public static final int PCM_ID = 20;
     
 }

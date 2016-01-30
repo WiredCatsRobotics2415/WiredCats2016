@@ -19,11 +19,14 @@ public class IntakeSubsystem extends Subsystem {
 	
 	private Encoder intakeEncoder;
 	
-	private double DEG_MATH = 0;
+	private double DEG_MATH = 0;	//DEG_MATH is an undecided constant that
+//									turns encoder values into intake angles
 
 	public IntakeSubsystem() {
 		IntakeMotor = new CANTalon(RobotMap.ROTATE_INTAKE_TALON);
 		SpinMotor = new CANTalon(RobotMap.SPIN_INTAKE_TALON);
+		
+		intakeEncoder = new Encoder(RobotMap.INTAKE_ENCODER[0],RobotMap.INTAKE_ENCODER[1]);
 	}
 	
     public void initDefaultCommand() {
