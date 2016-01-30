@@ -2,7 +2,7 @@
 package org.usfirst.frc.team2415.robot;
 
 import org.usfirst.frc.team2415.robot.intakecommands.IntakeCommand;
-import org.usfirst.frc.team2415.robot.intakecommands.MoveIntakeDownCommand;
+import org.usfirst.frc.team2415.robot.intakecommands.MoveIntakeCommand;
 import org.usfirst.frc.team2415.robot.intakecommands.MoveIntakeUpCommand;
 import org.usfirst.frc.team2415.robot.resetcommands.ResetEncodersCommand;
 import org.usfirst.frc.team2415.robot.resetcommands.ResetYawCommand;
@@ -35,6 +35,11 @@ public class Robot extends IterativeRobot {
 	
 	private IMU imu;
 	
+	private double INTAKE_ANGLE;
+	private double GROUND_ANGLE;
+	private double VERTICAL_ANGLE;
+	private double INTERIOR_ANGLE;
+	
 	//private Compressor compressor;
 
     /**
@@ -56,10 +61,12 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Reset Yaw", new ResetYawCommand());
 		
 		
-		operator.buttons[6].whileHeld(new MoveIntakeUpCommand());
-		operator.buttons[7].whileHeld(new MoveIntakeDownCommand());
-		operator.buttons[11].whileHeld(new IntakeCommand());
-		operator.buttons[10].whileHeld(new IntakeCommand());
+		operator.buttons[6].whenPressed(new MoveIntakeCommand(VERTICAL_ANGLE));
+		operator.buttons[7].whenPressed(new MoveIntakeCommand(INTAKE_ANGLE));
+		operator.buttons[7].whileHeld(new IntakeCommand());
+		operator.buttons[8].whenPressed(new MoveIntakeCommand(GROUND_ANGLE));
+		
+		operator.buttons[2].whileHeld(new IntakeCommand());
     }
 	
 	public void disabledPeriodic() {

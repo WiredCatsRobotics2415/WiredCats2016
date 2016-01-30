@@ -3,6 +3,7 @@ package org.usfirst.frc.team2415.robot.subsystems;
 import org.usfirst.frc.team2415.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -15,6 +16,10 @@ public class IntakeSubsystem extends Subsystem {
 	
 	private CANTalon IntakeMotor;
 	private CANTalon SpinMotor;
+	
+	private Encoder intakeEncoder;
+	
+	private double DEG_MATH = 0;
 
 	public IntakeSubsystem() {
 		IntakeMotor = new CANTalon(RobotMap.ROTATE_INTAKE_TALON);
@@ -38,6 +43,10 @@ public class IntakeSubsystem extends Subsystem {
     }
     public void stopSpinMotor(){
     	SpinMotor.set(0);
+    }
+    
+    public double getAngle(){
+    	return intakeEncoder.get() * DEG_MATH;
     }
 }
 

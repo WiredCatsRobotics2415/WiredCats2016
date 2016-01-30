@@ -1,18 +1,24 @@
 package org.usfirst.frc.team2415.robot.intakecommands;
 
 import org.usfirst.frc.team2415.robot.Robot;
+import org.usfirst.frc.team2415.robot.PID;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class MoveIntakeDownCommand extends Command {
+public class MoveIntakeCommand extends Command {
 	
-    public MoveIntakeDownCommand() {
+	private PID pid;
+	
+	double desiredAngle;
+	
+    public MoveIntakeCommand(double desiredAngle) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.intakeSubsystem);
+    	this.desiredAngle = desiredAngle;
     }
 
     // Called just before this Command runs the first time
@@ -22,7 +28,11 @@ public class MoveIntakeDownCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.intakeSubsystem.setIntakeMotor(-0.25);
+    	double currAngle = Robot.intakeSubsystem.getAngle();
+    	double output = pid.pidOut(currAngle);
+    	Robot.intakeSubsystem.setIntakeMotor(output);
+    	
+//    	Robot.intakeSubsystem.setIntakeMotor(-0.25);
     }
 
     // Make this return true when this Command no longer needs to run execute()
