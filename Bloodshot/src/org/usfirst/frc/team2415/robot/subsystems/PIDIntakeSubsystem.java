@@ -31,6 +31,8 @@ public class PIDIntakeSubsystem extends PIDSubsystem {
     	IntakeMotor = new CANTalon(RobotMap.ROTATE_INTAKE_TALON);
     	SpinMotor = new CANTalon(RobotMap.SPIN_INTAKE_TALON);
     	
+    	IntakeEncoder = new Encoder(RobotMap.INTAKE_ENCODER[0], RobotMap.INTAKE_ENCODER[1]);
+    	
     	setAbsoluteTolerance(0.05);
     	enable();
     }
