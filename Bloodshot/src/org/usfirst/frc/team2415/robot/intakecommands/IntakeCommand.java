@@ -12,22 +12,22 @@ public class IntakeCommand extends Command {
     public IntakeCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.intakeSubsystem);
+    	requires(Robot.pidintakeSubsystem);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.intakeSubsystem.stopSpinMotor();
+    	Robot.pidintakeSubsystem.stopSpinMotor();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
-    	if(Robot.operator.buttons[11].get() == true){
-    		Robot.intakeSubsystem.setSpinMotor(-1);
+    	if(Robot.operator.buttons[7].get() == true){
+    		Robot.pidintakeSubsystem.setSpinMotor(-1);
     	}
-    	if(Robot.operator.buttons[10].get() == true){
-    		Robot.intakeSubsystem.setSpinMotor(1);
+    	if(Robot.operator.buttons[2].get() == true){
+    		Robot.pidintakeSubsystem.setSpinMotor(1);
     	}
     }
 
@@ -38,12 +38,14 @@ public class IntakeCommand extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.intakeSubsystem.setSpinMotor(0);
+    	Robot.pidintakeSubsystem.setSpinMotor(0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	Robot.intakeSubsystem.setSpinMotor(0);
+    	Robot.pidintakeSubsystem.setSpinMotor(0);
     }
+    
+    
 }

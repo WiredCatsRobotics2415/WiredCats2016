@@ -1,13 +1,9 @@
 
 package org.usfirst.frc.team2415.robot;
 
-import org.usfirst.frc.team2415.robot.intakecommands.IntakeCommand;
-import org.usfirst.frc.team2415.robot.intakecommands.MoveIntakeDownCommand;
-import org.usfirst.frc.team2415.robot.intakecommands.MoveIntakeUpCommand;
-import org.usfirst.frc.team2415.robot.resetcommands.ResetEncodersCommand;
-import org.usfirst.frc.team2415.robot.resetcommands.ResetYawCommand;
-import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
-import org.usfirst.frc.team2415.robot.subsystems.IntakeSubsystem;
+import org.usfirst.frc.team2415.robot.drivecommands.*;
+import org.usfirst.frc.team2415.robot.intakecommands.*;
+import org.usfirst.frc.team2415.robot.subsystems.*;
 
 import com.kauailabs.nav6.frc.IMU;
 
@@ -28,12 +24,17 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	
 	public static DriveSubsystem driveSubsystem;
-	public static IntakeSubsystem intakeSubsystem;
+	public static PIDIntakeSubsystem pidintakeSubsystem;
 	
 	public static WiredCatGamepad gamepad;
 	public static WiredCatJoystick operator;
 	
 	private IMU imu;
+	
+	private float INTAKE_ANGLE;
+	private float GROUND_ANGLE;
+	private float VERTICAL_ANGLE;
+	private float INTERIOR_ANGLE;
 	
 	//private Compressor compressor;
 
@@ -49,17 +50,20 @@ public class Robot extends IterativeRobot {
 //		compressor = new Compressor(RobotMap.PCM_ID);
 		
 		driveSubsystem = new DriveSubsystem();
-		intakeSubsystem = new IntakeSubsystem();
+		pidintakeSubsystem = new PIDIntakeSubsystem(1,0,0,0);
 		
 		SmartDashboard.putData(Scheduler.getInstance());
 		SmartDashboard.putData("Reset Encoders", new ResetEncodersCommand());
 		SmartDashboard.putData("Reset Yaw", new ResetYawCommand());
+		SmartDashboard.putData("Zero Intake", new ZeroingCommand());
 		
+		operator.buttons[6].whenPressed(new MoveIntakeCommand(VERTICAL_ANGLE));
+		operator.buttons[7].whenPressed(new MoveIntakeCommand(INTAKE_ANGLE));
+		operator.buttons[7].whileHeld(new IntakeCommand());
+		operator.buttons[8].whenPressed(new MoveIntakeCommand(GROUND_ANGLE));
+		operator.buttons[2].whileHeld(new IntakeCommand());
+//		operator.buttons[9].whileHeld(new ZeroingCommand());
 		
-		operator.buttons[6].whileHeld(new MoveIntakeUpCommand());
-		operator.buttons[7].whileHeld(new MoveIntakeDownCommand());
-		operator.buttons[11].whileHeld(new IntakeCommand());
-		operator.buttons[10].whileHeld(new IntakeCommand());
     }
 	
 	public void disabledPeriodic() {
@@ -76,6 +80,7 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+        updateStatus();
         
     }
 
@@ -115,6 +120,6 @@ public class Robot extends IterativeRobot {
     
     public void updateStatus() {
     	Robot.driveSubsystem.updateStatus();
-    	Robot.intakeSubsystem.updateStatus();
+    	Robot.pidintakeSubsystem.updateStatus();
     }
 }

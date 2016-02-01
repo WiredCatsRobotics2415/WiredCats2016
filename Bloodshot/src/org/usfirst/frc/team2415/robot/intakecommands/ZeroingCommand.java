@@ -7,22 +7,27 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class MoveIntakeDownCommand extends Command {
+public class ZeroingCommand extends Command {
 	
-    public MoveIntakeDownCommand() {
+	private double VOLTAGE_LIMIT = 0.5;
+
+    public ZeroingCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.intakeSubsystem);
+    	requires(Robot.pidintakeSubsystem);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.intakeSubsystem.stopIntakeMotor();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.intakeSubsystem.setIntakeMotor(-0.25);
+    	Robot.pidintakeSubsystem.setSpinMotor(0.3);
+    	if(Robot.pidintakeSubsystem.getAngle() < 0 && 
+    	   Robot.pidintakeSubsystem.getIntakeVoltage() <= VOLTAGE_LIMIT){
+    		Robot.pidintakeSubsystem.zeroEncoder();
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -32,12 +37,12 @@ public class MoveIntakeDownCommand extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.intakeSubsystem.stopIntakeMotor();
+    	Robot.pidintakeSubsystem.stopIntakeMotor();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	Robot.intakeSubsystem.stopIntakeMotor();
+    	Robot.pidintakeSubsystem.stopIntakeMotor();
     }
 }
