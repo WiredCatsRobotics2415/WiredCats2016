@@ -72,7 +72,7 @@ public class PIDIntakeSubsystem extends PIDSubsystem {
     }
     
     public double getAngle(){
-    	return IntakeEncoder.get();
+    	return IntakeEncoder.get() * ENCODER_TO_DEG	;
     }
     
     public double getIntakeVoltage(){
@@ -85,9 +85,7 @@ public class PIDIntakeSubsystem extends PIDSubsystem {
     
     public void updateStatus(){
     	SmartDashboard.putNumber("Intake Motor Speed", SpinMotor.get());
-    	if(SpinMotor.get() < 0)SmartDashboard.putString("Intake Status:", "INTAKING");
-    	if(SpinMotor.get() > 0)SmartDashboard.putString("Intake Status:", "OUTTAKING");
-    	if(SpinMotor.get() == 0)SmartDashboard.putString("Intake Status:", "STASIES");
+    	SmartDashboard.putBoolean("Intaking or Outtaking?", IntakeEncoder.getDirection());
     	SmartDashboard.putNumber("Current Setpoint", getSetpoint());
     	SmartDashboard.putNumber("Current Angle", IntakeEncoder.get());
     }
