@@ -31,10 +31,10 @@ public class Robot extends IterativeRobot {
 	
 	private IMU imu;
 	
-	private float INTAKE_ANGLE;
-	private float GROUND_ANGLE;
-	private float VERTICAL_ANGLE;
-	private float INTERIOR_ANGLE;
+	private float INTAKE_ANGLE = 0f;
+	private float GROUND_ANGLE = 8f;
+	private float VERTICAL_ANGLE = 32f;
+	private float INTERIOR_ANGLE = 60f;
 	
 	//private Compressor compressor;
 

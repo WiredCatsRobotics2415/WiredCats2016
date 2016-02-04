@@ -88,6 +88,7 @@ public class PIDIntakeSubsystem extends PIDSubsystem {
     	SmartDashboard.putBoolean("Intaking or Outtaking?", IntakeEncoder.getDirection());
     	SmartDashboard.putNumber("Current Setpoint", getSetpoint());
     	SmartDashboard.putNumber("Current Angle", IntakeEncoder.get());
+    	SmartDashboard.putNumber("Current Voltage", getIntakeVoltage());
     }
     
     
