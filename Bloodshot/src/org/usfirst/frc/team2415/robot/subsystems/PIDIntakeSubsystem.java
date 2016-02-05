@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2415.robot.subsystems;
 
+import org.usfirst.frc.team2415.robot.Robot;
 import org.usfirst.frc.team2415.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.CANTalon;
@@ -34,6 +35,7 @@ public class PIDIntakeSubsystem extends PIDSubsystem {
     	IntakeEncoder = new Encoder(RobotMap.INTAKE_ENCODER[0], RobotMap.INTAKE_ENCODER[1]);
     	
     	setAbsoluteTolerance(0.05);
+    	setOutputRange(-0.5, 0.5);
     	enable();
     }
     
@@ -81,6 +83,10 @@ public class PIDIntakeSubsystem extends PIDSubsystem {
     
     public void zeroEncoder(){
     	IntakeEncoder.reset();
+    }
+    
+    public void stopPID(){
+    	disable();
     }
     
     public void updateStatus(){

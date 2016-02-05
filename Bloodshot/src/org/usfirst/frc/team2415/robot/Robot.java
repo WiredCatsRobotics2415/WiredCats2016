@@ -31,10 +31,10 @@ public class Robot extends IterativeRobot {
 	
 	private IMU imu;
 	
-	private float INTAKE_ANGLE = 0f;
-	private float GROUND_ANGLE = 8f;
-	private float VERTICAL_ANGLE = 32f;
-	private float INTERIOR_ANGLE = 60f;
+	private float INTAKE_ANGLE = 15f;
+	private float GROUND_ANGLE = 2f;
+	private float VERTICAL_ANGLE = 36f;
+	private float INTERIOR_ANGLE = 59f;
 	
 	//private Compressor compressor;
 
@@ -57,6 +57,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Reset Yaw", new ResetYawCommand());
 		SmartDashboard.putData("Zero Intake", new ZeroingCommand());
 		
+		operator.buttons[1].whenPressed(new StopPIDCommand());
 		operator.buttons[6].whenPressed(new MoveIntakeCommand(VERTICAL_ANGLE));
 		operator.buttons[7].whenPressed(new MoveIntakeCommand(INTAKE_ANGLE));
 		operator.buttons[7].whileHeld(new IntakeCommand());
@@ -99,6 +100,7 @@ public class Robot extends IterativeRobot {
      * You can use it to reset subsystems before shutting down.
      */
     public void disabledInit(){
+    	Robot.pidintakeSubsystem.stopPID();
 
     }
 
@@ -108,6 +110,7 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
         updateStatus();
+        
         
     }
     
