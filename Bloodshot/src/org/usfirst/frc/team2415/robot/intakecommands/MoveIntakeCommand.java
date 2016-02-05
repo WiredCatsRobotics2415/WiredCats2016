@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class MoveIntakeCommand extends Command {
 	
-	private PID pid;
 	
 	double desiredAngle;
 	
@@ -29,7 +28,7 @@ public class MoveIntakeCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	double currAngle = Robot.intakeSubsystem.getAngle();
-    	double output = pid.pidOut(currAngle);
+    	double output = Robot.intakeSubsystem.pid.pidOut(desiredAngle - currAngle);
     	Robot.intakeSubsystem.setIntakeMotor(output);
     	
 //    	Robot.intakeSubsystem.setIntakeMotor(-0.25);

@@ -35,10 +35,10 @@ public class Robot extends IterativeRobot {
 	
 	private IMU imu;
 	
-	private double INTAKE_ANGLE;
-	private double GROUND_ANGLE;
-	private double VERTICAL_ANGLE;
-	private double INTERIOR_ANGLE;
+	private float INTAKE_ANGLE = 15f;
+	private float GROUND_ANGLE = 12f;
+	private float VERTICAL_ANGLE = 36f;
+	private float INTERIOR_ANGLE = 59f;
 	
 	//private Compressor compressor;
 
@@ -60,6 +60,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Reset Encoders", new ResetEncodersCommand());
 		SmartDashboard.putData("Reset Yaw", new ResetYawCommand());
 		
+		Robot.intakeSubsystem.resetEncoder();
 		
 		operator.buttons[6].whenPressed(new MoveIntakeCommand(VERTICAL_ANGLE));
 		operator.buttons[7].whenPressed(new MoveIntakeCommand(INTAKE_ANGLE));
@@ -83,7 +84,6 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
-        
     }
 
     public void teleopInit() {
@@ -111,6 +111,8 @@ public class Robot extends IterativeRobot {
         Scheduler.getInstance().run();
         updateStatus();
         
+        System.out.println(Robot.intakeSubsystem.getAngle());
+        
     }
     
     /**
@@ -122,5 +124,6 @@ public class Robot extends IterativeRobot {
     
     public void updateStatus() {
     	Robot.driveSubsystem.updateStatus();
+    	Robot.intakeSubsystem.updateStatus();
     }
 }

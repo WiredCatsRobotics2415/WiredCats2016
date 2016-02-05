@@ -35,22 +35,11 @@ public class PID {
     	
     	if(lastError == 0) return 0;
     	integralError += .5*(error+lastError)*elapsedTime;
-    	
-//    	if(integral.size() < (int)Robot.driveSubsystem.getFreshRate()*INTEGRAL_TIMEFRAME)
-//    		integral.add(intInstance);
-//    	else{
-//    		integral.remove(0);
-//    		integral.add(intInstance);
-//    	}
-//    	
-//    	double sum = 0;
-//    	for(int i=0; i<integral.size(); i++)
-//  		sum += integral.get(i);
     	return i*integralError;
     }
     
     private double derivative(double error) {
-    	
+    	if(elapsedTime == 0) return 0;
     	double diff = error-lastError;
     	return d * diff/elapsedTime;
     }

@@ -1,10 +1,12 @@
 package org.usfirst.frc.team2415.robot.subsystems;
 
+import org.usfirst.frc.team2415.robot.PID;
 import org.usfirst.frc.team2415.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -14,12 +16,14 @@ public class IntakeSubsystem extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	
+	public PID pid = new PID(0.015,0,0);
+	
 	private CANTalon IntakeMotor;
 	private CANTalon SpinMotor;
 	
 	private Encoder intakeEncoder;
 	
-	private double DEG_MATH = 0;	//DEG_MATH is an undecided constant that
+	private double DEG_MATH = 1;	//DEG_MATH is an undecided constant that
 //									turns encoder values into intake angles
 
 	public IntakeSubsystem() {
@@ -35,7 +39,7 @@ public class IntakeSubsystem extends Subsystem {
     }
     
     public void setIntakeMotor(double intakeMotor){
-    	IntakeMotor.set(intakeMotor);
+    	IntakeMotor.set(-intakeMotor);
     }
     public void setSpinMotor(double spinMotor){
     	SpinMotor.set(spinMotor);
@@ -50,6 +54,18 @@ public class IntakeSubsystem extends Subsystem {
     
     public double getAngle(){
     	return intakeEncoder.get() * DEG_MATH;
+    }
+    
+    public double getVal(){
+    	return intakeEncoder.get();
+    }
+    
+    public void resetEncoder(){
+    	intakeEncoder.reset();
+    }
+    
+    public void updateStatus(){
+    	SmartDashboard.putNumber("Intake Encoder", intakeEncoder.get());
     }
 }
 
