@@ -2,8 +2,6 @@
 package org.usfirst.frc.team2415.robot;
 
 import org.usfirst.frc.team2415.robot.intakecommands.IntakeCommand;
-import org.usfirst.frc.team2415.robot.intakecommands.MoveIntakeCommand;
-import org.usfirst.frc.team2415.robot.intakecommands.MoveIntakeUpCommand;
 import org.usfirst.frc.team2415.robot.resetcommands.ResetEncodersCommand;
 import org.usfirst.frc.team2415.robot.resetcommands.ResetYawCommand;
 import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
@@ -35,10 +33,11 @@ public class Robot extends IterativeRobot {
 	
 	private IMU imu;
 	
-	private float INTAKE_ANGLE = 15f;
-	private float GROUND_ANGLE = 12f;
-	private float VERTICAL_ANGLE = 36f;
-	private float INTERIOR_ANGLE = 59f;
+	//in degrees
+	private float INTAKE_ANGLE = 33f;
+	private float GROUND_ANGLE = 3f;
+	private float VERTICAL_ANGLE = 90f;
+	private float INTERIOR_ANGLE = 160f;
 	
 	//private Compressor compressor;
 
@@ -62,12 +61,11 @@ public class Robot extends IterativeRobot {
 		
 		Robot.intakeSubsystem.resetEncoder();
 		
-		operator.buttons[6].whenPressed(new MoveIntakeCommand(VERTICAL_ANGLE));
-		operator.buttons[7].whenPressed(new MoveIntakeCommand(INTAKE_ANGLE));
-		operator.buttons[7].whileHeld(new IntakeCommand());
-		operator.buttons[8].whenPressed(new MoveIntakeCommand(GROUND_ANGLE));
+		operator.buttons[6].whenPressed(new IntakeCommand(VERTICAL_ANGLE, 0, false));
+		operator.buttons[7].whenPressed(new IntakeCommand(INTAKE_ANGLE, 0, false));
+		operator.buttons[8].whenPressed(new IntakeCommand(GROUND_ANGLE, 0, false));
+		operator.buttons[2].whenPressed(new IntakeCommand(INTAKE_ANGLE, 0, true));
 		
-		operator.buttons[2].whileHeld(new IntakeCommand());
     }
 	
 	public void disabledPeriodic() {
@@ -111,7 +109,6 @@ public class Robot extends IterativeRobot {
         Scheduler.getInstance().run();
         updateStatus();
         
-        System.out.println(Robot.intakeSubsystem.getAngle());
         
     }
     
