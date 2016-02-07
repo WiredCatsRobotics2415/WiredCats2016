@@ -2,8 +2,6 @@
 package org.usfirst.frc.team2415.robot;
 
 import org.usfirst.frc.team2415.robot.intakecommands.IntakeCommand;
-import org.usfirst.frc.team2415.robot.intakecommands.MoveIntakeDownCommand;
-import org.usfirst.frc.team2415.robot.intakecommands.MoveIntakeUpCommand;
 import org.usfirst.frc.team2415.robot.resetcommands.ResetEncodersCommand;
 import org.usfirst.frc.team2415.robot.resetcommands.ResetYawCommand;
 import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
@@ -35,6 +33,12 @@ public class Robot extends IterativeRobot {
 	
 	private IMU imu;
 	
+	//in degrees
+	private float INTAKE_ANGLE = 33f;
+	private float GROUND_ANGLE = 3f;
+	private float VERTICAL_ANGLE = 90f;
+	private float INTERIOR_ANGLE = 160f;
+	
 	//private Compressor compressor;
 
     /**
@@ -55,11 +59,13 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Reset Encoders", new ResetEncodersCommand());
 		SmartDashboard.putData("Reset Yaw", new ResetYawCommand());
 		
+		Robot.intakeSubsystem.resetEncoder();
 		
-		operator.buttons[6].whileHeld(new MoveIntakeUpCommand());
-		operator.buttons[7].whileHeld(new MoveIntakeDownCommand());
-		operator.buttons[11].whileHeld(new IntakeCommand());
-		operator.buttons[10].whileHeld(new IntakeCommand());
+		operator.buttons[6].whenPressed(new IntakeCommand(VERTICAL_ANGLE, 0, false));
+		operator.buttons[7].whenPressed(new IntakeCommand(INTAKE_ANGLE, 0, false));
+		operator.buttons[8].whenPressed(new IntakeCommand(GROUND_ANGLE, 0, false));
+		operator.buttons[2].whenPressed(new IntakeCommand(INTAKE_ANGLE, 0, true));
+		
     }
 	
 	public void disabledPeriodic() {
@@ -76,7 +82,6 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
-        
     }
 
     public void teleopInit() {
@@ -104,6 +109,7 @@ public class Robot extends IterativeRobot {
         Scheduler.getInstance().run();
         updateStatus();
         
+        
     }
     
     /**
@@ -115,5 +121,6 @@ public class Robot extends IterativeRobot {
     
     public void updateStatus() {
     	Robot.driveSubsystem.updateStatus();
+    	Robot.intakeSubsystem.updateStatus();
     }
 }
