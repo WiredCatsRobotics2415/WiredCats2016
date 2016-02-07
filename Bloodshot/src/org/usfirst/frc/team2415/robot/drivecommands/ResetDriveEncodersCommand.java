@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2415.robot.resetcommands;
+package org.usfirst.frc.team2415.robot.drivecommands;
 
 import org.usfirst.frc.team2415.robot.Robot;
 
@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ResetEncodersCommand extends Command {
+public class ResetDriveEncodersCommand extends Command {
 
-    public ResetEncodersCommand() {
+    public ResetDriveEncodersCommand() {
         requires(Robot.driveSubsystem);
     }
 

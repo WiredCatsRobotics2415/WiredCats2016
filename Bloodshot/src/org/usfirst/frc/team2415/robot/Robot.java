@@ -1,9 +1,9 @@
 
 package org.usfirst.frc.team2415.robot;
 
+import org.usfirst.frc.team2415.robot.drivecommands.ResetDriveEncodersCommand;
+import org.usfirst.frc.team2415.robot.drivecommands.ResetYawCommand;
 import org.usfirst.frc.team2415.robot.intakecommands.IntakeCommand;
-import org.usfirst.frc.team2415.robot.resetcommands.ResetEncodersCommand;
-import org.usfirst.frc.team2415.robot.resetcommands.ResetYawCommand;
 import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.IntakeSubsystem;
 
@@ -56,7 +56,7 @@ public class Robot extends IterativeRobot {
 		intakeSubsystem = new IntakeSubsystem();
 		
 		SmartDashboard.putData(Scheduler.getInstance());
-		SmartDashboard.putData("Reset Encoders", new ResetEncodersCommand());
+		SmartDashboard.putData("Reset Encoders", new ResetDriveEncodersCommand());
 		SmartDashboard.putData("Reset Yaw", new ResetYawCommand());
 		
 		Robot.intakeSubsystem.resetEncoder();
