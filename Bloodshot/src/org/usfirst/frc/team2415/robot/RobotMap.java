@@ -20,6 +20,14 @@ public class RobotMap {
     public static final int[] INTAKE_ENCODER = {4,5};
     public static final int INTAKE_STOPPER = 6;
     
+    /* TODO: make 3 integers that are public static and final:
+     * 		 - 2 that correspond to the ports on the PCM (pneumatic control module) 
+     * 		   that the solenoids are hooked up to
+     * 		 - 1 that corresponds to the port the spin motor is hooked up to
+     * hint 1: if you have any questions about the port numbers, 
+     * 		   ask Lara, she'll help you out
+     */
+    
     public static final int PCM_ID = 20;
     
 }

@@ -27,6 +27,7 @@ public class Robot extends IterativeRobot {
 	
 	public static DriveSubsystem driveSubsystem;
 	public static IntakeSubsystem intakeSubsystem;
+	//TODO: create a variable to hold an PneumaticIntakeSubsystem
 	
 	public static WiredCatGamepad gamepad;
 	public static WiredCatJoystick operator;
@@ -39,6 +40,7 @@ public class Robot extends IterativeRobot {
 	private float VERTICAL_ANGLE = 90f;
 	private float INTERIOR_ANGLE = 160f;
 	
+	//TODO: if the compressor is hooked up, un-comment the line below
 	//private Compressor compressor;
 
     /**
@@ -50,10 +52,12 @@ public class Robot extends IterativeRobot {
 		
 		gamepad = new WiredCatGamepad(0);
 		operator = new WiredCatJoystick(1);
+		//TODO: if the compressor is hooked up, un-comment the line below 
 //		compressor = new Compressor(RobotMap.PCM_ID);
 		
 		driveSubsystem = new DriveSubsystem();
 		intakeSubsystem = new IntakeSubsystem();
+		//TODO: initialize the PneumaticIntakeSubsystem
 		
 		SmartDashboard.putData(Scheduler.getInstance());
 		SmartDashboard.putData("Reset Encoders", new ResetDriveEncodersCommand());
@@ -65,6 +69,7 @@ public class Robot extends IterativeRobot {
 		operator.buttons[7].whenPressed(new IntakeCommand(INTAKE_ANGLE, 0, false));
 		operator.buttons[8].whenPressed(new IntakeCommand(GROUND_ANGLE, 0, false));
 		operator.buttons[2].whenPressed(new IntakeCommand(INTAKE_ANGLE, 0, true));
+		//TODO: map TogglePneumaticIntakeCommand to buttons 10 and 11
 		
     }
 	
