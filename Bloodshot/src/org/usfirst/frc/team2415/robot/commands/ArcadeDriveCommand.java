@@ -10,10 +10,15 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class ArcadeDriveCommand extends Command {
 	
+//	private float DEADBAND = 0.05f;
+//	private float INTERPOLATION_FACTOR = 0.75f;   Nathan's Settings
+//	private float STRAIGHT_LIMITER = 0.95f;
+//	private float TURN_BOOSTER = 1.3f;
+	
 	private float DEADBAND = 0.05f;
-	private float INTERPOLATION_FACTOR = 0.6f;
-	private float STRAIGHT_LIMITER = 0.9f;
-	private float TURN_BOOSTER = 1.05f;
+	private float INTERPOLATION_FACTOR = 0.5f;
+	private float STRAIGHT_LIMITER = .95f;
+	private float TURN_BOOSTER = 1.1f;
 	
 
     public ArcadeDriveCommand() {
@@ -40,8 +45,8 @@ public class ArcadeDriveCommand extends Command {
     	double left = leftY*STRAIGHT_LIMITER - rightX*TURN_BOOSTER;
     	double right =  leftY*STRAIGHT_LIMITER + rightX*TURN_BOOSTER;
     	
-    	if(Math.abs(left) >= 1) Robot.driveSubsystem.enableRightBreakState();
-    	if(Math.abs(right) >= 1) Robot.driveSubsystem.enableLeftBreakState();
+//    	if(Math.abs(left) >= 1) Robot.driveSubsystem.enableRightBreakState();
+//    	if(Math.abs(right) >= 1) Robot.driveSubsystem.enableLeftBreakState();
     	
     	Robot.driveSubsystem.setMotors(-left, right);
     }
