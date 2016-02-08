@@ -47,14 +47,17 @@ public class IntakeCommand extends Command {
     	Robot.intakeSubsystem.setIntakeMotor(output);
     	Robot.intakeSubsystem.setSpinMotor(intakeSpeed);
 
-    	if(operator.buttons[7].get()) Robot.intakeSubsystem.setSpinMotor(-0.5);
-    	if(operator.buttons[2].get()) Robot.intakeSubsystem.setSpinMotor(0.5);
+    	if(operator.buttons[7].get() && !Robot.intakeSubsystem.getButton()) {
+    		Robot.intakeSubsystem.setSpinMotor(-0.5);
+    	}
+    	if(operator.buttons[2].get()) {
+    		Robot.intakeSubsystem.setSpinMotor(0.5);
+    	}
     	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if(!overrideButton && Robot.intakeSubsystem.getButton()) return true;
         return false;
     }
 
