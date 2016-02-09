@@ -14,7 +14,8 @@ public class IntakeCommand extends Command {
 	double desiredAngle;
 	double intakeSpeed;
 	boolean overrideButton;
-
+	boolean buttonState;
+	
 	WiredCatJoystick operator;
 	
     public IntakeCommand(double desiredAngle, double intakeSpeed, boolean overrideButton) {
@@ -47,11 +48,11 @@ public class IntakeCommand extends Command {
     	Robot.intakeSubsystem.setIntakeMotor(output);
     	Robot.intakeSubsystem.setSpinMotor(intakeSpeed);
 
-    	if(operator.buttons[7].get() && !Robot.intakeSubsystem.getButton()) {
-    		Robot.intakeSubsystem.setSpinMotor(-0.5);
+    	if(operator.buttons[6].get() && !Robot.intakeSubsystem.getButton()) {
+    		Robot.intakeSubsystem.setSpinMotor(-1);
     	}
-    	if(operator.buttons[2].get()) {
-    		Robot.intakeSubsystem.setSpinMotor(0.5);
+    	if(operator.buttons[7].get()) {
+    		Robot.intakeSubsystem.setSpinMotor(1);
     	}
     	
     }

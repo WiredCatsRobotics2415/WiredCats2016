@@ -2,6 +2,7 @@ package org.usfirst.frc.team2415.robot.subsystems;
 
 import org.usfirst.frc.team2415.robot.PID;
 import org.usfirst.frc.team2415.robot.RobotMap;
+import org.usfirst.frc.team2415.robot.intakecommands.IntakeCommand;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -42,6 +43,7 @@ public class IntakeSubsystem extends Subsystem {
 	}
 	
     public void initDefaultCommand() {
+    	setDefaultCommand(new IntakeCommand(120, 0, false));
     }
     
     public void setIntakeMotor(double intakeMotor){
