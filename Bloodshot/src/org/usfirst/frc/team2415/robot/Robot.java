@@ -4,8 +4,10 @@ package org.usfirst.frc.team2415.robot;
 import org.usfirst.frc.team2415.robot.drivecommands.ResetDriveEncodersCommand;
 import org.usfirst.frc.team2415.robot.drivecommands.ResetYawCommand;
 import org.usfirst.frc.team2415.robot.intakecommands.IntakeCommand;
+import org.usfirst.frc.team2415.robot.pneumaticintakecommands.TogglePneumaticIntakeCommand;
 import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.IntakeSubsystem;
+import org.usfirst.frc.team2415.robot.subsystems.PneumaticIntakeSubsystem;
 
 import com.kauailabs.nav6.frc.IMU;
 
@@ -27,6 +29,7 @@ public class Robot extends IterativeRobot {
 	
 	public static DriveSubsystem driveSubsystem;
 	public static IntakeSubsystem intakeSubsystem;
+	public static PneumaticIntakeSubsystem pneumaticIntakeSubsystem;
 	//TODO: create a variable to hold an PneumaticIntakeSubsystem
 	
 	public static WiredCatGamepad gamepad;
@@ -57,7 +60,7 @@ public class Robot extends IterativeRobot {
 		
 		driveSubsystem = new DriveSubsystem();
 		intakeSubsystem = new IntakeSubsystem();
-		//TODO: initialize the PneumaticIntakeSubsystem
+		pneumaticIntakeSubsystem = new PneumaticIntakeSubsystem();
 		
 		SmartDashboard.putData(Scheduler.getInstance());
 		SmartDashboard.putData("Reset Encoders", new ResetDriveEncodersCommand());
@@ -69,6 +72,8 @@ public class Robot extends IterativeRobot {
 		operator.buttons[7].whenPressed(new IntakeCommand(INTAKE_ANGLE, 0, false));
 		operator.buttons[8].whenPressed(new IntakeCommand(GROUND_ANGLE, 0, false));
 		operator.buttons[2].whenPressed(new IntakeCommand(INTAKE_ANGLE, 0, true));
+		operator.buttons[10].whenPressed(new TogglePneumaticIntakeCommand());
+		operator.buttons[11].whenPressed(new TogglePneumaticIntakeCommand());
 		//TODO: map TogglePneumaticIntakeCommand to buttons 10 and 11
 		
     }

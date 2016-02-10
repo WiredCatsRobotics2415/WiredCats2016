@@ -20,6 +20,11 @@ public class RobotMap {
     public static final int[] INTAKE_ENCODER = {4,5};
     public static final int INTAKE_STOPPER = 6;
     
+    public static final int INTAKE_SOLENOID = 666;
+    public static final int OUTTAKE_SOLENOID = 666666;
+    
+    public static final int SPIN_INTAKE_TALON2 = 666666666;
+    
     /* TODO: make 3 integers that are public static and final:
      * 		 - 2 that correspond to the ports on the PCM (pneumatic control module) 
      * 		   that the solenoids are hooked up to

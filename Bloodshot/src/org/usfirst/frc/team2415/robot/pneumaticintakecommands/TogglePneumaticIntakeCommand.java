@@ -1,11 +1,16 @@
 package org.usfirst.frc.team2415.robot.pneumaticintakecommands;
 
+import org.usfirst.frc.team2415.robot.Robot;
+import org.usfirst.frc.team2415.robot.WiredCatJoystick;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
 public class TogglePneumaticIntakeCommand extends Command {
+	
+	WiredCatJoystick operator;
 	
 	/* TODO: make a variable operator to hold a WiredCatJoystick
 	 * hint 1: you're gonna have to import WiredCatJoystick
@@ -15,6 +20,10 @@ public class TogglePneumaticIntakeCommand extends Command {
     public TogglePneumaticIntakeCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	
+    	
+    	requires(Robot.pneumaticIntakeSubsystem);
+    	operator = new WiredCatJoystick(1);
     	
     	/* TODO: make it require the PneumaticIntakeSubsystem and initialize operator
     	 * hint 1: it has to require the instance of PneumaticIntakeSubstance
@@ -26,6 +35,12 @@ public class TogglePneumaticIntakeCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	if (Robot.pneumaticIntakeSubsystem.isExtended()) {
+    		Robot.pneumaticIntakeSubsystem.contract();
+    	} else {
+    		Robot.pneumaticIntakeSubsystem.extend();
+    	}
+    
     	/* TODO: if the state of the intake is extended, make it contract
     	 * 		 if the state of the intake is contracted, make it extend
     	 */
@@ -36,6 +51,8 @@ public class TogglePneumaticIntakeCommand extends Command {
     	/*TODO: if button 10 is pressed set the spin motor to -0.5
     	 * 		if button 11 is pressed set the spin motor to 0.5
     	 */
+    	if(operator.buttons[10].get()) Robot.pneumaticIntakeSubsystem.setSpinMotor(-0.5);
+    	if(operator.buttons[11].get()) Robot.pneumaticIntakeSubsystem.setSpinMotor(0.5);
     }
 
     // Make this return true when this Command no longer needs to run execute()
