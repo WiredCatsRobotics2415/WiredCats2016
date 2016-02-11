@@ -68,7 +68,7 @@ public class Robot extends IterativeRobot {
 		operator.buttons[7].whenPressed(new IntakeCommand(INTAKE_ANGLE, 0, false));
 		operator.buttons[8].whenPressed(new IntakeCommand(GROUND_ANGLE, 0, false));
 		operator.buttons[2].whenPressed(new IntakeCommand(INTAKE_ANGLE, 0, true));
-		operator.buttons[4].whileHeld(new CatapultCommand());
+		operator.buttons[4].whenPressed(new CatapultCommand());
 		
     }
 	
