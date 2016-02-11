@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2415.robot.drivecommands;
+package org.usfirst.frc.team2415.robot.Commands;
 
 import org.usfirst.frc.team2415.robot.Robot;
 
@@ -7,15 +7,15 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ResetDriveEncodersCommand extends Command {
+public class ResetYawCommand extends Command {
 
-    public ResetDriveEncodersCommand() {
+    public ResetYawCommand() {
         requires(Robot.driveSubsystem);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.driveSubsystem.resetEncoders();
+    	Robot.driveSubsystem.resetYaw();
     }
 
     // Called repeatedly when this Command is scheduled to run

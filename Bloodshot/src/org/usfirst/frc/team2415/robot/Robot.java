@@ -1,9 +1,11 @@
 
 package org.usfirst.frc.team2415.robot;
 
-import org.usfirst.frc.team2415.robot.drivecommands.ResetDriveEncodersCommand;
-import org.usfirst.frc.team2415.robot.drivecommands.ResetYawCommand;
-import org.usfirst.frc.team2415.robot.intakecommands.IntakeCommand;
+import org.usfirst.frc.team2415.robot.Commands.CatapultCommand;
+import org.usfirst.frc.team2415.robot.Commands.IntakeCommand;
+import org.usfirst.frc.team2415.robot.Commands.ResetDriveEncodersCommand;
+import org.usfirst.frc.team2415.robot.Commands.ResetYawCommand;
+import org.usfirst.frc.team2415.robot.subsystems.CatapultSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.IntakeSubsystem;
 
@@ -27,6 +29,7 @@ public class Robot extends IterativeRobot {
 	
 	public static DriveSubsystem driveSubsystem;
 	public static IntakeSubsystem intakeSubsystem;
+	public static CatapultSubsystem catapultSubsystem;
 	
 	public static WiredCatGamepad gamepad;
 	public static WiredCatJoystick operator;
@@ -65,6 +68,7 @@ public class Robot extends IterativeRobot {
 		operator.buttons[7].whenPressed(new IntakeCommand(INTAKE_ANGLE, 0, false));
 		operator.buttons[8].whenPressed(new IntakeCommand(GROUND_ANGLE, 0, false));
 		operator.buttons[2].whenPressed(new IntakeCommand(INTAKE_ANGLE, 0, true));
+		operator.buttons[4].whileHeld(new CatapultCommand());
 		
     }
 	

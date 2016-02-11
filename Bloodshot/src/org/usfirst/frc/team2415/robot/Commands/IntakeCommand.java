@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2415.robot.intakecommands;
+package org.usfirst.frc.team2415.robot.Commands;
 
 import org.usfirst.frc.team2415.robot.Robot;
 import org.usfirst.frc.team2415.robot.WiredCatJoystick;
