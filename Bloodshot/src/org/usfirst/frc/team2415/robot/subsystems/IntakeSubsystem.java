@@ -2,6 +2,7 @@ package org.usfirst.frc.team2415.robot.subsystems;
 
 import org.usfirst.frc.team2415.robot.PID;
 import org.usfirst.frc.team2415.robot.RobotMap;
+import org.usfirst.frc.team2415.robot.intakecommands.IntakeCommand;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -17,7 +18,8 @@ public class IntakeSubsystem extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	
-	public PID pid = new PID(0.03,0,0);
+	//public PID pid = new PID(.05,0,.001);
+	public PID pid = new PID(.03,0,0);
 	
 	private CANTalon IntakeMotor;
 	private CANTalon SpinMotor;
@@ -59,7 +61,7 @@ public class IntakeSubsystem extends Subsystem {
     }
     
     public double getAngle(){
-    	return intakeEncoder.get() * DEG_MATH;
+    	return -intakeEncoder.get();
     }
     
     public double getVal(){
@@ -75,7 +77,7 @@ public class IntakeSubsystem extends Subsystem {
     }
     
     public void updateStatus(){
-    	SmartDashboard.putNumber("Intake Encoder", intakeEncoder.get()); //(intakeEncoder.get()*360)/128 for degrees
+    	SmartDashboard.putNumber("Intake Encoder", getAngle()); //(intakeEncoder.get()*360)/128 for degrees
     	SmartDashboard.putNumber("PID Error Value", intakeError);
     	SmartDashboard.putNumber("PID Output Value", intakeOutput);
     	SmartDashboard.putNumber("PID Setpoint", intakeSetpoint);
