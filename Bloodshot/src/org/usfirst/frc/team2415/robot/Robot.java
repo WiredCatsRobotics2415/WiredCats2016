@@ -34,7 +34,7 @@ public class Robot extends IterativeRobot {
 	private IMU imu;
 	
 	//in degrees
-	private float INTAKE_ANGLE = 33f;
+	private float INTAKE_ANGLE = 40f;
 	private float GROUND_ANGLE = 3f;
 	private float VERTICAL_ANGLE = 120f;
 	private float INTERIOR_ANGLE = 160f;
@@ -61,7 +61,7 @@ public class Robot extends IterativeRobot {
 		
 		Robot.intakeSubsystem.resetEncoder();
 		
-		//operator.buttons[6].whenPressed(new IntakeCommand(VERTICAL_ANGLE, 0, false));
+		operator.buttons[9].whenPressed(new IntakeCommand(VERTICAL_ANGLE, 0, false));
 		operator.buttons[6].whenPressed(new IntakeCommand(INTAKE_ANGLE, 0, false));
 		operator.buttons[8].whenPressed(new IntakeCommand(GROUND_ANGLE, 0, false));
 		operator.buttons[7].whenPressed(new IntakeCommand(INTAKE_ANGLE, 0, true));

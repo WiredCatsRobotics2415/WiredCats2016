@@ -14,11 +14,11 @@ public class RobotMap {
     public static final int ROTATE_INTAKE_TALON = 5;
     public static final int SPIN_INTAKE_TALON = 6;
     
-    public static final int[] RIGHT_ENCODER = {0,1};
-    public static final int[] LEFT_ENCODER = {2,3};
+    public static final int[] RIGHT_ENCODER = {3,4};
+    public static final int[] LEFT_ENCODER = {5,6};
     
-    public static final int[] INTAKE_ENCODER = {4,5};
-    public static final int INTAKE_STOPPER = 6;
+    public static final int[] INTAKE_ENCODER = {0,1};
+    public static final int INTAKE_STOPPER = 2;
     
     public static final int PCM_ID = 20;
     

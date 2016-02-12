@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2415.robot;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class PID {
 	double p, i, d;
 	private double lastError, elapsedTime;
@@ -41,6 +43,8 @@ public class PID {
     private double derivative(double error) {
     	if(elapsedTime == 0) return 0;
     	double diff = error-lastError;
+    	diff = ((diff < 0) ? -1:1) * Math.min(Math.abs(diff), 1);
+    	SmartDashboard.putNumber("Diff", diff);
     	return d * diff/elapsedTime;
     }
 }
