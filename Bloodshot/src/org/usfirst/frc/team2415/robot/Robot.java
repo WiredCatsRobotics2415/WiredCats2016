@@ -1,11 +1,10 @@
 
 package org.usfirst.frc.team2415.robot;
 
-import org.usfirst.frc.team2415.robot.drivecommands.ResetDriveEncodersCommand;
-import org.usfirst.frc.team2415.robot.drivecommands.ResetYawCommand;
-import org.usfirst.frc.team2415.robot.intakecommands.IntakeCommand;
-import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
-import org.usfirst.frc.team2415.robot.subsystems.IntakeSubsystem;
+import org.usfirst.frc.team2415.robot.catapultcommands.*;
+import org.usfirst.frc.team2415.robot.drivecommands.*;
+import org.usfirst.frc.team2415.robot.intakecommands.*;
+import org.usfirst.frc.team2415.robot.subsystems.*;
 
 import com.kauailabs.nav6.frc.IMU;
 
@@ -27,6 +26,7 @@ public class Robot extends IterativeRobot {
 	
 	public static DriveSubsystem driveSubsystem;
 	public static IntakeSubsystem intakeSubsystem;
+	public static CatapultSubsystem catapultSubsystem;
 	
 	public static WiredCatGamepad gamepad;
 	public static WiredCatJoystick operator;
@@ -54,6 +54,7 @@ public class Robot extends IterativeRobot {
 		
 		driveSubsystem = new DriveSubsystem();
 		intakeSubsystem = new IntakeSubsystem();
+		catapultSubsystem = new CatapultSubsystem();
 		
 		SmartDashboard.putData(Scheduler.getInstance());
 		SmartDashboard.putData("Reset Encoders", new ResetDriveEncodersCommand());
@@ -65,6 +66,7 @@ public class Robot extends IterativeRobot {
 		operator.buttons[6].whenPressed(new IntakeCommand(INTAKE_ANGLE, 0, false));
 		operator.buttons[8].whenPressed(new IntakeCommand(GROUND_ANGLE, 0, false));
 		operator.buttons[7].whenPressed(new IntakeCommand(INTAKE_ANGLE, 0, true));
+		operator.buttons[1].whenPressed(new AutomatedShootCommand());
 		
     }
 	
@@ -122,5 +124,6 @@ public class Robot extends IterativeRobot {
     public void updateStatus() {
     	Robot.driveSubsystem.updateStatus();
     	Robot.intakeSubsystem.updateStatus();
+    	Robot.catapultSubsystem.updateStatus();
     }
 }
