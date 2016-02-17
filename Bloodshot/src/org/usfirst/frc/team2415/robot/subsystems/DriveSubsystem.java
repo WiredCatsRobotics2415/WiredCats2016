@@ -22,6 +22,9 @@ public class DriveSubsystem extends Subsystem {
 	
 	private final float DISTANCE_PER_PULSE = 1/45.5f;
 	
+	private final float LOWER_SHOOTING_BOUND = 0f;
+	private final float UPPER_SHOOTING_BOUND = 0f;
+	
 	private final int BAUD_RATE = 57600;
 	
 	private final byte REFRESH_RATE = 50;
@@ -119,6 +122,12 @@ public class DriveSubsystem extends Subsystem {
     	leftTalTwo.enableBrakeMode(true);
     }
     
+    public boolean isInShootingPosition(){
+    	if(getPitch() < UPPER_SHOOTING_BOUND && getPitch() > LOWER_SHOOTING_BOUND){
+    		return true;
+    	} else return false;
+    }
+    
     /**
      * Get's the break state of the right side
      * @return True if break is on, false if coast is on
@@ -142,9 +151,10 @@ public class DriveSubsystem extends Subsystem {
 		SmartDashboard.putNumber("Right Talon", getRightTal());
 		SmartDashboard.putNumber("Left Talon", getLeftTal());
 
-		SmartDashboard.putBoolean("Left Break State", getLeftBreakState());
-		SmartDashboard.putBoolean("Right Break State", getRightBreakState());
+		SmartDashboard.putBoolean("Left Break State Enabled?", getLeftBreakState());
+		SmartDashboard.putBoolean("Right Break State Enabled?", getRightBreakState());
 		
+		SmartDashboard.putBoolean("On Ramp to Shoot?", isInShootingPosition());
 	}
 }
 
