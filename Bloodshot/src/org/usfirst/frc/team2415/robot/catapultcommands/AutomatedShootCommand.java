@@ -14,7 +14,7 @@ public class AutomatedShootCommand extends CommandGroup {
 	
 	
     public  AutomatedShootCommand() {
-    	requires(Robot.catapultSubsystem);
+    	requires(Robot.launcherSubsystem);
     	requires(Robot.driveSubsystem);
     	requires(Robot.intakeSubsystem);
     	
@@ -22,7 +22,7 @@ public class AutomatedShootCommand extends CommandGroup {
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
         // these will run in order.
-    	Robot.catapultSubsystem.setIsShooting(true);      //indicates the shooting process is starting
+//    	Robot.catapultSubsystem.setIsShooting(true);      //indicates the shooting process is starting
     	addSequential(new IntakeCommand(120f, 0, false)); //puts the intake at vertical hight
     	addSequential(new TimeoutCommand(.65));			  //waits a bit
     	addSequential(new IntakeCommand(120f, .5, true)); //spits the ball into the shooter
@@ -32,7 +32,7 @@ public class AutomatedShootCommand extends CommandGroup {
     	addSequential(new CatapultCommand());			  //shoots
     	addSequential(new TimeoutCommand(1));			  //waits a bit
     	addSequential(new IntakeCommand(120f, 0, false)); //sets intake at vertical
-    	Robot.catapultSubsystem.setIsShooting(false);	  //indicates the shooting process is over
+//    	Robot.catapultSubsystem.setIsShooting(false);	  //indicates the shooting process is over
     	
         // To run multiple commands at the same time,
         // use addParallel()

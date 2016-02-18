@@ -56,7 +56,7 @@ public class Robot extends IterativeRobot {
 		
 		driveSubsystem = new DriveSubsystem();
 		intakeSubsystem = new IntakeSubsystem();
-		catapultSubsystem = new CatapultSubsystem();
+		//catapultSubsystem = new CatapultSubsystem();
 		launcherSubsystem = new TempCatapultSubsystem();
 		
 		SmartDashboard.putData(Scheduler.getInstance());
@@ -128,6 +128,6 @@ public class Robot extends IterativeRobot {
     public void updateStatus() {
     	Robot.driveSubsystem.updateStatus();
     	Robot.intakeSubsystem.updateStatus();
-    	Robot.catapultSubsystem.updateStatus();
+//    	Robot.catapultSubsystem.updateStatus();
     }
 }
