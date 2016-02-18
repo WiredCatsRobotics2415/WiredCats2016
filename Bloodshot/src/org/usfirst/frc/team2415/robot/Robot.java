@@ -8,6 +8,7 @@ import org.usfirst.frc.team2415.robot.subsystems.*;
 
 import com.kauailabs.nav6.frc.IMU;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -27,6 +28,7 @@ public class Robot extends IterativeRobot {
 	public static DriveSubsystem driveSubsystem;
 	public static IntakeSubsystem intakeSubsystem;
 	public static CatapultSubsystem catapultSubsystem;
+	public static TempCatapultSubsystem launcherSubsystem;
 	
 	public static WiredCatGamepad gamepad;
 	public static WiredCatJoystick operator;
@@ -36,10 +38,10 @@ public class Robot extends IterativeRobot {
 	//in degrees
 	private float INTAKE_ANGLE = 40f;
 	private float GROUND_ANGLE = 3f;
-	private float VERTICAL_ANGLE = 120f;
+	private float VERTICAL_ANGLE = 80f;
 	private float INTERIOR_ANGLE = 160f;
 	
-	//private Compressor compressor;
+	private Compressor compressor;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -50,11 +52,12 @@ public class Robot extends IterativeRobot {
 		
 		gamepad = new WiredCatGamepad(0);
 		operator = new WiredCatJoystick(1);
-//		compressor = new Compressor(RobotMap.PCM_ID);
+		compressor = new Compressor(RobotMap.PCM_ID);
 		
 		driveSubsystem = new DriveSubsystem();
 		intakeSubsystem = new IntakeSubsystem();
 		catapultSubsystem = new CatapultSubsystem();
+		launcherSubsystem = new TempCatapultSubsystem();
 		
 		SmartDashboard.putData(Scheduler.getInstance());
 		SmartDashboard.putData("Reset Encoders", new ResetDriveEncodersCommand());
@@ -66,7 +69,8 @@ public class Robot extends IterativeRobot {
 		operator.buttons[6].whenPressed(new IntakeCommand(INTAKE_ANGLE, 0, false));
 		operator.buttons[8].whenPressed(new IntakeCommand(GROUND_ANGLE, 0, false));
 		operator.buttons[7].whenPressed(new IntakeCommand(INTAKE_ANGLE, 0, true));
-		operator.buttons[1].whenPressed(new AutomatedShootCommand());
+		operator.buttons[1].whileHeld(new FireBarrels1And2Command());
+		operator.buttons[1].whenInactive(new CancelCommand());
 		
     }
 	

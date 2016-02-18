@@ -20,10 +20,10 @@ public class CatapultSubsystem extends Subsystem {
 	private Solenoid Solenoid3;
 
 	public void initDefaultCommand() {
-		Solenoid0 = new Solenoid(RobotMap.PCM_ID, RobotMap.CATAPULT_SOLENOID0);
-		Solenoid1 = new Solenoid(RobotMap.PCM_ID, RobotMap.CATAPULT_SOLENOID1);
-		Solenoid2 = new Solenoid(RobotMap.PCM_ID, RobotMap.CATAPULT_SOLENOID2);
-		Solenoid3 = new Solenoid(RobotMap.PCM_ID, RobotMap.CATAPULT_SOLENOID3);
+//		Solenoid0 = new Solenoid(RobotMap.PCM_ID, RobotMap.CATAPULT_SOLENOID0);
+//		Solenoid1 = new Solenoid(RobotMap.PCM_ID, RobotMap.CATAPULT_SOLENOID1);
+//		Solenoid2 = new Solenoid(RobotMap.PCM_ID, RobotMap.CATAPULT_SOLENOID2);
+//		Solenoid3 = new Solenoid(RobotMap.PCM_ID, RobotMap.CATAPULT_SOLENOID3);
 	}
 
 	public void extendCatapult() {
