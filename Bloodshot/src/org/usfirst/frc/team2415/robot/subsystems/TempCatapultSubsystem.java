@@ -14,12 +14,11 @@ public class TempCatapultSubsystem extends Subsystem {
 							BOT_RIGHT_FIRE, ALL_FIRE
 	}
 	
-	private int numOfSolenoids = RobotMap.FIRE_SOLENOIDS.length;
 	private Solenoid[] solenoids;
 	public boolean firing;
 	
 	public TempCatapultSubsystem(){
-		solenoids = new Solenoid[numOfSolenoids];
+		solenoids = new Solenoid[2];
 		
 		for(int i=0; i<solenoids.length; i++){
 			solenoids[i] = new Solenoid(RobotMap.PCM_ID, RobotMap.FIRE_SOLENOIDS[i]);
@@ -44,9 +43,8 @@ public class TempCatapultSubsystem extends Subsystem {
     }
     
     public void closeAll(){
-    	for(int i=0; i<solenoids.length; i++){
-    		solenoids[i].set(false);
-    	}
+    	solenoids[0].set(false);
+    	solenoids[1].set(false);
     	firing = false;
     }
     
