@@ -29,7 +29,7 @@ public class TempAutomatedShooterCommand extends CommandGroup {
     	addSequential(new TimeoutCommand(1));		      //waits a bit
     	addSequential(new IntakeCommand(3f, 0, false));   //puts the intake at ground hight
     	addSequential(new TimeoutCommand(.65));			  //waits a bit
-    	addSequential(new FireBarrels1And2Command());	  //shoots
+    	addSequential(new FireCatapultCommand());	  //shoots
     	addSequential(new TimeoutCommand(.5));			  //waits a bit
     	addSequential(new CancelCommand());				  //closes the solenoids
     	addSequential(new TimeoutCommand(1));			  //waits a bit

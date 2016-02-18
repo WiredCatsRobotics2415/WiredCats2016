@@ -38,7 +38,7 @@ public class Robot extends IterativeRobot {
 	//in degrees
 	private float INTAKE_ANGLE = 40f;
 	private float GROUND_ANGLE = 3f;
-	private float VERTICAL_ANGLE = 80f;
+	private float VERTICAL_ANGLE = 90f;
 	private float INTERIOR_ANGLE = 160f;
 	
 	private Compressor compressor;
@@ -69,7 +69,8 @@ public class Robot extends IterativeRobot {
 		operator.buttons[6].whenPressed(new IntakeCommand(INTAKE_ANGLE, 0, false));
 		operator.buttons[8].whenPressed(new IntakeCommand(GROUND_ANGLE, 0, false));
 		operator.buttons[7].whenPressed(new IntakeCommand(INTAKE_ANGLE, 0, true));
-		operator.buttons[1].whileHeld(new FireBarrels1And2Command());
+		operator.buttons[2].whenPressed(new IntakeCommand(VERTICAL_ANGLE, 1, true));
+		operator.buttons[1].whileHeld(new FireCatapultCommand());
 		operator.buttons[1].whenInactive(new CancelCommand());
 		
     }

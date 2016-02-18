@@ -45,7 +45,7 @@ public class IntakeCommand extends Command {
     	double output = Robot.intakeSubsystem.pid.pidOut(desiredAngle - currAngle);
     	Robot.intakeSubsystem.intakeOutput = output;
 //    	output = (output < 0 ? -1:1) * Math.min(Math.abs(output), .5);
-    	Robot.intakeSubsystem.setIntakeMotor(output);
+    	Robot.intakeSubsystem.setIntakeMotor(-output);
     	Robot.intakeSubsystem.setSpinMotor(intakeSpeed);
 
     	if(operator.buttons[7].get() && !Robot.intakeSubsystem.getButton()) {

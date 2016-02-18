@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class FireBarrels1And2Command extends Command {
+public class FireCatapultCommand extends Command {
 
-    public FireBarrels1And2Command() {
+    public FireCatapultCommand() {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.launcherSubsystem);
     }
