@@ -28,7 +28,6 @@ public class Robot extends IterativeRobot {
 	public static DriveSubsystem driveSubsystem;
 	public static IntakeSubsystem intakeSubsystem;
 	public static CatapultSubsystem catapultSubsystem;
-	public static TempCatapultSubsystem launcherSubsystem;
 	
 	public static WiredCatGamepad gamepad;
 	public static WiredCatJoystick operator;
@@ -56,22 +55,13 @@ public class Robot extends IterativeRobot {
 		
 		driveSubsystem = new DriveSubsystem();
 		intakeSubsystem = new IntakeSubsystem();
-		//catapultSubsystem = new CatapultSubsystem();
-		launcherSubsystem = new TempCatapultSubsystem();
+		catapultSubsystem = new CatapultSubsystem();
 		
 		SmartDashboard.putData(Scheduler.getInstance());
 		SmartDashboard.putData("Reset Encoders", new ResetDriveEncodersCommand());
 		SmartDashboard.putData("Reset Yaw", new ResetYawCommand());
 		
 		Robot.intakeSubsystem.resetEncoder();
-		
-//		operator.buttons[9].whenPressed(new IntakeCommand(VERTICAL_ANGLE, 0, false));
-//		operator.buttons[6].whenPressed(new IntakeCommand(INTAKE_ANGLE, 0, false));
-//		operator.buttons[8].whenPressed(new IntakeCommand(GROUND_ANGLE, 0, false));
-//		operator.buttons[7].whenPressed(new IntakeCommand(INTAKE_ANGLE, 0, true));
-//		operator.buttons[2].whenPressed(new IntakeCommand(VERTICAL_ANGLE, 1, true));
-//		operator.buttons[1].whileHeld(new FireCatapultCommand());
-//		operator.buttons[1].whenInactive(new CancelCommand());
 		
 		operator.buttons[9].whileHeld(new IntakeCommand(VERTICAL_ANGLE, 0, false));
 		operator.buttons[6].whileHeld(new IntakeCommand(INTAKE_ANGLE, 0, false));
@@ -82,8 +72,7 @@ public class Robot extends IterativeRobot {
 		operator.buttons[7].whenInactive(new IntakeCommand(VERTICAL_ANGLE, 0, false));
 		operator.buttons[2].whileHeld(new IntakeCommand(VERTICAL_ANGLE, 1, true));
 		operator.buttons[2].whenInactive(new IntakeCommand(VERTICAL_ANGLE, 0, false));
-		operator.buttons[1].whileHeld(new FireCatapultCommand());
-		operator.buttons[1].whenInactive(new CancelCommand());
+		operator.buttons[1].whenPressed(new FireCatapultCommand());
 		
     }
 	
@@ -141,6 +130,6 @@ public class Robot extends IterativeRobot {
     public void updateStatus() {
     	Robot.driveSubsystem.updateStatus();
     	Robot.intakeSubsystem.updateStatus();
-//    	Robot.catapultSubsystem.updateStatus();
+    	Robot.catapultSubsystem.updateStatus();
     }
 }

@@ -10,15 +10,15 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class ArcadeDriveCommand extends Command {
 	
-//	private float DEADBAND = 0.05f;
-//	private float INTERPOLATION_FACTOR = 0.75f;   Nathan's Settings
-//	private float STRAIGHT_LIMITER = 0.95f;
-//	private float TURN_BOOSTER = 1.3f;
-	
 	private float DEADBAND = 0.05f;
-	private float INTERPOLATION_FACTOR = 0.5f;
-	private float STRAIGHT_LIMITER = .95f;
-	private float TURN_BOOSTER = 1.1f;
+	private float INTERPOLATION_FACTOR = 0.75f;   //Nathan's Settings
+	private float STRAIGHT_LIMITER = 0.95f;
+	private float TURN_BOOSTER = 1.3f;
+	
+//	private float DEADBAND = 0.05f;
+//	private float INTERPOLATION_FACTOR = 0.5f;
+//	private float STRAIGHT_LIMITER = .95f;
+//	private float TURN_BOOSTER = 1.1f;
 	
 
     public ArcadeDriveCommand() {

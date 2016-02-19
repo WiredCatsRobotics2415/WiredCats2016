@@ -7,10 +7,16 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class CancelCommand extends Command {
-
-    public CancelCommand() {
-        requires(Robot.launcherSubsystem);
+public class TimeoutCommand extends Command {
+	
+	private double time, startTime;
+	private boolean isDone = false;
+	
+    public TimeoutCommand(double time) {
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
+    	this.time = time;
+    	startTime = System.currentTimeMillis();
     }
 
     // Called just before this Command runs the first time
@@ -19,22 +25,20 @@ public class CancelCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.launcherSubsystem.closeAll();
+    	if((System.currentTimeMillis() - startTime)/1000.0 >= time) isDone = true;
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return isDone;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.launcherSubsystem.closeAll();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	Robot.launcherSubsystem.closeAll();
     }
 }

@@ -1,7 +1,6 @@
 package org.usfirst.frc.team2415.robot.catapultcommands;
 
 import org.usfirst.frc.team2415.robot.Robot;
-import org.usfirst.frc.team2415.robot.drivecommands.TimeoutCommand;
 import org.usfirst.frc.team2415.robot.intakecommands.IntakeCommand;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -9,12 +8,12 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class TempAutomatedShooterCommand extends CommandGroup {
+public class AutoLoadAndShootCommand extends CommandGroup {
     
 	
 	
-    public  TempAutomatedShooterCommand() {
-    	requires(Robot.launcherSubsystem);
+    public  AutoLoadAndShootCommand() {
+    	requires(Robot.catapultSubsystem);
     	requires(Robot.driveSubsystem);
     	requires(Robot.intakeSubsystem);
     	
@@ -23,15 +22,13 @@ public class TempAutomatedShooterCommand extends CommandGroup {
         //      addSequential(new Command2());
         // these will run in order.
     	Robot.catapultSubsystem.setIsShooting(true);      //indicates the shooting process is starting
-    	addSequential(new IntakeCommand(80f, 0, false));  //puts the intake at vertical hight
+    	addSequential(new IntakeCommand(3f, 0, false));   //lowers intake to prepare anus
     	addSequential(new TimeoutCommand(.65));			  //waits a bit
-    	addSequential(new IntakeCommand(80f, .5, true));  //spits the ball into the shooter
+    	addSequential(new IntakeCommand(80f, 1, true));   //spits the ball into the shooter & blasts anus
     	addSequential(new TimeoutCommand(1));		      //waits a bit
     	addSequential(new IntakeCommand(3f, 0, false));   //puts the intake at ground hight
     	addSequential(new TimeoutCommand(.65));			  //waits a bit
-    	addSequential(new FireCatapultCommand());	  //shoots
-    	addSequential(new TimeoutCommand(.5));			  //waits a bit
-    	addSequential(new CancelCommand());				  //closes the solenoids
+    	addSequential(new FireCatapultCommand());	      //shoots
     	addSequential(new TimeoutCommand(1));			  //waits a bit
     	addSequential(new IntakeCommand(80f, 0, false));  //sets intake at vertical
     	Robot.catapultSubsystem.setIsShooting(false);	  //indicates the shooting process is over
