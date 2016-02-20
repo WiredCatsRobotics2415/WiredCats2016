@@ -23,6 +23,8 @@ public class DriveSubsystem extends Subsystem {
 	private final float DISTANCE_PER_PULSE = 1/45.5f;
 	
 	private final int BAUD_RATE = 57600;
+	private final int UPPER_BOUND = 15, //in degrees 
+					  LOWER_BOUND = 5;
 	
 	private final byte REFRESH_RATE = 50;
 	
@@ -134,6 +136,11 @@ public class DriveSubsystem extends Subsystem {
     public boolean getLeftBreakState(){
     	return (leftTalOne.getBrakeEnableDuringNeutral() && leftTalTwo.getBrakeEnableDuringNeutral());
     }
+    
+    public boolean isOnRamp(){
+    	if(LOWER_BOUND < getPitch()  && getPitch() < UPPER_BOUND) return true;
+    	return false;
+    }
 
 	public void updateStatus() {
 		SmartDashboard.putNumber("Left Encoder", getLeftEncoder());
@@ -144,6 +151,8 @@ public class DriveSubsystem extends Subsystem {
 
 		SmartDashboard.putBoolean("Left Break State", getLeftBreakState());
 		SmartDashboard.putBoolean("Right Break State", getRightBreakState());
+		
+		SmartDashboard.putBoolean("Am I On The Ramp?", isOnRamp());
 		
 	}
 }
