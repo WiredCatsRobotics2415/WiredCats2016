@@ -17,13 +17,10 @@ public class FireCatapultCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	long startTime = System.currentTimeMillis();
     	Robot.catapultSubsystem.fire(0);
     	Robot.catapultSubsystem.fire(1);
-    	double x = 0;
-    	for(int i=0; i<84000; i++){
-    	      x = Math.pow((Math.pow(i,3)),2);
-    	}
-    	System.out.println(x);
+    	while((System.currentTimeMillis() - startTime)/1000.0 <= .25);
     	Robot.catapultSubsystem.closeAll();
     }
 
