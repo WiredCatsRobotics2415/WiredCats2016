@@ -1,8 +1,7 @@
 package org.usfirst.frc.team2415.robot.subsystems;
 
 import org.usfirst.frc.team2415.robot.RobotMap;
-import org.usfirst.frc.team2415.robot.catapultcommands.RestingCommand;
-import org.usfirst.frc.team2415.robot.catapultcommands.AutoLoadAndShootCommand;
+import org.usfirst.frc.team2415.robot.catapultcommands.*;
 
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -68,8 +67,6 @@ public class CatapultSubsystem extends Subsystem {
     public void updateStatus() {
 		SmartDashboard.putBoolean("Are The Solenoids Extended", firing);
 		SmartDashboard.putBoolean("Am I Shooting Right Now", isShooting);
-		
-		SmartDashboard.putData("Autonomous Shooting Command", new AutoLoadAndShootCommand());
 	}
 
     

@@ -22,15 +22,15 @@ public class AutoLoadAndShootCommand extends CommandGroup {
         //      addSequential(new Command2());
         // these will run in order.
     	Robot.catapultSubsystem.setIsShooting(true);      //indicates the shooting process is starting
-    	addSequential(new IntakeCommand(3f, 0, false));   //lowers intake to prepare anus
+    	addSequential(new IntakeCommand(Robot.INTAKE_ANGLE, 0, false));   //lowers intake to prepare anus
     	addSequential(new TimeoutCommand(.65));			  //waits a bit
-    	addSequential(new IntakeCommand(80f, 1, true));   //spits the ball into the shooter & blasts anus
+    	addSequential(new IntakeCommand(Robot.VERTICAL_ANGLE, 1, true));   //spits the ball into the shooter & blasts anus
     	addSequential(new TimeoutCommand(1));		      //waits a bit
-    	addSequential(new IntakeCommand(3f, 0, false));   //puts the intake at ground hight
+    	addSequential(new IntakeCommand(Robot.GROUND_ANGLE, 0, false));   //puts the intake at ground hight
     	addSequential(new TimeoutCommand(.65));			  //waits a bit
-    	addSequential(new FireCatapultCommand());	      //shoots
+    	addSequential(new FireCatapultCommandTest1());	  //shoots
     	addSequential(new TimeoutCommand(1));			  //waits a bit
-    	addSequential(new IntakeCommand(80f, 0, false));  //sets intake at vertical
+    	addSequential(new IntakeCommand(Robot.VERTICAL_ANGLE, 0, false));  //sets intake at vertical
     	Robot.catapultSubsystem.setIsShooting(false);	  //indicates the shooting process is over
     	
         // To run multiple commands at the same time,
