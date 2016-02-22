@@ -65,11 +65,6 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Reset Encoders", new ResetDriveEncodersCommand());
 		SmartDashboard.putData("Reset Yaw", new ResetYawCommand());
 
-		SmartDashboard.putData("Autonomous Shooting Command", new AutoLoadAndShootCommand());
-		SmartDashboard.putData("ShootCommandTest1", new FireCatapultCommandTest1());
-		SmartDashboard.putData("ShootCommandTest2", new FireCatapultCommandTest2());
-		SmartDashboard.putData("ShootCommandControl", new FireCatapultCommand());
-
 		operator.buttons[11].whenActive(new ZeroIntakeCommand());
 		operator.buttons[9].whileHeld(new IntakeCommand(VERTICAL_ANGLE, 0, false));
 		operator.buttons[6].whileHeld(new IntakeCommand(INTAKE_ANGLE, 0, false));
@@ -80,7 +75,7 @@ public class Robot extends IterativeRobot {
 		operator.buttons[7].whenInactive(new IntakeCommand(VERTICAL_ANGLE, 0, false));
 		operator.buttons[2].whileHeld(new IntakeCommand(VERTICAL_ANGLE, 1, true));
 		operator.buttons[2].whenInactive(new IntakeCommand(VERTICAL_ANGLE, 0, false));
-		operator.buttons[1].whileHeld(new FireCatapultCommand());
+		operator.buttons[1].whenPressed(new FireCatapultCommand());
 		operator.buttons[1].whenInactive(new RestingCommand());
     }
 	

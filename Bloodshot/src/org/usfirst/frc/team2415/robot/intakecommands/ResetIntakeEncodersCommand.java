@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2415.robot.catapultcommands;
+package org.usfirst.frc.team2415.robot.intakecommands;
 
 import org.usfirst.frc.team2415.robot.Robot;
 
@@ -7,30 +7,24 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class TimeoutCommand extends Command {
-	
-	private double time, startTime;
-	private boolean isDone = false;
-	
-    public TimeoutCommand(double time) {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-    	this.time = time;
-    	startTime = System.currentTimeMillis();
+public class ResetIntakeEncodersCommand extends Command {
+
+    public ResetIntakeEncodersCommand() {
+        requires(Robot.intakeSubsystem);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.intakeSubsystem.resetEncoder();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if((System.currentTimeMillis() - startTime)/1000.0 >= time) isDone = true;
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return isDone;
+        return false;
     }
 
     // Called once after isFinished returns true

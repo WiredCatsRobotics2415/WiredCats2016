@@ -19,6 +19,12 @@ public class FireCatapultCommand extends Command {
     protected void initialize() {
     	Robot.catapultSubsystem.fire(0);
     	Robot.catapultSubsystem.fire(1);
+    	double x = 0;
+    	for(int i=0; i<84000; i++){
+    	      x = Math.pow((Math.pow(i,3)),2);
+    	     }
+    	System.out.println(x);
+    	Robot.catapultSubsystem.closeAll();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -32,14 +38,12 @@ public class FireCatapultCommand extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.catapultSubsystem.close(0);
-    	Robot.catapultSubsystem.close(1);
+    	Robot.catapultSubsystem.closeAll();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	Robot.catapultSubsystem.close(0);
-    	Robot.catapultSubsystem.close(1);
+    	Robot.catapultSubsystem.closeAll();
     }
 }

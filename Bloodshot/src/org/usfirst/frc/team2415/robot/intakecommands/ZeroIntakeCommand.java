@@ -16,7 +16,7 @@ public class ZeroIntakeCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.intakeSubsystem.setIntakeMotor(-0.1);
+    	Robot.intakeSubsystem.setIntakeMotor(0.1);
     	if(Robot.intakeSubsystem.getAngle() < 0) Robot.intakeSubsystem.resetEncoder();
     }
 
