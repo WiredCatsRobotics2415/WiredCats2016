@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class StraightDriveCommand extends Command {
 	
-	private int leftStart, rightStart;
+	private double leftStart, rightStart;
 	private double distance, leftErr, rightErr;
 	private double stdErrLeft = 0, stdErrRight = 0;
 	private PID pidLeft, pidRight;

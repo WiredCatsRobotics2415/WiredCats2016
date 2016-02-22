@@ -27,6 +27,8 @@ public class DriveSubsystem extends Subsystem {
 	public CANTalon leftTalOne, leftTalTwo, rightTalOne, rightTalTwo;
 	private Encoder rightEncoder, leftEncoder;
 	private IMU imu;
+	public static final double 	TICKS_PER_REV = 120, WHEEL_RADIUS = 2,
+								WHEEL_TRACK = 25.25;
 	
 	
 	

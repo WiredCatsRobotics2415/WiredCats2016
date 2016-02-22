@@ -10,17 +10,17 @@ public class RestingCommand extends Command {
 
     public RestingCommand() {
         // Use requires() here to declare subsystem dependencies
-    	requires(Robot.launcherSubsystem);
+    	requires(Robot.catapultSubsystem);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.launcherSubsystem.closeAll();
+    	Robot.catapultSubsystem.closeAll();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.launcherSubsystem.closeAll();
+    	Robot.catapultSubsystem.closeAll();
     }
 
     // Make this return true when this Command no longer needs to run execute()
