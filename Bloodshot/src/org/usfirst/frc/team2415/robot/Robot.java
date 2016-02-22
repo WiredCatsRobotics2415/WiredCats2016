@@ -28,7 +28,6 @@ public class Robot extends IterativeRobot {
 	public static DriveSubsystem driveSubsystem;
 	public static IntakeSubsystem intakeSubsystem;
 	public static CatapultSubsystem catapultSubsystem;
-	public static TempCatapultSubsystem launcherSubsystem;
 	
 	public static WiredCatGamepad gamepad;
 	public static WiredCatJoystick operator;
@@ -36,10 +35,10 @@ public class Robot extends IterativeRobot {
 	private IMU imu;
 	
 	//in degrees
-	private float INTAKE_ANGLE = 40f;
-	private float GROUND_ANGLE = 3f;
-	private float VERTICAL_ANGLE = 90f;
-	private float INTERIOR_ANGLE = 160f;
+	public static final float INTAKE_ANGLE = 40f;
+	public static final float GROUND_ANGLE = 3f;
+	public static final float VERTICAL_ANGLE = 90f;
+	public static final float INTERIOR_ANGLE = 160f;
 	
 	private Compressor compressor;
 
@@ -56,15 +55,17 @@ public class Robot extends IterativeRobot {
 		
 		driveSubsystem = new DriveSubsystem();
 		intakeSubsystem = new IntakeSubsystem();
-		//catapultSubsystem = new CatapultSubsystem();
-		launcherSubsystem = new TempCatapultSubsystem();
+		catapultSubsystem = new CatapultSubsystem();
 		
 		SmartDashboard.putData(Scheduler.getInstance());
-		SmartDashboard.putData("Reset Encoders", new ResetDriveEncodersCommand());
-		SmartDashboard.putData("Reset Yaw", new ResetYawCommand());
 		
 		Robot.intakeSubsystem.resetEncoder();
+		Robot.driveSubsystem.resetEncoders();
 		
+		SmartDashboard.putData("Reset Encoders", new ResetDriveEncodersCommand());
+		SmartDashboard.putData("Reset Yaw", new ResetYawCommand());
+
+		operator.buttons[11].whenActive(new ZeroIntakeCommand());
 		operator.buttons[9].whileHeld(new IntakeCommand(VERTICAL_ANGLE, 0, false));
 		operator.buttons[6].whileHeld(new IntakeCommand(INTAKE_ANGLE, 0, false));
 		operator.buttons[6].whenInactive(new IntakeCommand(VERTICAL_ANGLE, 0, false));
@@ -74,9 +75,8 @@ public class Robot extends IterativeRobot {
 		operator.buttons[7].whenInactive(new IntakeCommand(VERTICAL_ANGLE, 0, false));
 		operator.buttons[2].whileHeld(new IntakeCommand(VERTICAL_ANGLE, 1, true));
 		operator.buttons[2].whenInactive(new IntakeCommand(VERTICAL_ANGLE, 0, false));
-		operator.buttons[1].whileHeld(new FireCatapultCommand());
-		operator.buttons[1].whenInactive(new CancelCommand());
-		
+		operator.buttons[1].whenPressed(new FireCatapultCommand());
+		operator.buttons[1].whenInactive(new RestingCommand());
     }
 	
 	public void disabledPeriodic() {
@@ -133,6 +133,6 @@ public class Robot extends IterativeRobot {
     public void updateStatus() {
     	Robot.driveSubsystem.updateStatus();
     	Robot.intakeSubsystem.updateStatus();
-//    	Robot.catapultSubsystem.updateStatus();
+    	Robot.catapultSubsystem.updateStatus();
     }
 }
