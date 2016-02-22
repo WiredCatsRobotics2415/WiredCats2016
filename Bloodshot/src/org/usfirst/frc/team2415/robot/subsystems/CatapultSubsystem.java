@@ -1,60 +1,74 @@
 package org.usfirst.frc.team2415.robot.subsystems;
 
 import org.usfirst.frc.team2415.robot.RobotMap;
+import org.usfirst.frc.team2415.robot.catapultcommands.*;
 
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.CANTalon;
-import edu.wpi.first.wpilibj.Solenoid;
-
 /**
  *
  */
 public class CatapultSubsystem extends Subsystem {
-
-	private boolean isShooting;
 	
-	private Solenoid Solenoid0;
-	private Solenoid Solenoid1;
-	private Solenoid Solenoid2;
-	private Solenoid Solenoid3;
-
-	public void initDefaultCommand() {
-//		Solenoid0 = new Solenoid(RobotMap.PCM_ID, RobotMap.CATAPULT_SOLENOID0);
-//		Solenoid1 = new Solenoid(RobotMap.PCM_ID, RobotMap.CATAPULT_SOLENOID1);
-//		Solenoid2 = new Solenoid(RobotMap.PCM_ID, RobotMap.CATAPULT_SOLENOID2);
-//		Solenoid3 = new Solenoid(RobotMap.PCM_ID, RobotMap.CATAPULT_SOLENOID3);
-	}
-
-	public void extendCatapult() {
-		Solenoid0.set(true);
-		Solenoid1.set(true);
-		Solenoid2.set(true);
-		Solenoid3.set(true);
-	}
-
-	public void retractCatapult() {
-		Solenoid0.set(false);
-		Solenoid1.set(false);
-		Solenoid2.set(false);
-		Solenoid3.set(false);
-	}
-
-	public boolean isExtended() {
-		return Solenoid0.get();
+	public enum Solenoids {	TOP_LEFT_FIRE, TOP_RIGHT_FIRE, BOT_LEFT_FIRE,
+							BOT_RIGHT_FIRE, ALL_FIRE
 	}
 	
-
-	public boolean getIsShooting() {
+	
+	private Solenoid[] solenoids;
+	public boolean firing;
+	public boolean isShooting;
+	
+	public CatapultSubsystem(){
+		solenoids = new Solenoid[2];
+		
+		for(int i=0; i<solenoids.length; i++){
+			solenoids[i] = new Solenoid(RobotMap.PCM_ID, RobotMap.FIRE_SOLENOIDS[i]);
+		}
+		closeAll();
+	}
+	
+    public void initDefaultCommand() {
+    	this.setDefaultCommand(new RestingCommand());
+    }
+    
+    public void fireAll(){
+    	for(int i=0; i<solenoids.length; i++){
+    		solenoids[i].set(true);
+    	}
+    	firing = true;
+    }
+    
+    public void fire(int barrelID){
+    	solenoids[barrelID].set(true);
+    	firing = true;
+    }
+    
+    public void closeAll(){
+    	solenoids[0].set(false);
+    	solenoids[1].set(false);
+    	firing = false;
+    }
+    
+    public void close(int barrelID){
+    	solenoids[barrelID].set(false);
+    	firing = false;
+    }
+    
+    public boolean getIsShooting() {
 		return isShooting;
 	}
 
 	public void setIsShooting(boolean isShooting) {
 		this.isShooting = isShooting;
 	}
-
-	public void updateStatus() {
-		SmartDashboard.putBoolean("Are The Solenoids Extended", isExtended());
-		SmartDashboard.putBoolean("Am I Shooting Right Now", getIsShooting());
+    
+    public void updateStatus() {
+		SmartDashboard.putBoolean("Are The Solenoids Extended", firing);
+		SmartDashboard.putBoolean("Am I Shooting Right Now", isShooting);
 	}
+
+    
 }
+

@@ -20,8 +20,6 @@ public class DriveSubsystem extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	
-	private final float DISTANCE_PER_PULSE = 1/45.5f;
-	
 	private final int BAUD_RATE = 57600;
 	
 	private final byte REFRESH_RATE = 50;
@@ -42,8 +40,6 @@ public class DriveSubsystem extends Subsystem {
 		leftEncoder = new Encoder(RobotMap.LEFT_ENCODER[0],RobotMap.LEFT_ENCODER[1]);
 		
 		resetEncoders();
-		leftEncoder.setDistancePerPulse(DISTANCE_PER_PULSE);
-		rightEncoder.setDistancePerPulse(DISTANCE_PER_PULSE);
 		
 		SerialPort imuSerialPort = new SerialPort(BAUD_RATE, SerialPort.Port.kMXP);
 		imu = new IMU(imuSerialPort, REFRESH_RATE);
@@ -80,12 +76,12 @@ public class DriveSubsystem extends Subsystem {
     }
     
     public double getRightEncoder(){
-    	return rightEncoder.getDistance();
+    	return rightEncoder.get();
     }
     
    
     public double getLeftEncoder(){
-    	return leftEncoder.getDistance();
+    	return leftEncoder.get();
     }
     
     public void resetEncoders(){
@@ -117,6 +113,16 @@ public class DriveSubsystem extends Subsystem {
     public void enableLeftBreakState(){
     	leftTalOne.enableBrakeMode(true);
     	leftTalTwo.enableBrakeMode(true);
+    }
+    
+    public void disableRightBreakState(){
+    	rightTalOne.enableBrakeMode(false);
+    	rightTalTwo.enableBrakeMode(false);
+    }
+    
+    public void disableLeftBreakState(){
+    	leftTalOne.enableBrakeMode(false);
+    	leftTalTwo.enableBrakeMode(false);
     }
     
     /**

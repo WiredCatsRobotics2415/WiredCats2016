@@ -22,7 +22,7 @@ public class FireCatapultCommand extends Command {
     	double x = 0;
     	for(int i=0; i<84000; i++){
     	      x = Math.pow((Math.pow(i,3)),2);
-    	     }
+    	}
     	System.out.println(x);
     	Robot.catapultSubsystem.closeAll();
     }
