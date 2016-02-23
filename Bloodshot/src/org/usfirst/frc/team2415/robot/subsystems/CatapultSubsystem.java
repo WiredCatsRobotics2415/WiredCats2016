@@ -21,7 +21,7 @@ public class CatapultSubsystem extends Subsystem {
 	public boolean isShooting;
 	
 	public CatapultSubsystem(){
-		solenoids = new Solenoid[2];
+		solenoids = new Solenoid[RobotMap.FIRE_SOLENOIDS.length];
 		
 		for(int i=0; i<solenoids.length; i++){
 			solenoids[i] = new Solenoid(RobotMap.PCM_ID, RobotMap.FIRE_SOLENOIDS[i]);
@@ -46,8 +46,9 @@ public class CatapultSubsystem extends Subsystem {
     }
     
     public void closeAll(){
-    	solenoids[0].set(false);
-    	solenoids[1].set(false);
+    	for(int i=0; i<solenoids.length; i++){
+    		solenoids[i].set(false);
+    	}
     	firing = false;
     }
     

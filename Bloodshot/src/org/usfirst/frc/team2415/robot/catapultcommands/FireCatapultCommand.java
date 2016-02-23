@@ -18,8 +18,7 @@ public class FireCatapultCommand extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	long startTime = System.currentTimeMillis();
-    	Robot.catapultSubsystem.fire(0);
-    	Robot.catapultSubsystem.fire(1);
+    	Robot.catapultSubsystem.fireAll();
     	while((System.currentTimeMillis() - startTime)/1000.0 <= .25);
     	Robot.catapultSubsystem.closeAll();
     }
