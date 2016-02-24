@@ -11,9 +11,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class CatapultSubsystem extends Subsystem {
 	
-	public enum Solenoids {	TOP_LEFT_FIRE, TOP_RIGHT_FIRE, BOT_LEFT_FIRE,
-							BOT_RIGHT_FIRE, ALL_FIRE
-	}
 	
 	
 	private Solenoid[] solenoids;

@@ -61,7 +61,7 @@ public class IntakeSubsystem extends Subsystem {
     }
     
     public double getAngle(){
-    	return -intakeEncoder.get();
+    	return intakeEncoder.get();
     }
     
     public double getVal(){

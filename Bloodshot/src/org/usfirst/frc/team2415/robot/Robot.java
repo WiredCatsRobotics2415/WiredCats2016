@@ -37,7 +37,7 @@ public class Robot extends IterativeRobot {
 	//in degrees
 	public static final float INTAKE_ANGLE = 40f;
 	public static final float GROUND_ANGLE = 3f;
-	public static final float VERTICAL_ANGLE = 90f;
+	public static final float VERTICAL_ANGLE = 100f;
 	public static final float INTERIOR_ANGLE = 160f;
 	
 	private Compressor compressor;
