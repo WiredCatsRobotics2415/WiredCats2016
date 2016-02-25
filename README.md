@@ -13,6 +13,7 @@ intake button | `2` | `6`
 right drivetrain encoder | `3,4` | `0,1`
 left drivetrain encoder | `5,6` | `2,3`
 PCM | `20` | `20`
+Solenoids | `0 & 1` | `4 & 5`
 
 ### Control Scheme:
 #### Controller -
