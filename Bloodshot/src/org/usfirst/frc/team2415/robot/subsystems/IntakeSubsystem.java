@@ -77,7 +77,7 @@ public class IntakeSubsystem extends Subsystem {
     }
     
     public void updateStatus(){
-    	SmartDashboard.putNumber("Intake Encoder", getAngle()); //(intakeEncoder.get()*360)/128 for degrees
+    	SmartDashboard.putNumber("Intake Encoder", (intakeEncoder.get()*360)/128); //(intakeEncoder.get()*360)/128 for degrees
     	SmartDashboard.putNumber("PID Error Value", intakeError);
     	SmartDashboard.putNumber("PID Output Value", intakeOutput);
     	SmartDashboard.putNumber("PID Setpoint", intakeSetpoint);

@@ -54,7 +54,9 @@ public class IntakeCommand extends Command {
     	if(operator.buttons[6].get()) {
     		Robot.intakeSubsystem.setSpinMotor(-1);
     	}
-    	
+    	if(operator.buttons[2].get()) {
+    		Robot.intakeSubsystem.setSpinMotor(0.6);
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()

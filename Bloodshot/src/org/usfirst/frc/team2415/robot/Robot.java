@@ -35,10 +35,10 @@ public class Robot extends IterativeRobot {
 	private IMU imu;
 	
 	//in degrees
-	public static final float INTAKE_ANGLE = 40f;
-	public static final float GROUND_ANGLE = 3f;
+	public static final float INTAKE_ANGLE = 48.5f;
+	public static final float GROUND_ANGLE = 20f;
 	public static final float VERTICAL_ANGLE = 100f;
-	public static final float INTERIOR_ANGLE = 160f;
+	public static final float INTERIOR_ANGLE = 140f;
 	
 	private Compressor compressor;
 
@@ -51,7 +51,7 @@ public class Robot extends IterativeRobot {
 		
 		gamepad = new WiredCatGamepad(0);
 		operator = new WiredCatJoystick(1);
-		compressor = new Compressor(RobotMap.PCM_ID);
+		//compressor = new Compressor(RobotMap.PCM_ID);
 		
 		driveSubsystem = new DriveSubsystem();
 		intakeSubsystem = new IntakeSubsystem();
@@ -78,7 +78,7 @@ public class Robot extends IterativeRobot {
 		operator.buttons[8].whenInactive(new IntakeCommand(VERTICAL_ANGLE, 0, false));
 		operator.buttons[7].whileHeld(new IntakeCommand(INTAKE_ANGLE, 0, true));
 		operator.buttons[7].whenInactive(new IntakeCommand(VERTICAL_ANGLE, 0, false));
-		operator.buttons[2].whileHeld(new IntakeCommand(VERTICAL_ANGLE, 1, true));
+		operator.buttons[2].whileHeld(new IntakeCommand(INTERIOR_ANGLE, 1, true));
 		operator.buttons[2].whenInactive(new IntakeCommand(VERTICAL_ANGLE, 0, false));
 		operator.buttons[1].whenPressed(new FireCatapultCommand0250msec());
 		operator.buttons[1].whenInactive(new RestingCommand());
