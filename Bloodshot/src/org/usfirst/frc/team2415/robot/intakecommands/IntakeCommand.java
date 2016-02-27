@@ -15,6 +15,13 @@ public class IntakeCommand extends Command {
 	double intakeSpeed;
 	boolean overrideButton;
 	boolean buttonState;
+	boolean irState = false;
+	double previousIRVoltage;
+	
+	private double IR_THRESHOLD; //This is for the IR, it's an arbitrary value
+//								and all we should need to find out is what is
+//								an average change for the IR Voltage to make in
+//								going from nothing to something
 	
 	WiredCatJoystick operator;
 	
@@ -25,6 +32,7 @@ public class IntakeCommand extends Command {
     	this.intakeSpeed = intakeSpeed;
     	this.desiredAngle = (desiredAngle/360)*128;
     	this.overrideButton = overrideButton;
+    	this.previousIRVoltage = Robot.intakeSubsystem.getVoltage();
     	
     }
 
@@ -48,10 +56,20 @@ public class IntakeCommand extends Command {
     	Robot.intakeSubsystem.setIntakeMotor(-output);
     	Robot.intakeSubsystem.setSpinMotor(intakeSpeed);
 
-    	if(operator.buttons[7].get() && !Robot.intakeSubsystem.getButton()) {
+    	
+    	if(operator.buttons[7].get() && !irState) {
     		Robot.intakeSubsystem.setSpinMotor(1);
+    		//I think as distance increases, so does IRVoltage
+    		if(Robot.intakeSubsystem.getVoltage() - previousIRVoltage > IR_THRESHOLD){
+        		long startingTime = System.currentTimeMillis();
+            	while(System.currentTimeMillis()-startingTime<500){}
+            	irState = true;
+        	}
     	}
+    	
+    	
     	if(operator.buttons[6].get()) {
+    		irState = false;
     		Robot.intakeSubsystem.setSpinMotor(-1);
     	}
     	
@@ -59,7 +77,7 @@ public class IntakeCommand extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return irState;
     }
 
     // Called once after isFinished returns true

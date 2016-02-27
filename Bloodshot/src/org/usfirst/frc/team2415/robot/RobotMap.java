@@ -48,6 +48,8 @@ public class RobotMap {
     public static final int[] RIGHT_ENCODER = {0,1};
     public static final int[] LEFT_ENCODER = {2,3};
     
+    public static final int IR_SENSOR = 0;
+    
     public static final int[] INTAKE_ENCODER = {4,5};
     public static final int INTAKE_STOPPER = 6;
     

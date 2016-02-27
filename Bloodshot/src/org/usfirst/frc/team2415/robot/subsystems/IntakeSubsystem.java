@@ -2,8 +2,8 @@ package org.usfirst.frc.team2415.robot.subsystems;
 
 import org.usfirst.frc.team2415.robot.PID;
 import org.usfirst.frc.team2415.robot.RobotMap;
-import org.usfirst.frc.team2415.robot.intakecommands.IntakeCommand;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
@@ -26,6 +26,8 @@ public class IntakeSubsystem extends Subsystem {
 	
 	private Encoder intakeEncoder;
 	
+	private AnalogInput irSensor;
+	
 	private DigitalInput intakeButton;
 
 	public double intakeError;
@@ -38,6 +40,7 @@ public class IntakeSubsystem extends Subsystem {
 	public IntakeSubsystem() {
 		IntakeMotor = new CANTalon(RobotMap.ROTATE_INTAKE_TALON);
 		SpinMotor = new CANTalon(RobotMap.SPIN_INTAKE_TALON);
+		irSensor = new AnalogInput(RobotMap.IR_SENSOR);
 		
 		intakeEncoder = new Encoder(RobotMap.INTAKE_ENCODER[0],RobotMap.INTAKE_ENCODER[1]);
 		intakeButton = new DigitalInput(RobotMap.INTAKE_STOPPER);
@@ -72,6 +75,10 @@ public class IntakeSubsystem extends Subsystem {
     	intakeEncoder.reset();
     }
     
+    public double getVoltage(){
+    	return irSensor.getVoltage();
+    }
+    
     public boolean getButton(){
     	return !intakeButton.get();
     }
@@ -82,6 +89,7 @@ public class IntakeSubsystem extends Subsystem {
     	SmartDashboard.putNumber("PID Output Value", intakeOutput);
     	SmartDashboard.putNumber("PID Setpoint", intakeSetpoint);
     	SmartDashboard.putBoolean("Is Intake Button Pressed?", getButton());
+    	SmartDashboard.putNumber("IR Sensor Voltage", getVoltage());
     }
 }
 
