@@ -37,20 +37,10 @@ public class CatapultSubsystem extends Subsystem {
     	firing = true;
     }
     
-    public void fire(int barrelID){
-    	solenoids[barrelID].set(true);
-    	firing = true;
-    }
-    
     public void closeAll(){
     	for(int i=0; i<solenoids.length; i++){
     		solenoids[i].set(false);
     	}
-    	firing = false;
-    }
-    
-    public void close(int barrelID){
-    	solenoids[barrelID].set(false);
     	firing = false;
     }
     
