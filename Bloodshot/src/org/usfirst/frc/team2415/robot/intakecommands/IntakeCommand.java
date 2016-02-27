@@ -15,6 +15,8 @@ public class IntakeCommand extends Command {
 	double intakeSpeed;
 	boolean overrideButton;
 	boolean buttonState;
+	boolean isDone = false;
+	double VOLTAGE_THRESHOLD = 0.0; //the value we don't want the voltage to go below
 	
 	WiredCatJoystick operator;
 	
@@ -55,11 +57,20 @@ public class IntakeCommand extends Command {
     		Robot.intakeSubsystem.setSpinMotor(-1);
     	}
     	
+//    	get the input and output voltage
+    	System.out.println("Input Voltage: "+Robot.intakeSubsystem.getInputVoltage()
+    			+", Output Voltage: "+Robot.intakeSubsystem.getOutputVoltage());
+   
+    	if(Robot.intakeSubsystem.getOutputVoltage() < VOLTAGE_THRESHOLD){
+    		long startingTime = System.currentTimeMillis();
+        	while(System.currentTimeMillis()-startingTime<300){}
+        	isDone = true;
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return isDone;
     }
 
     // Called once after isFinished returns true

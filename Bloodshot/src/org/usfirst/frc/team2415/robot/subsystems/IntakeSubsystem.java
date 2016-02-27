@@ -76,6 +76,14 @@ public class IntakeSubsystem extends Subsystem {
     	return !intakeButton.get();
     }
     
+    public double getInputVoltage(){
+    	return SpinMotor.getBusVoltage();
+    }
+    
+    public double getOutputVoltage(){
+    	return SpinMotor.getOutputVoltage();
+    }
+    
     public void updateStatus(){
     	SmartDashboard.putNumber("Intake Encoder", getAngle()); //(intakeEncoder.get()*360)/128 for degrees
     	SmartDashboard.putNumber("PID Error Value", intakeError);
