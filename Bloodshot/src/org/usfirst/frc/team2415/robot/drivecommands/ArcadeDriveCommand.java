@@ -1,8 +1,8 @@
 package org.usfirst.frc.team2415.robot.drivecommands;
 
 import org.usfirst.frc.team2415.robot.Robot;
+import org.usfirst.frc.team2415.robot.WiredCatGamepad;
 
-import edu.wpi.first.wpilibj.smartdashboard.*;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -20,6 +20,8 @@ public class ArcadeDriveCommand extends Command {
 	private float STRAIGHT_LIMITER = .95f;
 	private float TURN_BOOSTER = 1.1f;
 	
+	private WiredCatGamepad gamepad;
+	
 
     public ArcadeDriveCommand() {
         requires(Robot.driveSubsystem);
@@ -28,6 +30,7 @@ public class ArcadeDriveCommand extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.driveSubsystem.stop();
+		gamepad = new WiredCatGamepad(0);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -42,13 +45,14 @@ public class ArcadeDriveCommand extends Command {
     	leftY = INTERPOLATION_FACTOR*Math.pow(leftY, 3) + (1 - INTERPOLATION_FACTOR)*leftY;
     	rightX = INTERPOLATION_FACTOR*Math.pow(rightX, 3) + (1 - INTERPOLATION_FACTOR)*rightX;
     	
-    	double left = leftY*STRAIGHT_LIMITER - rightX*TURN_BOOSTER;
-    	double right =  leftY*STRAIGHT_LIMITER + rightX*TURN_BOOSTER;
+    	double left = leftY*STRAIGHT_LIMITER + rightX*TURN_BOOSTER;
+    	double right =  leftY*STRAIGHT_LIMITER - rightX*TURN_BOOSTER;
     	
 //    	if(Math.abs(left) >= 1) Robot.driveSubsystem.enableRightBreakState();
 //    	if(Math.abs(right) >= 1) Robot.driveSubsystem.enableLeftBreakState();
     	
-    	Robot.driveSubsystem.setMotors(-left, right);
+    	
+    	Robot.driveSubsystem.setMotors(left*.6, -right*.6);
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -1,18 +1,30 @@
 
 package org.usfirst.frc.team2415.robot;
 
-import org.usfirst.frc.team2415.robot.catapultcommands.*;
-import org.usfirst.frc.team2415.robot.drivecommands.*;
-import org.usfirst.frc.team2415.robot.intakecommands.*;
-import org.usfirst.frc.team2415.robot.subsystems.*;
+import org.usfirst.frc.team2415.robot.catapultcommands.FireCatapultCommand0250msec;
+import org.usfirst.frc.team2415.robot.catapultcommands.FireCatapultCommand0500msec;
+import org.usfirst.frc.team2415.robot.catapultcommands.FireCatapultCommand0750msec;
+import org.usfirst.frc.team2415.robot.catapultcommands.FireCatapultCommand1000msec;
+import org.usfirst.frc.team2415.robot.catapultcommands.RestingCommand;
+import org.usfirst.frc.team2415.robot.drivecommands.ResetDriveEncodersCommand;
+import org.usfirst.frc.team2415.robot.drivecommands.ResetYawCommand;
+import org.usfirst.frc.team2415.robot.intakecommands.IntakeCommand;
+import org.usfirst.frc.team2415.robot.intakecommands.ResetIntakeEncodersCommand;
+import org.usfirst.frc.team2415.robot.intakecommands.ZeroIntakeCommand;
+import org.usfirst.frc.team2415.robot.subsystems.CatapultSubsystem;
+import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
+import org.usfirst.frc.team2415.robot.subsystems.IntakeSubsystem;
 
 import com.kauailabs.nav6.frc.IMU;
+import com.ni.vision.NIVision;
 
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.vision.USBCamera;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -35,13 +47,16 @@ public class Robot extends IterativeRobot {
 	private IMU imu;
 	
 	//in degrees
-	public static final float INTAKE_ANGLE = 48.5f;
+	public static final float INTAKE_ANGLE = 31f;
 	public static final float GROUND_ANGLE = 20f;
 	public static final float VERTICAL_ANGLE = 100f;
 	public static final float INTERIOR_ANGLE = 140f;
 	
 	private Compressor compressor;
-
+	
+	private USBCamera cam;
+	private NIVision.Image frame;
+	
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -51,7 +66,7 @@ public class Robot extends IterativeRobot {
 		
 		gamepad = new WiredCatGamepad(0);
 		operator = new WiredCatJoystick(1);
-		//compressor = new Compressor(RobotMap.PCM_ID);
+		compressor = new Compressor(RobotMap.PCM_ID);
 		
 		driveSubsystem = new DriveSubsystem();
 		intakeSubsystem = new IntakeSubsystem();
@@ -62,7 +77,8 @@ public class Robot extends IterativeRobot {
 		Robot.intakeSubsystem.resetEncoder();
 		Robot.driveSubsystem.resetEncoders();
 		
-		SmartDashboard.putData("Reset Encoders", new ResetDriveEncodersCommand());
+		SmartDashboard.putData("Reset Drive Encoders", new ResetDriveEncodersCommand());
+		SmartDashboard.putData("Reset Intake Encoders", new ResetIntakeEncodersCommand());
 		SmartDashboard.putData("Reset Yaw", new ResetYawCommand());
 		
 		SmartDashboard.putData("0.25 Second Shot", new FireCatapultCommand0250msec());
@@ -82,11 +98,24 @@ public class Robot extends IterativeRobot {
 		operator.buttons[2].whenInactive(new IntakeCommand(VERTICAL_ANGLE, 0, false));
 		operator.buttons[1].whenPressed(new FireCatapultCommand0250msec());
 		operator.buttons[1].whenInactive(new RestingCommand());
+		
+		frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
+		cam = new USBCamera("cam1");
+		cam.openCamera();
+		cam.startCapture();
+		cam.setExposureManual(25);
+		cam.setExposureHoldCurrent();
+		cam.setWhiteBalanceManual(USBCamera.WhiteBalance.kFixedFlourescent2);
+		cam.setWhiteBalanceHoldCurrent();
+		cam.setSize(320, 240);
+		cam.setFPS(30);
     }
 	
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 		updateStatus();
+		cam.getImage(frame);
+		CameraServer.getInstance().setImage(frame);
 	}
 
     public void autonomousInit() {
@@ -98,6 +127,8 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+		cam.getImage(frame);
+		CameraServer.getInstance().setImage(frame);
     }
 
     public void teleopInit() {
@@ -124,7 +155,8 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
         updateStatus();
-        
+		cam.getImage(frame);
+		CameraServer.getInstance().setImage(frame);
         
     }
     

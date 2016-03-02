@@ -33,10 +33,10 @@ public class DriveSubsystem extends Subsystem {
 	
 	
 	public DriveSubsystem(){
-		leftTalOne = new CANTalon(RobotMap.LEFT_TALON_ZERO);
-		leftTalTwo = new CANTalon(RobotMap.LEFT_TALON_ONE);
-		rightTalOne = new CANTalon(RobotMap.RIGHT_TALON_ZERO);
-		rightTalTwo = new CANTalon(RobotMap.RIGHT_TALON_ONE);
+		leftTalOne = new CANTalon(RobotMap.LEFT_TALON_BACK);
+		leftTalTwo = new CANTalon(RobotMap.LEFT_TALON_FRONT);
+		rightTalOne = new CANTalon(RobotMap.RIGHT_TALON_BACK);
+		rightTalTwo = new CANTalon(RobotMap.RIGHT_TALON_FRONT);
 		
 		rightEncoder = new Encoder(RobotMap.RIGHT_ENCODER[0],RobotMap.RIGHT_ENCODER[1]);
 		leftEncoder = new Encoder(RobotMap.LEFT_ENCODER[0],RobotMap.LEFT_ENCODER[1]);

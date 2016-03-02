@@ -49,7 +49,7 @@ public class IntakeCommand extends Command {
     	Robot.intakeSubsystem.setSpinMotor(intakeSpeed);
 
     	if(operator.buttons[7].get() && !Robot.intakeSubsystem.getButton()) {
-    		Robot.intakeSubsystem.setSpinMotor(1);
+    		Robot.intakeSubsystem.setSpinMotor(.7324);
     	}
     	if(operator.buttons[6].get()) {
     		Robot.intakeSubsystem.setSpinMotor(-1);
