@@ -57,6 +57,14 @@ public class Robot extends IterativeRobot {
 	private USBCamera cam;
 	private NIVision.Image frame;
 	
+	private final int CAM_W = 320, CAM_H = 240;
+	private final int[] focus = {(int)((8.1/13.7)*CAM_W), (int)((2/10.2)*CAM_H)};
+	
+	private final NIVision.Point vert1 = new NIVision.Point(focus[0], focus[1] - 30),
+								 vert2 = new NIVision.Point(focus[0], focus[1] + 30),
+								 hori1 = new NIVision.Point(focus[0] - 30, focus[1]),
+								 hori2 = new NIVision.Point(focus[0] + 30, focus[1]);
+	
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -90,8 +98,8 @@ public class Robot extends IterativeRobot {
 		operator.buttons[9].whileHeld(new IntakeCommand(VERTICAL_ANGLE, 0, false));
 		operator.buttons[6].whileHeld(new IntakeCommand(INTAKE_ANGLE, 0, false));
 		operator.buttons[6].whenInactive(new IntakeCommand(VERTICAL_ANGLE, 0, false));
-		operator.buttons[8].whileHeld(new IntakeCommand(GROUND_ANGLE, 0, false));
-		operator.buttons[8].whenInactive(new IntakeCommand(VERTICAL_ANGLE, 0, false));
+		operator.buttons[3].whileHeld(new IntakeCommand(GROUND_ANGLE, 0, false));
+		operator.buttons[3].whenInactive(new IntakeCommand(VERTICAL_ANGLE, 0, false));
 		operator.buttons[7].whileHeld(new IntakeCommand(INTAKE_ANGLE, 0, true));
 		operator.buttons[7].whenInactive(new IntakeCommand(VERTICAL_ANGLE, 0, false));
 		operator.buttons[2].whileHeld(new IntakeCommand(INTERIOR_ANGLE, 1, true));
@@ -156,6 +164,8 @@ public class Robot extends IterativeRobot {
         Scheduler.getInstance().run();
         updateStatus();
 		cam.getImage(frame);
+		NIVision.imaqDrawLineOnImage(frame, frame, NIVision.DrawMode.DRAW_VALUE, vert1, vert2, 0.0f);
+		NIVision.imaqDrawLineOnImage(frame, frame, NIVision.DrawMode.DRAW_VALUE, hori1, hori2, 0.0f);
 		CameraServer.getInstance().setImage(frame);
         
     }

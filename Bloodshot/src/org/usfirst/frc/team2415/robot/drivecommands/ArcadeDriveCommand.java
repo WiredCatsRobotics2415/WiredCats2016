@@ -52,7 +52,7 @@ public class ArcadeDriveCommand extends Command {
 //    	if(Math.abs(right) >= 1) Robot.driveSubsystem.enableLeftBreakState();
     	
     	
-    	Robot.driveSubsystem.setMotors(left*.6, -right*.6);
+    	Robot.driveSubsystem.setMotors(left, -right);
     }
 
     // Make this return true when this Command no longer needs to run execute()

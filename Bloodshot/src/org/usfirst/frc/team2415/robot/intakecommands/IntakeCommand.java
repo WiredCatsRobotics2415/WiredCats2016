@@ -15,6 +15,7 @@ public class IntakeCommand extends Command {
 	double intakeSpeed;
 	boolean overrideButton;
 	boolean buttonState;
+	boolean isChecked = false;
 	
 	WiredCatJoystick operator;
 	
@@ -39,23 +40,32 @@ public class IntakeCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-
-    	double currAngle = Robot.intakeSubsystem.getAngle();
-    	Robot.intakeSubsystem.intakeError = desiredAngle - currAngle;
-    	double output = Robot.intakeSubsystem.pid.pidOut(desiredAngle - currAngle);
-    	Robot.intakeSubsystem.intakeOutput = output;
-//    	output = (output < 0 ? -1:1) * Math.min(Math.abs(output), .5);
-    	Robot.intakeSubsystem.setIntakeMotor(-output);
-    	Robot.intakeSubsystem.setSpinMotor(intakeSpeed);
+    	if(Math.abs(Robot.intakeSubsystem.intakeError) < 3 && isChecked){
+    		Robot.intakeSubsystem.enableBrakeMode();
+    		Robot.intakeSubsystem.stopIntakeMotor();
+    	} else {
+    		Robot.intakeSubsystem.disableBrakeMode();
+    		double currAngle = Robot.intakeSubsystem.getAngle();
+        	Robot.intakeSubsystem.intakeError = desiredAngle - currAngle;
+        	double output = Robot.intakeSubsystem.pid.pidOut(desiredAngle - currAngle);
+        	Robot.intakeSubsystem.intakeOutput = output;
+        	output = (output < 0 ? -1:1) * Math.min(Math.abs(output), .5);
+        	Robot.intakeSubsystem.setIntakeMotor(-output);
+        	Robot.intakeSubsystem.setSpinMotor(intakeSpeed);
+        	isChecked = true;
+    	}
 
     	if(operator.buttons[7].get() && !Robot.intakeSubsystem.getButton()) {
     		Robot.intakeSubsystem.setSpinMotor(.7324);
+    		isChecked = false;
     	}
     	if(operator.buttons[6].get()) {
     		Robot.intakeSubsystem.setSpinMotor(-1);
+    		isChecked = false;
     	}
     	if(operator.buttons[2].get()) {
-    		Robot.intakeSubsystem.setSpinMotor(0.6);
+    		Robot.intakeSubsystem.setSpinMotor(1);
+    		isChecked = false;
     	}
     }
 
