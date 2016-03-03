@@ -19,7 +19,7 @@ public class IntakeSubsystem extends Subsystem {
     // here. Call these from Commands.
 	
 	//public PID pid = new PID(.05,0,.001);
-	public PID pid = new PID(.03,0,0);
+	public PID pid = new PID(.3,.01, 0);
 	
 	private CANTalon IntakeMotor;
 	private CANTalon SpinMotor;
@@ -61,7 +61,7 @@ public class IntakeSubsystem extends Subsystem {
     }
     
     public double getAngle(){
-    	return -intakeEncoder.get();
+    	return intakeEncoder.get();
     }
     
     public double getVal(){
@@ -76,8 +76,19 @@ public class IntakeSubsystem extends Subsystem {
     	return !intakeButton.get();
     }
     
+    public void enableBrakeMode(){
+    	IntakeMotor.enableBrakeMode(true);
+    	IntakeMotor.enableBrakeMode(true);
+    }
+    
+    public void disableBrakeMode(){
+    	IntakeMotor.enableBrakeMode(false);
+    	IntakeMotor.enableBrakeMode(false);
+    }
+    
     public void updateStatus(){
-    	SmartDashboard.putNumber("Intake Encoder", getAngle()); //(intakeEncoder.get()*360)/128 for degrees
+    	SmartDashboard.putNumber("Intake Angle", (intakeEncoder.get()*360)/128);
+    	SmartDashboard.putNumber("Intake Encoder", getAngle());
     	SmartDashboard.putNumber("PID Error Value", intakeError);
     	SmartDashboard.putNumber("PID Output Value", intakeOutput);
     	SmartDashboard.putNumber("PID Setpoint", intakeSetpoint);

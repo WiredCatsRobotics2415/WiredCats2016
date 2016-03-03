@@ -7,10 +7,10 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class FireCatapultCommand extends Command {
+public class FireCatapultCommand0750msec extends Command {
 	
 
-    public FireCatapultCommand() {
+    public FireCatapultCommand0750msec() {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.catapultSubsystem);
     }
@@ -19,7 +19,7 @@ public class FireCatapultCommand extends Command {
     protected void initialize() {
     	long startTime = System.currentTimeMillis();
     	Robot.catapultSubsystem.fireAll();
-    	while((System.currentTimeMillis() - startTime)/1000.0 <= .25);
+    	while((System.currentTimeMillis() - startTime)/1000.0 <= .75);
     	Robot.catapultSubsystem.closeAll();
     }
 
