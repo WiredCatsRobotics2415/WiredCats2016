@@ -21,4 +21,12 @@ public class WiredCatJoystick extends Joystick{
         
         trigger = new JoystickButton(this,1);
     }
+    
+    public double Y(){
+		return this.getRawAxis(1);
+	}
+	
+	public double X(){
+		return this.getRawAxis(0);
+	}
 }

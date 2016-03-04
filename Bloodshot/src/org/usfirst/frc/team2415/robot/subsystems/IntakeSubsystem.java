@@ -19,7 +19,7 @@ public class IntakeSubsystem extends Subsystem {
     // here. Call these from Commands.
 	
 	//public PID pid = new PID(.05,0,.001);
-	public PID pid = new PID(.3,.01, 0);
+	public PID pid = new PID(.05,.01, 0);
 	
 	private CANTalon IntakeMotor;
 	private CANTalon SpinMotor;
@@ -47,7 +47,7 @@ public class IntakeSubsystem extends Subsystem {
     }
     
     public void setIntakeMotor(double intakeMotor){
-    	IntakeMotor.set(-intakeMotor);
+    	IntakeMotor.set(intakeMotor);
     }
     public void setSpinMotor(double spinMotor){
     	SpinMotor.set(spinMotor);
@@ -93,6 +93,7 @@ public class IntakeSubsystem extends Subsystem {
     	SmartDashboard.putNumber("PID Output Value", intakeOutput);
     	SmartDashboard.putNumber("PID Setpoint", intakeSetpoint);
     	SmartDashboard.putBoolean("Is Intake Button Pressed?", getButton());
+    	SmartDashboard.putNumber("Intake Talon", IntakeMotor.get());
     }
 }
 
