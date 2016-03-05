@@ -2,10 +2,6 @@
 package org.usfirst.frc.team2415.robot;
 
 import org.usfirst.frc.team2415.robot.autocommands.TurnCommand;
-import org.usfirst.frc.team2415.robot.catapultcommands.FireCatapultCommand0250msec;
-import org.usfirst.frc.team2415.robot.catapultcommands.FireCatapultCommand0500msec;
-import org.usfirst.frc.team2415.robot.catapultcommands.FireCatapultCommand0750msec;
-import org.usfirst.frc.team2415.robot.catapultcommands.FireCatapultCommand1000msec;
 import org.usfirst.frc.team2415.robot.catapultcommands.RestingCommand;
 import org.usfirst.frc.team2415.robot.drivecommands.ResetDriveEncodersCommand;
 import org.usfirst.frc.team2415.robot.drivecommands.ResetYawCommand;
@@ -45,10 +41,12 @@ public class Robot extends IterativeRobot {
 	private IMU imu;
 	
 	//in degrees
-	public static final float INTAKE_ANGLE = 31f;
-	public static final float GROUND_ANGLE = 20f;
-	public static final float VERTICAL_ANGLE = 100f;
-	public static final float INTERIOR_ANGLE = 140f;
+	public static final float INTAKE_ANGLE = 160-31f;
+	public static final float GROUND_ANGLE = 160-8f;
+	public static final float VERTICAL_ANGLE = 160-100f;
+	public static final float INTERIOR_ANGLE = 160-140f;
+	
+	public static boolean singlePlayerMode = true;
 	
 	private Compressor compressor;
 	
@@ -79,23 +77,18 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Reset Drive Encoders", new ResetDriveEncodersCommand());
 		SmartDashboard.putData("Reset Intake Encoders", new ResetIntakeEncodersCommand());
 		SmartDashboard.putData("Reset Yaw", new ResetYawCommand());
-		
-		SmartDashboard.putData("0.25 Second Shot", new FireCatapultCommand0250msec());
-		SmartDashboard.putData("0.5 Second Shot", new FireCatapultCommand0500msec());
-		SmartDashboard.putData("0.75 Second Shot", new FireCatapultCommand0750msec());
-		SmartDashboard.putData("1 Second Shot", new FireCatapultCommand1000msec());
 
-		operator.buttons[11].whenActive(new ZeroIntakeCommand());
-		operator.buttons[9].whileHeld(new IntakeCommand(VERTICAL_ANGLE, 0, false));
-		operator.buttons[6].whileHeld(new IntakeCommand(INTAKE_ANGLE, 0, false));
-		operator.buttons[6].whenInactive(new IntakeCommand(VERTICAL_ANGLE, 0, false));
-		operator.buttons[3].whileHeld(new IntakeCommand(GROUND_ANGLE, 0, false));
-		operator.buttons[3].whenInactive(new IntakeCommand(VERTICAL_ANGLE, 0, false));
-		operator.buttons[7].whileHeld(new IntakeCommand(INTAKE_ANGLE, 0, true));
-		operator.buttons[7].whenInactive(new IntakeCommand(VERTICAL_ANGLE, 0, false));
-		operator.buttons[2].whileHeld(new IntakeCommand(INTERIOR_ANGLE, 1, true));
-		operator.buttons[2].whenInactive(new IntakeCommand(VERTICAL_ANGLE, 0, false));
-		operator.buttons[1].whenPressed(new FireCatapultCommand0250msec());
+		operator.buttons[11].whileHeld(new ZeroIntakeCommand());
+		operator.buttons[9].whileHeld(new IntakeCommand(-VERTICAL_ANGLE, 0));
+		operator.buttons[6].whileHeld(new IntakeCommand(-INTAKE_ANGLE, 0));
+		operator.buttons[6].whenInactive(new IntakeCommand(-VERTICAL_ANGLE, 0));
+		operator.buttons[3].whileHeld(new IntakeCommand(-GROUND_ANGLE, 0));
+		operator.buttons[3].whenInactive(new IntakeCommand(-VERTICAL_ANGLE, 0));
+		operator.buttons[7].whileHeld(new IntakeCommand(-INTAKE_ANGLE, 0));
+		operator.buttons[7].whenInactive(new IntakeCommand(-VERTICAL_ANGLE, 0));
+		operator.buttons[2].whileHeld(new IntakeCommand(-INTERIOR_ANGLE, 1));
+		operator.buttons[2].whenInactive(new IntakeCommand(-VERTICAL_ANGLE, 0));
+		operator.buttons[1].whenPressed(new FireSequenceCommand());
 		operator.buttons[1].whenInactive(new RestingCommand());
 		
 		imgServer = new ImgServer("cam1", 2415);

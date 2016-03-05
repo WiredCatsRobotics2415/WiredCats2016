@@ -13,20 +13,16 @@ public class IntakeCommand extends Command {
 	double staySetpoint;
 	double desiredAngle;
 	double intakeSpeed;
-	boolean overrideButton;
+	double timeOutLength;
 	boolean buttonState;
 	boolean isChecked = false;
-	
-	WiredCatJoystick operator;
-	
-    public IntakeCommand(double desiredAngle, double intakeSpeed, boolean overrideButton) {
+    
+    public IntakeCommand(double desiredAngle, double intakeSpeed) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.intakeSubsystem);
     	this.intakeSpeed = intakeSpeed;
     	this.desiredAngle = (desiredAngle/360)*128;
-    	this.overrideButton = overrideButton;
-    	
     }
 
     // Called just before this Command runs the first time
@@ -35,35 +31,34 @@ public class IntakeCommand extends Command {
     	Robot.intakeSubsystem.stopIntakeMotor();
     	Robot.intakeSubsystem.intakeSetpoint = desiredAngle;
 
-		operator = new WiredCatJoystick(1);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(Math.abs(Robot.intakeSubsystem.intakeError) < 3 && isChecked){
-    		Robot.intakeSubsystem.enableBrakeMode();
-    		Robot.intakeSubsystem.stopIntakeMotor();
-    	} else {
+//    	if(Math.abs(Robot.intakeSubsystem.intakeError) < 3 && isChecked){
+//    		Robot.intakeSubsystem.enableBrakeMode();
+//    		Robot.intakeSubsystem.stopIntakeMotor();
+//    	} else {
     		Robot.intakeSubsystem.disableBrakeMode();
     		double currAngle = Robot.intakeSubsystem.getAngle();
         	Robot.intakeSubsystem.intakeError = desiredAngle - currAngle;
         	double output = Robot.intakeSubsystem.pid.pidOut(desiredAngle - currAngle);
         	Robot.intakeSubsystem.intakeOutput = output;
-        	output = (output < 0 ? -1:1) * Math.min(Math.abs(output), .5);
+//        	output = (output < 0 ? -1:1) * Math.min(Math.abs(output), .75);
         	Robot.intakeSubsystem.setIntakeMotor(-output);
         	Robot.intakeSubsystem.setSpinMotor(intakeSpeed);
-        	isChecked = true;
-    	}
+//        	isChecked = true;
+//    	}
 
-    	if(operator.buttons[7].get() && !Robot.intakeSubsystem.getIR()) {
+    	if(Robot.operator.buttons[7].get() && !Robot.intakeSubsystem.getIR()) {
     		Robot.intakeSubsystem.setSpinMotor(.7324);
     		isChecked = false;
     	}
-    	if(operator.buttons[6].get()) {
+    	if(Robot.operator.buttons[6].get()) {
     		Robot.intakeSubsystem.setSpinMotor(-1);
     		isChecked = false;
     	}
-    	if(operator.buttons[2].get()) {
+    	if(Robot.operator.buttons[2].get()) {
     		Robot.intakeSubsystem.setSpinMotor(1);
     		isChecked = false;
     	}
