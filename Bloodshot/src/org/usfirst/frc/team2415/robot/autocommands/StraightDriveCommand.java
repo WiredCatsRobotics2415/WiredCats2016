@@ -43,8 +43,10 @@ public class StraightDriveCommand extends Command {
     }
 
     protected void execute() {
-    	leftErr =  -distance - (Robot.driveSubsystem.getLeftEncoder() - leftStart);
+    	leftErr =  distance - (Robot.driveSubsystem.getLeftEncoder() - leftStart);
     	rightErr = -distance - (Robot.driveSubsystem.getRightEncoder() - rightStart);
+    	
+    	System.out.println(leftErr + ",\t" + rightErr);
     	
     	if(leftSamples.size() >= SAMPLE_SIZE){
     		leftSamples.remove(0);
@@ -67,10 +69,9 @@ public class StraightDriveCommand extends Command {
     	double leftOut = pidLeft.pidOut(leftErr);
     	double rightOut = pidRight.pidOut(rightErr);
     	
-    	if ( leftOut > .5) leftOut = .5;    
-    	if ( leftOut < -.5) leftOut = -.5;
-    	if ( rightOut > .5) rightOut = .5;
-    	if ( rightOut < -.5) rightOut = -.5;
+
+    	if(Math.abs(leftOut) > .5) leftOut = ((leftOut > 0) ? 1:-1) * .5;
+    	if(Math.abs(rightOut) > .5) leftOut = ((rightOut > 0) ? 1:-1) * .5;
     	
     	Robot.driveSubsystem.setMotors(leftOut, -rightOut);
     }

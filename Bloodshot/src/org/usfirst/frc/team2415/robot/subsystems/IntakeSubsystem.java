@@ -26,7 +26,7 @@ public class IntakeSubsystem extends Subsystem {
 	
 	private Encoder intakeEncoder;
 	
-	private DigitalInput intakeButton;
+	private DigitalInput leftIR, rightIR;
 
 	public double intakeError;
 	public double intakeOutput;
@@ -40,7 +40,8 @@ public class IntakeSubsystem extends Subsystem {
 		SpinMotor = new CANTalon(RobotMap.SPIN_INTAKE_TALON);
 		
 		intakeEncoder = new Encoder(RobotMap.INTAKE_ENCODER[0],RobotMap.INTAKE_ENCODER[1]);
-		intakeButton = new DigitalInput(RobotMap.INTAKE_STOPPER);
+		leftIR = new DigitalInput(RobotMap.INTAKE_IR_LEFT);
+		rightIR = new DigitalInput(RobotMap.INTAKE_IR_RIGHT);
 	}
 	
     public void initDefaultCommand() {
@@ -72,8 +73,8 @@ public class IntakeSubsystem extends Subsystem {
     	intakeEncoder.reset();
     }
     
-    public boolean getButton(){
-    	return !intakeButton.get();
+    public boolean getIR(){
+    	return (leftIR.get() || rightIR.get());
     }
     
     public void enableBrakeMode(){
@@ -92,8 +93,8 @@ public class IntakeSubsystem extends Subsystem {
     	SmartDashboard.putNumber("PID Error Value", intakeError);
     	SmartDashboard.putNumber("PID Output Value", intakeOutput);
     	SmartDashboard.putNumber("PID Setpoint", intakeSetpoint);
-    	SmartDashboard.putBoolean("Is Intake Button Pressed?", getButton());
     	SmartDashboard.putNumber("Intake Talon", IntakeMotor.get());
+    	SmartDashboard.putBoolean("Is Intake Button Pressed?", getIR());
     }
 }
 
