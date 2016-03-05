@@ -55,7 +55,7 @@ public class IntakeCommand extends Command {
         	isChecked = true;
     	}
 
-    	if(operator.buttons[7].get() && !Robot.intakeSubsystem.getButton()) {
+    	if(operator.buttons[7].get() && !Robot.intakeSubsystem.getIR()) {
     		Robot.intakeSubsystem.setSpinMotor(.7324);
     		isChecked = false;
     	}

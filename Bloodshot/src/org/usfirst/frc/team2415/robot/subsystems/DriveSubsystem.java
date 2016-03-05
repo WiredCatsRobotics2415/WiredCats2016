@@ -92,7 +92,7 @@ public class DriveSubsystem extends Subsystem {
     }
     
     public double getYaw(){
-    	return imu.getYaw();
+    	return -imu.getYaw();
     }
     
     public double getPitch(){

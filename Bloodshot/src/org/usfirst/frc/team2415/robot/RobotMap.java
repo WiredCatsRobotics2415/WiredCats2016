@@ -24,7 +24,8 @@ public class RobotMap {
     public static final int[] LEFT_ENCODER = {0,1};
     
     public static final int[] INTAKE_ENCODER = {4,5};
-    public static final int INTAKE_STOPPER = 6;
+    public static final int INTAKE_IR_LEFT = 6;
+    public static final int INTAKE_IR_RIGHT = 7;
     
     public static final int PCM_ID = 20;
 	

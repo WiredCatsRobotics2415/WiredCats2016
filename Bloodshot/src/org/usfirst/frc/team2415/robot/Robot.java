@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team2415.robot;
 
+import org.usfirst.frc.team2415.robot.autocommands.TurnCommand;
 import org.usfirst.frc.team2415.robot.catapultcommands.FireCatapultCommand0250msec;
 import org.usfirst.frc.team2415.robot.catapultcommands.FireCatapultCommand0500msec;
 import org.usfirst.frc.team2415.robot.catapultcommands.FireCatapultCommand0750msec;
@@ -16,15 +17,12 @@ import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.IntakeSubsystem;
 
 import com.kauailabs.nav6.frc.IMU;
-import com.ni.vision.NIVision;
 
-import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.vision.USBCamera;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -54,16 +52,9 @@ public class Robot extends IterativeRobot {
 	
 	private Compressor compressor;
 	
-	private USBCamera cam;
-	private NIVision.Image frame;
+	private ImgServer imgServer;
 	
-	private final int CAM_W = 320, CAM_H = 240;
-	private final int[] focus = {(int)((8.1/13.7)*CAM_W), (int)((2/10.2)*CAM_H)};
-	
-	private final NIVision.Point vert1 = new NIVision.Point(focus[0], focus[1] - 30),
-								 vert2 = new NIVision.Point(focus[0], focus[1] + 30),
-								 hori1 = new NIVision.Point(focus[0] - 30, focus[1]),
-								 hori2 = new NIVision.Point(focus[0] + 30, focus[1]);
+	private TurnCommand auto;
 	
     /**
      * This function is run when the robot is first started up and should be
@@ -107,27 +98,20 @@ public class Robot extends IterativeRobot {
 		operator.buttons[1].whenPressed(new FireCatapultCommand0250msec());
 		operator.buttons[1].whenInactive(new RestingCommand());
 		
-		frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
-		cam = new USBCamera("cam1");
-		cam.openCamera();
-		cam.startCapture();
-		cam.setExposureManual(25);
-		cam.setExposureHoldCurrent();
-		cam.setWhiteBalanceManual(USBCamera.WhiteBalance.kFixedFlourescent2);
-		cam.setWhiteBalanceHoldCurrent();
-		cam.setSize(320, 240);
-		cam.setFPS(30);
+		imgServer = new ImgServer("cam1", 2415);
     }
 	
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 		updateStatus();
-		cam.getImage(frame);
-		CameraServer.getInstance().setImage(frame);
+		imgServer.showImg();
 	}
 
     public void autonomousInit() {
         // schedule the autonomous command (example)
+    	driveSubsystem.resetYaw();
+    	auto = new TurnCommand(90);
+    	auto.start();
     }
 
     /**
@@ -135,8 +119,10 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
-		cam.getImage(frame);
-		CameraServer.getInstance().setImage(frame);
+		imgServer.showImg();
+		//imgServer.sendImg();
+		
+		System.out.println(driveSubsystem.getLeftEncoder() + ",\t" + driveSubsystem.getRightEncoder() + ",\t" + driveSubsystem.getYaw());
     }
 
     public void teleopInit() {
@@ -163,11 +149,7 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
         updateStatus();
-		cam.getImage(frame);
-		NIVision.imaqDrawLineOnImage(frame, frame, NIVision.DrawMode.DRAW_VALUE, vert1, vert2, 0.0f);
-		NIVision.imaqDrawLineOnImage(frame, frame, NIVision.DrawMode.DRAW_VALUE, hori1, hori2, 0.0f);
-		CameraServer.getInstance().setImage(frame);
-        
+        imgServer.teleopShowImg();
     }
     
     /**
