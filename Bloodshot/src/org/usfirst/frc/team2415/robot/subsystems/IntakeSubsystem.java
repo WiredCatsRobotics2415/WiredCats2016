@@ -19,7 +19,7 @@ public class IntakeSubsystem extends Subsystem {
     // here. Call these from Commands.
 	
 	//public PID pid = new PID(.05,0,.001);
-	public PID pid = new PID(.05,.01, 0);
+	public PID pid = new PID(.05, 0,0);//new PID(.05,.01, 0);
 	
 	private CANTalon IntakeMotor;
 	private CANTalon SpinMotor;

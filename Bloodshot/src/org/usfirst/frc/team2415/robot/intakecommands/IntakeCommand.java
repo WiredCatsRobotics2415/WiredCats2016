@@ -44,14 +44,14 @@ public class IntakeCommand extends Command {
         	Robot.intakeSubsystem.intakeError = desiredAngle - currAngle;
         	double output = Robot.intakeSubsystem.pid.pidOut(desiredAngle - currAngle);
         	Robot.intakeSubsystem.intakeOutput = output;
-//        	output = (output < 0 ? -1:1) * Math.min(Math.abs(output), .75);
+        	output = (output < 0 ? -1:1) * Math.min(Math.abs(output), .50);
         	Robot.intakeSubsystem.setIntakeMotor(-output);
         	Robot.intakeSubsystem.setSpinMotor(intakeSpeed);
 //        	isChecked = true;
 //    	}
 
     	if(Robot.operator.buttons[7].get() && !Robot.intakeSubsystem.getIR()) {
-    		Robot.intakeSubsystem.setSpinMotor(.7324);
+    		Robot.intakeSubsystem.setSpinMotor(1);
     		isChecked = false;
     	}
     	if(Robot.operator.buttons[6].get()) {
