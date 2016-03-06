@@ -54,6 +54,7 @@ public class CatapultSubsystem extends Subsystem {
     	firing = false;
     }
     
+    
     public boolean getIsShooting() {
 		return isShooting;
 	}

@@ -51,7 +51,7 @@ public class IntakeCommand extends Command {
 //    	}
 
     	if(Robot.operator.buttons[7].get() && !Robot.intakeSubsystem.getIR()) {
-    		Robot.intakeSubsystem.setSpinMotor(1);
+    		Robot.intakeSubsystem.setSpinMotor(0.7234);
     		isChecked = false;
     	}
     	if(Robot.operator.buttons[6].get()) {
@@ -59,7 +59,7 @@ public class IntakeCommand extends Command {
     		isChecked = false;
     	}
     	if(Robot.operator.buttons[2].get()) {
-    		Robot.intakeSubsystem.setSpinMotor(1);
+    		Robot.intakeSubsystem.setSpinMotor(0.75);
     		isChecked = false;
     	}
     }
