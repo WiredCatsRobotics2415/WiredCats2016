@@ -15,7 +15,6 @@ public class IntakeCommand extends Command {
 	double intakeSpeed;
 	double timeOutLength;
 	boolean buttonState;
-	boolean isChecked = false;
     
     public IntakeCommand(double desiredAngle, double intakeSpeed) {
         // Use requires() here to declare subsystem dependencies
@@ -35,10 +34,6 @@ public class IntakeCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-//    	if(Math.abs(Robot.intakeSubsystem.intakeError) < 3 && isChecked){
-//    		Robot.intakeSubsystem.enableBrakeMode();
-//    		Robot.intakeSubsystem.stopIntakeMotor();
-//    	} else {
     		Robot.intakeSubsystem.disableBrakeMode();
     		double currAngle = Robot.intakeSubsystem.getAngle();
         	Robot.intakeSubsystem.intakeError = desiredAngle - currAngle;
@@ -47,20 +42,15 @@ public class IntakeCommand extends Command {
         	output = (output < 0 ? -1:1) * Math.min(Math.abs(output), .50);
         	Robot.intakeSubsystem.setIntakeMotor(-output);
         	Robot.intakeSubsystem.setSpinMotor(intakeSpeed);
-//        	isChecked = true;
-//    	}
 
     	if(Robot.operator.buttons[7].get() && !Robot.intakeSubsystem.getIR()) {
     		Robot.intakeSubsystem.setSpinMotor(0.7234);
-    		isChecked = false;
     	}
-    	if(Robot.operator.buttons[6].get()) {
+    	if(Robot.operator.buttons[6].get() && Math.abs(Robot.intakeSubsystem.intakeError) <= 1) {
     		Robot.intakeSubsystem.setSpinMotor(-1);
-    		isChecked = false;
     	}
-    	if(Robot.operator.buttons[2].get()) {
+    	if(Robot.operator.buttons[2].get() && Math.abs(Robot.intakeSubsystem.intakeError) <= 1) {
     		Robot.intakeSubsystem.setSpinMotor(0.75);
-    		isChecked = false;
     	}
     }
 

@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team2415.robot;
 
+import org.usfirst.frc.team2415.robot.autocommands.FireSequenceCommand;
 import org.usfirst.frc.team2415.robot.autocommands.TurnCommand;
 import org.usfirst.frc.team2415.robot.catapultcommands.FireCatapultCloseCommand;
 import org.usfirst.frc.team2415.robot.catapultcommands.FireCatapultCommand;
@@ -44,16 +45,16 @@ public class Robot extends IterativeRobot {
 	private IMU imu;
 	
 	//in degrees
-	public static final float INTAKE_ANGLE = 160-35f;
-	public static final float GROUND_ANGLE = 160-3f;
-	public static final float VERTICAL_ANGLE = 160-100f;
-	public static final float INTERIOR_ANGLE = 160-140f;
+	public static final float INTAKE_ANGLE = -125f;
+	public static final float GROUND_ANGLE = -157f;
+	public static final float VERTICAL_ANGLE = -60f;
+	public static final float INTERIOR_ANGLE = -20f;
 	
-	public static boolean singlePlayerMode = false;
+	public static boolean singlePlayerMode = true;
 	
 	private Compressor compressor;
 	
-	//private ImgServer imgServer;
+	private ImgServer imgServer;
 	
 	private TurnCommand auto;
 	
@@ -76,17 +77,18 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Reset Drive Encoders", new ResetDriveEncodersCommand());
 		SmartDashboard.putData("Reset Intake Encoders", new ResetIntakeEncodersCommand());
 		SmartDashboard.putData("Reset Yaw", new ResetYawCommand());
+		SmartDashboard.putData("Fire Sequence Command", new FireSequenceCommand());
 
 		operator.buttons[11].whileHeld(new ZeroIntakeCommand());
-		operator.buttons[9].whileHeld(new IntakeCommand(-VERTICAL_ANGLE, 0));
-		operator.buttons[6].whileHeld(new IntakeCommand(-INTAKE_ANGLE, 0));
-		operator.buttons[6].whenInactive(new IntakeCommand(-INTERIOR_ANGLE, 0));
-		operator.buttons[3].whileHeld(new IntakeCommand(-GROUND_ANGLE, 0));
-		operator.buttons[3].whenInactive(new IntakeCommand(-INTERIOR_ANGLE, 0));
-		operator.buttons[7].whileHeld(new IntakeCommand(-INTAKE_ANGLE, 0));
-		operator.buttons[7].whenInactive(new IntakeCommand(-INTERIOR_ANGLE, 0));
-		operator.buttons[2].whileHeld(new IntakeCommand(-INTERIOR_ANGLE, 1));
-		operator.buttons[2].whenInactive(new IntakeCommand(-INTERIOR_ANGLE, 0));
+		operator.buttons[9].whileHeld(new IntakeCommand(VERTICAL_ANGLE, 0));
+		operator.buttons[6].whileHeld(new IntakeCommand(VERTICAL_ANGLE, 0));
+		operator.buttons[6].whenInactive(new IntakeCommand(INTERIOR_ANGLE, 0));
+		operator.buttons[3].whileHeld(new IntakeCommand(GROUND_ANGLE, 0));
+		operator.buttons[3].whenInactive(new IntakeCommand(INTERIOR_ANGLE, 0));
+		operator.buttons[7].whileHeld(new IntakeCommand(INTAKE_ANGLE, 0));
+		operator.buttons[7].whenInactive(new IntakeCommand(INTERIOR_ANGLE, 0));
+		operator.buttons[2].whileHeld(new IntakeCommand(INTERIOR_ANGLE, 1));
+		operator.buttons[2].whenInactive(new IntakeCommand(INTERIOR_ANGLE, 0));
 		operator.buttons[4].whenPressed(new FireCatapultCloseCommand());
 		operator.buttons[4].whenInactive(new RestingCommand());
 		operator.buttons[1].whenPressed(new FireCatapultCommand());
@@ -94,13 +96,13 @@ public class Robot extends IterativeRobot {
 		
 		gamepad.leftBumper.whileHeld(new BreakCommand());
 		
-		//imgServer = new ImgServer("cam1", 2415);
+		imgServer = new ImgServer("cam1", 2415);
     }
 	
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 		updateStatus();
-		//imgServer.showImg();
+		imgServer.showImg();
 	}
 
     public void autonomousInit() {
@@ -130,7 +132,7 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
         updateStatus();
-        //imgServer.teleopShowImg();
+        imgServer.teleopShowImg();
     }
  
     public void testPeriodic() {
