@@ -45,12 +45,13 @@ public class Robot extends IterativeRobot {
 	private IMU imu;
 	
 	//in degrees
-	public static final float INTAKE_ANGLE = -125f;
+	public static final float INTAKE_ANGLE = -137.25f;
 	public static final float GROUND_ANGLE = -157f;
 	public static final float VERTICAL_ANGLE = -60f;
 	public static final float INTERIOR_ANGLE = -20f;
+	public static final float HIGH_GOAL_ANGLE = -30f;
 	
-	public static boolean singlePlayerMode = true;
+	public static boolean singlePlayerMode = false;
 	
 	private Compressor compressor;
 	
@@ -79,8 +80,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Reset Yaw", new ResetYawCommand());
 		SmartDashboard.putData("Fire Sequence Command", new FireSequenceCommand());
 
-		operator.buttons[11].whileHeld(new ZeroIntakeCommand());
-		operator.buttons[9].whileHeld(new IntakeCommand(VERTICAL_ANGLE, 0));
+		operator.buttons[5].whileHeld(new ZeroIntakeCommand());
+		operator.buttons[9].whileHeld(new IntakeCommand(HIGH_GOAL_ANGLE, 0));
 		operator.buttons[6].whileHeld(new IntakeCommand(VERTICAL_ANGLE, 0));
 		operator.buttons[6].whenInactive(new IntakeCommand(INTERIOR_ANGLE, 0));
 		operator.buttons[3].whileHeld(new IntakeCommand(GROUND_ANGLE, 0));

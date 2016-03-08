@@ -18,10 +18,13 @@ public class FireCatapultCloseCommand extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	long startTime = System.currentTimeMillis();
-    	Robot.catapultSubsystem.fire(0);
+    	Robot.catapultSubsystem.fireAll();
+    	while((System.currentTimeMillis() - startTime)/1000.0 <= .00);
+    	Robot.catapultSubsystem.close(0);
     	while((System.currentTimeMillis() - startTime)/1000.0 <= .05);
-    	Robot.catapultSubsystem.closeAll();
+    	Robot.catapultSubsystem.close(1);
     }
+    
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {

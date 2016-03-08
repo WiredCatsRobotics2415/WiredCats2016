@@ -77,14 +77,8 @@ public class IntakeSubsystem extends Subsystem {
     	return (leftIR.get() || rightIR.get());
     }
     
-    public void enableBrakeMode(){
-    	IntakeMotor.enableBrakeMode(true);
-    	IntakeMotor.enableBrakeMode(true);
-    }
-    
-    public void disableBrakeMode(){
-    	IntakeMotor.enableBrakeMode(false);
-    	IntakeMotor.enableBrakeMode(false);
+    public double getIntakeCurrent(){
+    	return IntakeMotor.getOutputCurrent();
     }
     
     public void updateStatus(){
@@ -94,6 +88,7 @@ public class IntakeSubsystem extends Subsystem {
     	SmartDashboard.putNumber("PID Output Value", intakeOutput);
     	SmartDashboard.putNumber("PID Setpoint", intakeSetpoint);
     	SmartDashboard.putNumber("Intake Talon", IntakeMotor.get());
+		SmartDashboard.putNumber("Pivot Talon Current", IntakeMotor.getOutputCurrent());
     	SmartDashboard.putBoolean("Is Intake Button Pressed?", getIR());
     }
 }

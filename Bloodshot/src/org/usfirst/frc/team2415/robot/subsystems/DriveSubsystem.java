@@ -149,7 +149,6 @@ public class DriveSubsystem extends Subsystem {
 		SmartDashboard.putNumber("Yaw", getYaw());
 		SmartDashboard.putNumber("Right Talon", getRightTal());
 		SmartDashboard.putNumber("Left Talon", getLeftTal());
-
 		SmartDashboard.putBoolean("Left Break State", getLeftBreakState());
 		SmartDashboard.putBoolean("Right Break State", getRightBreakState());
 		
