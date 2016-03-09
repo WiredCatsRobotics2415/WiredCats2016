@@ -1,8 +1,7 @@
 
 package org.usfirst.frc.team2415.robot;
 
-import org.usfirst.frc.team2415.robot.autocommands.FireSequenceCommand;
-import org.usfirst.frc.team2415.robot.autocommands.TurnCommand;
+import org.usfirst.frc.team2415.robot.autocommands.RoughTerrainAutoCommand;
 import org.usfirst.frc.team2415.robot.catapultcommands.FireCatapultCloseCommand;
 import org.usfirst.frc.team2415.robot.catapultcommands.FireCatapultCommand;
 import org.usfirst.frc.team2415.robot.catapultcommands.RestingCommand;
@@ -36,7 +35,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot {
 
 	public static OI oi;
-	public static SendableChooser autoChooser;
+	public static SendableChooser autoPosChooser, autoTypeChooser;
 	public static Command autoCommand;
 	
 	public static DriveSubsystem driveSubsystem;
@@ -55,13 +54,17 @@ public class Robot extends IterativeRobot {
 	public static final float INTERIOR_ANGLE = -20f;
 	public static final float HIGH_GOAL_ANGLE = -30f;
 	
+	public static final double LOW_BAR_ANGLE = 1;
+	public static final double DEFENSE_1_ANGLE = 1;
+	public static final double DEFENSE_2_ANGLE = 1;
+	public static final double DEFENSE_3_ANGLE = 1;
+	public static final double DEFENSE_4_ANGLE = 1;
+	
 	public static boolean singlePlayerMode = false;
 	
 	private Compressor compressor;
 	
 	private ImgServer imgServer;
-	
-	private TurnCommand auto;
 	
     public void robotInit() {
     	oi = new OI();
@@ -74,11 +77,18 @@ public class Robot extends IterativeRobot {
 		intakeSubsystem = new IntakeSubsystem();
 		catapultSubsystem = new CatapultSubsystem();
 		
-		autoChooser = new SendableChooser();
-		autoChooser.addDefault("Interior Angle", new IntakeCommand(INTERIOR_ANGLE, 0));
-		autoChooser.addObject("Vertical Angle", new IntakeCommand(VERTICAL_ANGLE, 0));
-		autoChooser.addObject("Intake Angle", new IntakeCommand(INTAKE_ANGLE, 0));
-		SmartDashboard.putData("Auto Mode Chooser", autoChooser);
+		autoPosChooser = new SendableChooser();
+		autoPosChooser.addDefault("Low Bar", LOW_BAR_ANGLE);
+		autoPosChooser.addObject("Defense 1", DEFENSE_1_ANGLE);
+		autoPosChooser.addObject("Defense 2", DEFENSE_2_ANGLE);
+		autoPosChooser.addObject("Defense 3", DEFENSE_3_ANGLE);
+		autoPosChooser.addObject("Defense 4", DEFENSE_4_ANGLE);
+		SmartDashboard.putData("Auto Position Chooser", autoPosChooser);
+		
+		autoTypeChooser = new SendableChooser();
+		autoTypeChooser.addDefault("Rough Terrain", new RoughTerrainAutoCommand((double)autoPosChooser.getSelected()));
+		autoTypeChooser.addObject("Portcullis", "doot!");
+		SmartDashboard.putData("Auto Obstacle Type", autoTypeChooser);
 		
 		SmartDashboard.putData(Scheduler.getInstance());
 		
@@ -119,15 +129,13 @@ public class Robot extends IterativeRobot {
     public void autonomousInit() {
         // schedule the autonomous command (example)
     	driveSubsystem.resetYaw();
-    	autoCommand = (Command)autoChooser.getSelected();
+    	autoCommand = (Command)autoTypeChooser.getSelected();
     	autoCommand.start();
     }
 
     public void autonomousPeriodic() {
-    	
         Scheduler.getInstance().run();
 		imgServer.showImg();
-//		imgServer.sendImg();
 		updateStatus();
 		
     }
