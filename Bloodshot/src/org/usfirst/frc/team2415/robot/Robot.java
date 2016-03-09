@@ -20,8 +20,10 @@ import com.kauailabs.nav6.frc.IMU;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -34,6 +36,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot {
 
 	public static OI oi;
+	public static SendableChooser autoChooser;
+	public static Command autoCommand;
 	
 	public static DriveSubsystem driveSubsystem;
 	public static IntakeSubsystem intakeSubsystem;
@@ -60,7 +64,7 @@ public class Robot extends IterativeRobot {
 	private TurnCommand auto;
 	
     public void robotInit() {
-		oi = new OI();
+    	oi = new OI();
 		
 		gamepad = new WiredCatGamepad(0);
 		operator = new WiredCatJoystick(1);
@@ -69,6 +73,12 @@ public class Robot extends IterativeRobot {
 		driveSubsystem = new DriveSubsystem();
 		intakeSubsystem = new IntakeSubsystem();
 		catapultSubsystem = new CatapultSubsystem();
+		
+		autoChooser = new SendableChooser();
+		autoChooser.addDefault("Interior Angle", new IntakeCommand(INTERIOR_ANGLE, 0));
+		autoChooser.addObject("Vertical Angle", new IntakeCommand(VERTICAL_ANGLE, 0));
+		autoChooser.addObject("Intake Angle", new IntakeCommand(INTAKE_ANGLE, 0));
+		SmartDashboard.putData("Auto Mode Chooser", autoChooser);
 		
 		SmartDashboard.putData(Scheduler.getInstance());
 		
@@ -109,17 +119,17 @@ public class Robot extends IterativeRobot {
     public void autonomousInit() {
         // schedule the autonomous command (example)
     	driveSubsystem.resetYaw();
-    	auto = new TurnCommand(90);
-    	auto.start();
+    	autoCommand = (Command)autoChooser.getSelected();
+    	autoCommand.start();
     }
 
     public void autonomousPeriodic() {
-    	/*
+    	
         Scheduler.getInstance().run();
 		imgServer.showImg();
-		//imgServer.sendImg();
+//		imgServer.sendImg();
 		updateStatus();
-		*/
+		
     }
 
     public void teleopInit() {
