@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -47,7 +48,13 @@ public class DriveSubsystem extends Subsystem {
 		imu = new IMU(imuSerialPort, REFRESH_RATE);
 		imu.zeroYaw();
 		
-		
+
+		LiveWindow.addActuator("Drive Subsystem", "Left Back Talon", leftTalOne);
+		LiveWindow.addActuator("Drive Subsystem", "Left Front Talon", leftTalTwo);
+		LiveWindow.addActuator("Drive Subsystem", "Right Back Talon", rightTalOne);
+		LiveWindow.addActuator("Drive Subsystem", "Right Front Talon", rightTalTwo);
+		LiveWindow.addSensor("Drive Subsystem", "Left Encoder", leftEncoder);
+		LiveWindow.addSensor("Drive Subsystem", "Right Encoder", rightEncoder);
 	}
 	
     public void initDefaultCommand() {
@@ -149,7 +156,6 @@ public class DriveSubsystem extends Subsystem {
 		SmartDashboard.putNumber("Yaw", getYaw());
 		SmartDashboard.putNumber("Right Talon", getRightTal());
 		SmartDashboard.putNumber("Left Talon", getLeftTal());
-
 		SmartDashboard.putBoolean("Left Break State", getLeftBreakState());
 		SmartDashboard.putBoolean("Right Break State", getRightBreakState());
 		

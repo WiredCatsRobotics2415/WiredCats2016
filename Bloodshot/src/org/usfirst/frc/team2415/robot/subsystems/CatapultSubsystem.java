@@ -5,6 +5,7 @@ import org.usfirst.frc.team2415.robot.catapultcommands.*;
 
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
@@ -24,6 +25,9 @@ public class CatapultSubsystem extends Subsystem {
 			solenoids[i] = new Solenoid(RobotMap.PCM_ID, RobotMap.FIRE_SOLENOIDS[i]);
 		}
 		closeAll();
+		
+		LiveWindow.addActuator("Catapult Subsystem", "Solenoid 1", solenoids[0]);
+		LiveWindow.addActuator("Catapult Subsystem", "Solenoid 2", solenoids[1]);
 	}
 	
     public void initDefaultCommand() {
@@ -53,6 +57,7 @@ public class CatapultSubsystem extends Subsystem {
     	solenoids[barrelID].set(false);
     	firing = false;
     }
+    
     
     public boolean getIsShooting() {
 		return isShooting;
