@@ -21,7 +21,7 @@ public class ZeroIntakeCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.intakeSubsystem.setIntakeMotor(-0.5);
+    	if(Robot.intakeSubsystem.getIntakeCurrent() <= 6)Robot.intakeSubsystem.setIntakeMotor(-0.35);
     	if(Math.abs(Robot.intakeSubsystem.getAngle()) > 0) Robot.intakeSubsystem.resetEncoder();
     }
 
@@ -31,7 +31,7 @@ public class ZeroIntakeCommand extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return !operator.buttons[11].get();
+        return !operator.buttons[5].get() || (Robot.intakeSubsystem.getIntakeCurrent() >= 6);
     }
 
     // Called once after isFinished returns true

@@ -28,7 +28,7 @@ public class TurnCommand extends Command {
     public TurnCommand(double desiredYaw) {
         requires(Robot.driveSubsystem);
         this.desiredYaw = desiredYaw;
-        pid = new PID(0.01, 0.01, 0.0015);
+        pid = new PID(0.08, 0,.001);
         
         samples = new ArrayList<Double>();
     }
@@ -58,11 +58,9 @@ public class TurnCommand extends Command {
     	
     	
     	double power = pid.pidOut(error);
-    	if(Math.abs(power) > .5) power = ((power > 0) ? 1:-1) * .5;
+    	//if(Math.abs(power) > .5) power = ((power > 0) ? 1:-1) * .5;
     	
-    	System.out.println(power);
-    	
-    	Robot.driveSubsystem.setMotors(power, power);
+    	Robot.driveSubsystem.setMotors(-power, -power);
     }
     
     protected boolean isFinished() {

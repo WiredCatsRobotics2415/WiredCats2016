@@ -19,7 +19,7 @@ public class FireCatapultCommand extends Command {
     protected void initialize() {
     	long startTime = System.currentTimeMillis();
     	Robot.catapultSubsystem.fireAll();
-    	while((System.currentTimeMillis() - startTime)/1000.0 <= .25);
+    	while((System.currentTimeMillis() - startTime)/1000.0 <= 0.25);
     	Robot.catapultSubsystem.closeAll();
     }
 

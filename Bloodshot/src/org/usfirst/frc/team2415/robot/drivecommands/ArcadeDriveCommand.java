@@ -29,6 +29,8 @@ public class ArcadeDriveCommand extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.driveSubsystem.stop();
+    	Robot.driveSubsystem.disableRightBreakState();
+    	Robot.driveSubsystem.disableLeftBreakState();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -57,7 +59,7 @@ public class ArcadeDriveCommand extends Command {
 //    	if(Math.abs(right) >= 1) Robot.driveSubsystem.enableLeftBreakState();
     	
     	if(Robot.gamepad.rightBumper.get()){
-        	Robot.driveSubsystem.setMotors(left*0.2, -right*0.2);
+        	Robot.driveSubsystem.setMotors(left*0.25, -right*0.33);
     	} else {
         	Robot.driveSubsystem.setMotors(left, -right);
     	}

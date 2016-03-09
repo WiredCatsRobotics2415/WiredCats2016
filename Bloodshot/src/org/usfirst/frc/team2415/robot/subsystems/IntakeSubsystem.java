@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -19,9 +20,9 @@ public class IntakeSubsystem extends Subsystem {
     // here. Call these from Commands.
 	
 	//public PID pid = new PID(.05,0,.001);
-	public PID pid = new PID(.05,.01, 0);
+	public PID pid = new PID(.05, 0,0);//new PID(.05,.01, 0);
 	
-	private CANTalon IntakeMotor;
+	private CANTalon PivotMotor;
 	private CANTalon SpinMotor;
 	
 	private Encoder intakeEncoder;
@@ -36,26 +37,32 @@ public class IntakeSubsystem extends Subsystem {
 //									turns encoder values into intake angles
 
 	public IntakeSubsystem() {
-		IntakeMotor = new CANTalon(RobotMap.ROTATE_INTAKE_TALON);
+		PivotMotor = new CANTalon(RobotMap.PIVOT_INTAKE_TALON);
 		SpinMotor = new CANTalon(RobotMap.SPIN_INTAKE_TALON);
 		
 		intakeEncoder = new Encoder(RobotMap.INTAKE_ENCODER[0],RobotMap.INTAKE_ENCODER[1]);
 		leftIR = new DigitalInput(RobotMap.INTAKE_IR_LEFT);
 		rightIR = new DigitalInput(RobotMap.INTAKE_IR_RIGHT);
+		
+		LiveWindow.addActuator("Intake Subsystem", "Pivot Motor", PivotMotor);
+		LiveWindow.addActuator("Intake Subsystem", "Spin Motor", SpinMotor);
+		LiveWindow.addSensor("Intake Subsystem", "Pivot Encoder", intakeEncoder);
+		LiveWindow.addSensor("Intake Subsystem", "Left IR Sensor", leftIR);
+		LiveWindow.addSensor("Intake Subsystem", "Right IR Sensor", rightIR);
 	}
 	
     public void initDefaultCommand() {
     }
     
     public void setIntakeMotor(double intakeMotor){
-    	IntakeMotor.set(intakeMotor);
+    	PivotMotor.set(intakeMotor);
     }
     public void setSpinMotor(double spinMotor){
     	SpinMotor.set(spinMotor);
     }
     
     public void stopIntakeMotor(){
-    	IntakeMotor.set(0);
+    	PivotMotor.set(0);
     }
     public void stopSpinMotor(){
     	SpinMotor.set(0);
@@ -77,14 +84,8 @@ public class IntakeSubsystem extends Subsystem {
     	return (leftIR.get() || rightIR.get());
     }
     
-    public void enableBrakeMode(){
-    	IntakeMotor.enableBrakeMode(true);
-    	IntakeMotor.enableBrakeMode(true);
-    }
-    
-    public void disableBrakeMode(){
-    	IntakeMotor.enableBrakeMode(false);
-    	IntakeMotor.enableBrakeMode(false);
+    public double getIntakeCurrent(){
+    	return PivotMotor.getOutputCurrent();
     }
     
     public void updateStatus(){
@@ -93,7 +94,8 @@ public class IntakeSubsystem extends Subsystem {
     	SmartDashboard.putNumber("PID Error Value", intakeError);
     	SmartDashboard.putNumber("PID Output Value", intakeOutput);
     	SmartDashboard.putNumber("PID Setpoint", intakeSetpoint);
-    	SmartDashboard.putNumber("Intake Talon", IntakeMotor.get());
+    	SmartDashboard.putNumber("Intake Talon", PivotMotor.get());
+		SmartDashboard.putNumber("Pivot Talon Current", PivotMotor.getOutputCurrent());
     	SmartDashboard.putBoolean("Is Intake Button Pressed?", getIR());
     }
 }
