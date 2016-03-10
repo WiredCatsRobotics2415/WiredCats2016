@@ -83,7 +83,7 @@ public class Robot extends IterativeRobot {
 		
 		autoTypeChooser = new SendableChooser();
 		autoTypeChooser.addDefault("Rough Terrain", new RoughTerrainAutoCommand((double)autoPosChooser.getSelected()));
-		autoTypeChooser.addObject("Portcullis", "doot!");
+		autoTypeChooser.addObject("Portcullis", new PortcullisAutonomous((double)autoPosChooser.getSelected()));
 		SmartDashboard.putData("Auto Obstacle Type", autoTypeChooser);
 		
 		SmartDashboard.putData(Scheduler.getInstance());
