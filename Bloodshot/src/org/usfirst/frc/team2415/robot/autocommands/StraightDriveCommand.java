@@ -49,8 +49,6 @@ public class StraightDriveCommand extends Command {
     	leftErr =  distance - (Robot.driveSubsystem.getLeftEncoder() - leftStart);
     	rightErr = distance - (Robot.driveSubsystem.getRightEncoder() - rightStart);
     	
-    	System.out.println(leftErr + ",\t" + rightErr);
-    	
     	if(leftSamples.size() >= SAMPLE_SIZE){
     		leftSamples.remove(0);
     		leftSamples.add(leftErr);
