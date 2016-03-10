@@ -78,7 +78,7 @@ public class DriveSubsystem extends Subsystem {
     }
     
     public double getRightEncoder(){
-    	return rightEncoder.get();
+    	return -rightEncoder.get();
     }
     
    

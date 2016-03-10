@@ -16,6 +16,7 @@ public class StraightDriveCommand extends Command {
 	
 	private double leftStart, rightStart;
 	private double distance, leftErr, rightErr;
+	private double speedCap;
 	private double stdErrLeft = 0, stdErrRight = 0;
 	private PID pidLeft, pidRight;
 	boolean isDone = false;
@@ -24,10 +25,12 @@ public class StraightDriveCommand extends Command {
 	
 	private ArrayList<Double> leftSamples, rightSamples;
 	
-    public StraightDriveCommand(double distance) {
+    public StraightDriveCommand(double distance, double speedCap) {
     	
     	pidLeft = new PID(0.01, 0,0.0015);
     	pidRight = new PID(0.01, 0, 0.0015);
+    	
+    	this.speedCap = speedCap;
     	
     	this.distance = (distance/(2*Math.PI*DriveSubsystem.WHEEL_RADIUS))*DriveSubsystem.TICKS_PER_REV;
     	
@@ -44,7 +47,7 @@ public class StraightDriveCommand extends Command {
 
     protected void execute() {
     	leftErr =  distance - (Robot.driveSubsystem.getLeftEncoder() - leftStart);
-    	rightErr = -distance - (Robot.driveSubsystem.getRightEncoder() - rightStart);
+    	rightErr = distance - (Robot.driveSubsystem.getRightEncoder() - rightStart);
     	
     	System.out.println(leftErr + ",\t" + rightErr);
     	
@@ -70,8 +73,8 @@ public class StraightDriveCommand extends Command {
     	double rightOut = pidRight.pidOut(rightErr);
     	
 
-    	if(Math.abs(leftOut) > .5) leftOut = ((leftOut > 0) ? 1:-1) * .5;
-    	if(Math.abs(rightOut) > .5) leftOut = ((rightOut > 0) ? 1:-1) * .5;
+    	if(Math.abs(leftOut) > speedCap) leftOut = ((leftOut > 0) ? 1:-1) * speedCap;
+    	if(Math.abs(rightOut) > speedCap) leftOut = ((rightOut > 0) ? 1:-1) * speedCap;
     	
     	Robot.driveSubsystem.setMotors(leftOut, -rightOut);
     }

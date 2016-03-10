@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team2415.robot;
 
+import org.usfirst.frc.team2415.robot.autocommands.PortcullisAutonomous;
 import org.usfirst.frc.team2415.robot.autocommands.TurnCommand;
 import org.usfirst.frc.team2415.robot.catapultcommands.FireCatapultCommand;
 import org.usfirst.frc.team2415.robot.catapultcommands.RestingCommand;
@@ -51,9 +52,9 @@ public class Robot extends IterativeRobot {
 	
 	private Compressor compressor;
 	
-	private ImgServer imgServer;
+	//private ImgServer imgServer;
 	
-	private TurnCommand auto;
+	private PortcullisAutonomous auto;
 	
     public void robotInit() {
 		oi = new OI();
@@ -100,13 +101,13 @@ public class Robot extends IterativeRobot {
     public void autonomousInit() {
         // schedule the autonomous command (example)
     	driveSubsystem.resetYaw();
-    	auto = new TurnCommand(90);
+    	auto = new PortcullisAutonomous();
     	auto.start();
     }
 
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
-		imgServer.showImg();
+		//imgServer.showImg();
 		//imgServer.sendImg();
 		updateStatus();
     }
@@ -122,7 +123,7 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
         updateStatus();
-        imgServer.teleopShowImg();
+        //imgServer.teleopShowImg();
     }
  
     public void testPeriodic() {
