@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team2415.robot;
 
+import org.usfirst.frc.team2415.robot.autocommands.PortcullisAutonomous;
 import org.usfirst.frc.team2415.robot.autocommands.RoughTerrainAutoCommand;
 import org.usfirst.frc.team2415.robot.catapultcommands.FireCatapultCloseCommand;
 import org.usfirst.frc.team2415.robot.catapultcommands.FireCatapultCommand;
@@ -14,8 +15,7 @@ import org.usfirst.frc.team2415.robot.intakecommands.ZeroIntakeCommand;
 import org.usfirst.frc.team2415.robot.subsystems.CatapultSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.IntakeSubsystem;
-
-import com.kauailabs.nav6.frc.IMU;
+import org.usfirst.frc.team2415.robot.ImgServer;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -34,7 +34,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
-	public static OI oi;
 	public static SendableChooser autoPosChooser, autoTypeChooser;
 	public static Command autoCommand;
 	
@@ -45,8 +44,6 @@ public class Robot extends IterativeRobot {
 	public static WiredCatGamepad gamepad;
 	public static WiredCatJoystick operator;
 	
-	private IMU imu;
-	
 	//in degrees
 	public static final float INTAKE_ANGLE = -137.25f;
 	public static final float GROUND_ANGLE = -157f;
@@ -54,11 +51,11 @@ public class Robot extends IterativeRobot {
 	public static final float INTERIOR_ANGLE = -20f;
 	public static final float HIGH_GOAL_ANGLE = -30f;
 	
-	public static final double LOW_BAR_ANGLE = 1;
-	public static final double DEFENSE_1_ANGLE = 1;
-	public static final double DEFENSE_2_ANGLE = 1;
-	public static final double DEFENSE_3_ANGLE = 1;
-	public static final double DEFENSE_4_ANGLE = 1;
+	public static final double LOW_BAR_ANGLE = 135;
+	public static final double DEFENSE_1_ANGLE = 90;
+	public static final double DEFENSE_2_ANGLE = 0;
+	public static final double DEFENSE_3_ANGLE = -90;
+	public static final double DEFENSE_4_ANGLE = -135;
 	
 	public static boolean singlePlayerMode = false;
 	
@@ -67,7 +64,6 @@ public class Robot extends IterativeRobot {
 	private ImgServer imgServer;
 	
     public void robotInit() {
-    	oi = new OI();
 		
 		gamepad = new WiredCatGamepad(0);
 		operator = new WiredCatJoystick(1);
@@ -87,7 +83,7 @@ public class Robot extends IterativeRobot {
 		
 		autoTypeChooser = new SendableChooser();
 		autoTypeChooser.addDefault("Rough Terrain", new RoughTerrainAutoCommand((double)autoPosChooser.getSelected()));
-		autoTypeChooser.addObject("Portcullis", "doot!");
+		autoTypeChooser.addObject("Portcullis", new PortcullisAutonomous((double)autoPosChooser.getSelected()));
 		SmartDashboard.putData("Auto Obstacle Type", autoTypeChooser);
 		
 		SmartDashboard.putData(Scheduler.getInstance());
@@ -98,7 +94,6 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Reset Drive Encoders", new ResetDriveEncodersCommand());
 		SmartDashboard.putData("Reset Intake Encoders", new ResetIntakeEncodersCommand());
 		SmartDashboard.putData("Reset Yaw", new ResetYawCommand());
-		SmartDashboard.putData("Fire Sequence Command", new FireSequenceCommand());
 
 		operator.buttons[5].whileHeld(new ZeroIntakeCommand());
 		operator.buttons[9].whileHeld(new IntakeCommand(HIGH_GOAL_ANGLE, 0));

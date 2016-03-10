@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class IntakeCommand extends Command {
 	
-	private final double SAMPLE_TIME = .25;
+	private final double SAMPLE_TIME = .1;
 	
 	double staySetpoint;
 	double desiredAngle;

@@ -17,7 +17,7 @@ public class MoveCommand extends CommandGroup {
     	thetaT = -Math.toDegrees(Math.atan2(this.x, this.y));
     	
     	addSequential(new TurnCommand(thetaT));
-    	addSequential(new StraightDriveCommand(distance));
+    	addSequential(new StraightDriveCommand(distance, .5));
 	}
 	
     public MoveCommand(double x, double y, double theta) {
@@ -27,7 +27,7 @@ public class MoveCommand extends CommandGroup {
     	thetaT = -Math.toDegrees(Math.atan2(this.x, this.y));
     	
     	addSequential(new TurnCommand(thetaT));
-    	addSequential(new StraightDriveCommand(distance));
+    	addSequential(new StraightDriveCommand(distance, .5));
     	addSequential(new TurnCommand(theta));
     }
 }

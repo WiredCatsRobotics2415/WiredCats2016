@@ -85,7 +85,7 @@ public class DriveSubsystem extends Subsystem {
     }
     
     public double getRightEncoder(){
-    	return rightEncoder.get();
+    	return -rightEncoder.get();
     }
     
    
@@ -99,7 +99,7 @@ public class DriveSubsystem extends Subsystem {
     }
     
     public double getYaw(){
-    	return -imu.getYaw();
+    	return imu.getYaw();
     }
     
     public double getPitch(){

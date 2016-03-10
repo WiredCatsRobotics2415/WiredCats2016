@@ -37,7 +37,6 @@ public class TurnCommand extends Command {
     protected void initialize() {
     	Robot.driveSubsystem.disableLeftBreakState();
     	Robot.driveSubsystem.disableRightBreakState();
-    	System.out.println(desiredYaw);
     }
     
     protected void execute() {
@@ -54,11 +53,11 @@ public class TurnCommand extends Command {
     	}else samples.add(error);
     	
     	if(Math.abs(error/desiredYaw) < STEADY_STATE_TOLERANCE) isDone = true;
-    	if(stdError <= STEADY_STATE_TOLERANCE && stdError != 0) isDone = true;
+    	//if(stdError <= STEADY_STATE_TOLERANCE && stdError != 0) isDone = true;
     	
     	
     	double power = pid.pidOut(error);
-    	//if(Math.abs(power) > .5) power = ((power > 0) ? 1:-1) * .5;
+    	if(Math.abs(power) > .5) power = ((power > 0) ? 1:-1) * .5;
     	
     	Robot.driveSubsystem.setMotors(-power, -power);
     }
