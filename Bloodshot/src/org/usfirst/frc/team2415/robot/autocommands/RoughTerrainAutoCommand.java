@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class RoughTerrainAutoCommand extends CommandGroup {
     
+	//EDIT AT COMPETITION (ON PRACTICE FIELD)
 	private final double DISTANCE = 12 * 12; //in inches
     public  RoughTerrainAutoCommand(double angle) {
     	addSequential(new StraightDriveCommand(DISTANCE, .7));

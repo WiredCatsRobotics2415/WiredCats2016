@@ -19,6 +19,7 @@ public class ImgServer {
 					  EXPOSURE = 25, WHITE_BALANCE = USBCamera.WhiteBalance.kFixedIndoor,
 					  BRIGHTNESS = 25, FPS = 30;
 	
+	//UPDATE AT COMPETITION AFTER MOUNTING CAMERA
 	private final int[] TARGET = {(int)((8.1/13.7)*CAM_W), (int)((2/10.2)*CAM_H)};
 	
 	private final NIVision.Point VERT1 = new NIVision.Point(TARGET[0], TARGET[1] - 30),

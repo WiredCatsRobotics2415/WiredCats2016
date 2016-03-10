@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class PortcullisAutonomous extends CommandGroup {
     
+	//TEST ON PRACTICE FIELD
 	private final double DISTANCE = 2 * 12; //in inches
     public  PortcullisAutonomous(double angle) {
     	addSequential(new StraightDriveCommand(DISTANCE, .5));

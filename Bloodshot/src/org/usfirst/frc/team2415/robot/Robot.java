@@ -51,6 +51,7 @@ public class Robot extends IterativeRobot {
 	public static final float INTERIOR_ANGLE = -20f;
 	public static final float HIGH_GOAL_ANGLE = -30f;
 	
+	//EDIT AT COMPETITON!!!!
 	public static final double LOW_BAR_ANGLE = 135;
 	public static final double DEFENSE_1_ANGLE = 90;
 	public static final double DEFENSE_2_ANGLE = 0;
