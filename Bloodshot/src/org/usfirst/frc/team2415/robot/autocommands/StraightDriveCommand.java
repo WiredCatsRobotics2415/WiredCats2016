@@ -34,7 +34,7 @@ public class StraightDriveCommand extends Command {
     	
     	this.distance = (distance/(2*Math.PI*DriveSubsystem.WHEEL_RADIUS))*DriveSubsystem.TICKS_PER_REV;
     	
-    	leftSamples = rightSamples = new ArrayList<Double>();
+    	leftSamples = /*rightSamples =*/ new ArrayList<Double>();
     }
 
     protected void initialize() {
@@ -42,12 +42,12 @@ public class StraightDriveCommand extends Command {
     	Robot.driveSubsystem.disableRightBreakState();
     	Robot.driveSubsystem.resetEncoders();
     	leftStart = Robot.driveSubsystem.getLeftEncoder();
-    	rightStart = Robot.driveSubsystem.getRightEncoder();
+//    	rightStart = Robot.driveSubsystem.getRightEncoder();
     }
 
     protected void execute() {
     	leftErr =  distance - (Robot.driveSubsystem.getLeftEncoder() - leftStart);
-    	rightErr = distance - (Robot.driveSubsystem.getRightEncoder() - rightStart);
+//    	rightErr = distance - (Robot.driveSubsystem.getRightEncoder() - rightStart);
     	
     	if(leftSamples.size() >= SAMPLE_SIZE){
     		leftSamples.remove(0);
@@ -55,26 +55,26 @@ public class StraightDriveCommand extends Command {
     		stdErrLeft = DataAnalyzer.stdError(leftSamples);
     	}else leftSamples.add(leftErr);
 
-    	if(rightSamples.size() >= SAMPLE_SIZE){
-    		rightSamples.remove(0);
-    		rightSamples.add(rightErr);
-    		stdErrRight = DataAnalyzer.stdError(rightSamples);
-    	}else rightSamples.add(rightErr);
+//    	if(rightSamples.size() >= SAMPLE_SIZE){
+//    		rightSamples.remove(0);
+//    		rightSamples.add(rightErr);
+//    		stdErrRight = DataAnalyzer.stdError(rightSamples);
+//    	}else rightSamples.add(rightErr);
     	
-    	if(Math.abs(leftErr/distance) < STEADY_STATE_TOLERANCE &&
-    			Math.abs(rightErr/distance) < STEADY_STATE_TOLERANCE) isDone = true;
+    	if(Math.abs(leftErr/distance) < STEADY_STATE_TOLERANCE /*&&
+    			Math.abs(rightErr/distance) < STEADY_STATE_TOLERANCE*/) isDone = true;
     	
-    	if(stdErrLeft <= STEADY_STATE_TOLERANCE && stdErrRight <= STEADY_STATE_TOLERANCE && 
-    			stdErrLeft != 0 && stdErrRight != 0) isDone = true;
+    	if(stdErrLeft <= STEADY_STATE_TOLERANCE && /*stdErrRight <= STEADY_STATE_TOLERANCE &&*/ 
+    			stdErrLeft != 0 /*&& stdErrRight != 0*/) isDone = true;
     	
     	double leftOut = pidLeft.pidOut(leftErr);
-    	double rightOut = pidRight.pidOut(rightErr);
+    	//double rightOut = pidRight.pidOut(rightErr);
     	
 
     	if(Math.abs(leftOut) > speedCap) leftOut = ((leftOut > 0) ? 1:-1) * speedCap;
-    	if(Math.abs(rightOut) > speedCap) leftOut = ((rightOut > 0) ? 1:-1) * speedCap;
+    	//if(Math.abs(rightOut) > speedCap) rightOut = ((rightOut > 0) ? 1:-1) * speedCap;
     	
-    	Robot.driveSubsystem.setMotors(leftOut, -rightOut);
+    	Robot.driveSubsystem.setMotors(leftOut, -leftOut);
     }
 
     protected boolean isFinished() {

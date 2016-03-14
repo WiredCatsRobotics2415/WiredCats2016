@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class IntakeCommand extends Command {
 	
-	private final double SAMPLE_TIME = .1;
+	private final double SAMPLE_TIME = .2;
 	
 	double staySetpoint;
 	double desiredAngle;
@@ -46,18 +46,22 @@ public class IntakeCommand extends Command {
     	Robot.intakeSubsystem.setIntakeMotor(-output);
     	Robot.intakeSubsystem.setSpinMotor(intakeSpeed);
         
-    	time = (System.currentTimeMillis() - lastTime)/1000.0;
-    	if(time >= SAMPLE_TIME){
-    		if(Robot.operator.buttons[7].get() && !Robot.intakeSubsystem.getIR()) {
-    			Robot.intakeSubsystem.setSpinMotor(0.7234);
-    		}
-			lastTime = time;
-    	}
-    	if(Robot.operator.buttons[6].get() && Math.abs(Robot.intakeSubsystem.intakeError) <= 2) {
+    	if(Robot.operator.buttons[7].get()) {
+			Robot.intakeSubsystem.setSpinMotor(0.45);
+		}
+//    	
+//    	time = (System.currentTimeMillis() - lastTime)/1000.0;
+//    	if(time >= SAMPLE_TIME){
+//    		if(Robot.operator.buttons[7].get() && !Robot.intakeSubsystem.getIR()) {
+//    			Robot.intakeSubsystem.setSpinMotor(0.7234);
+//    		}
+//			lastTime = time;
+//    	}
+    	if(Robot.operator.buttons[6].get() && Math.abs(Robot.intakeSubsystem.intakeError) <= 3) {
     		Robot.intakeSubsystem.setSpinMotor(-1);
     	}
-    	if(Robot.operator.buttons[2].get() && Math.abs(Robot.intakeSubsystem.intakeError) <= 2) {
-    		Robot.intakeSubsystem.setSpinMotor(0.75);
+    	if(Robot.operator.buttons[2].get() && Math.abs(Robot.intakeSubsystem.intakeError) <= 3) {
+    		Robot.intakeSubsystem.setSpinMotor(0.50);
     	}
     }
 

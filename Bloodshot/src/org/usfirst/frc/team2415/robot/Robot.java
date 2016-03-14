@@ -45,18 +45,18 @@ public class Robot extends IterativeRobot {
 	public static WiredCatJoystick operator;
 	
 	//in degrees
-	public static final float INTAKE_ANGLE = -137.25f;
-	public static final float GROUND_ANGLE = -157f;
+	public static final float INTAKE_ANGLE = -132f;
+	public static final float GROUND_ANGLE = -152f;
 	public static final float VERTICAL_ANGLE = -60f;
 	public static final float INTERIOR_ANGLE = -20f;
 	public static final float HIGH_GOAL_ANGLE = -30f;
 	
 	//EDIT AT COMPETITON!!!!
-	public static final double LOW_BAR_ANGLE = 135;
-	public static final double DEFENSE_1_ANGLE = 90;
+	public static final double LOW_BAR_ANGLE = 0;
+	public static final double DEFENSE_1_ANGLE = 0;
 	public static final double DEFENSE_2_ANGLE = 0;
-	public static final double DEFENSE_3_ANGLE = -90;
-	public static final double DEFENSE_4_ANGLE = -135;
+	public static final double DEFENSE_3_ANGLE = 0;
+	public static final double DEFENSE_4_ANGLE = 0;
 	
 	public static boolean singlePlayerMode = false;
 	
@@ -104,7 +104,7 @@ public class Robot extends IterativeRobot {
 		operator.buttons[3].whenInactive(new IntakeCommand(INTERIOR_ANGLE, 0));
 		operator.buttons[7].whileHeld(new IntakeCommand(INTAKE_ANGLE, 0));
 		operator.buttons[7].whenInactive(new IntakeCommand(INTERIOR_ANGLE, 0));
-		operator.buttons[2].whileHeld(new IntakeCommand(INTERIOR_ANGLE, 1));
+		operator.buttons[2].whileHeld(new IntakeCommand(INTERIOR_ANGLE, .6));
 		operator.buttons[2].whenInactive(new IntakeCommand(INTERIOR_ANGLE, 0));
 		operator.buttons[4].whenPressed(new FireCatapultCloseCommand());
 		operator.buttons[4].whenInactive(new RestingCommand());
@@ -113,13 +113,13 @@ public class Robot extends IterativeRobot {
 		
 		gamepad.leftBumper.whileHeld(new BreakCommand());
 		
-		imgServer = new ImgServer("cam1", 2415);
+		//imgServer = new ImgServer("cam0", 2415);
     }
 	
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 		updateStatus();
-		imgServer.showImg();
+		//imgServer.showImg();
 	}
 
     public void autonomousInit() {
@@ -131,7 +131,7 @@ public class Robot extends IterativeRobot {
 
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
-		imgServer.showImg();
+		//imgServer.showImg();
 		updateStatus();
 		
     }
@@ -147,7 +147,8 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
         updateStatus();
-        imgServer.teleopShowImg();
+		//imgServer.showImg();
+        //imgServer.teleopShowImg();
     }
  
     public void testPeriodic() {

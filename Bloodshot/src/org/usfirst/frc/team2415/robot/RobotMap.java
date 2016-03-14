@@ -20,10 +20,10 @@ public class RobotMap {
     
     public static final int[] FIRE_SOLENOIDS = {CATAPULT_SOLENOID_1, CATAPULT_SOLENOID_2};
     
-    public static final int[] RIGHT_ENCODER = {2,3};
-    public static final int[] LEFT_ENCODER = {0,1};
+    public static final int[] LEFT_ENCODER = {4,5};
+    public static final int[] INTAKE_ENCODER = {0,1};
     
-    public static final int[] INTAKE_ENCODER = {4,5};
+    public static final int[] RIGHT_ENCODER = {2,3};
     public static final int INTAKE_IR_LEFT = 6;
     public static final int INTAKE_IR_RIGHT = 7;
     

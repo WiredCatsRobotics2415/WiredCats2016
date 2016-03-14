@@ -72,10 +72,6 @@ public class IntakeSubsystem extends Subsystem {
     	return intakeEncoder.get();
     }
     
-    public double getVal(){
-    	return intakeEncoder.get();
-    }
-    
     public void resetEncoder(){
     	intakeEncoder.reset();
     }
