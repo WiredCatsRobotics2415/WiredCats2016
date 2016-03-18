@@ -15,10 +15,11 @@ import org.usfirst.frc.team2415.robot.intakecommands.ZeroIntakeCommand;
 import org.usfirst.frc.team2415.robot.subsystems.CatapultSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.IntakeSubsystem;
-import org.usfirst.frc.team2415.robot.ImgServer;
+import org.usfirst.frc.team2415.robot.subsystems.PneumaticIntakeSubsystem;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -33,6 +34,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Robot extends IterativeRobot {
+	
+	Preferences prefs;
 
 	public static SendableChooser autoPosChooser, autoTypeChooser;
 	public static Command autoCommand;
@@ -40,23 +43,24 @@ public class Robot extends IterativeRobot {
 	public static DriveSubsystem driveSubsystem;
 	public static IntakeSubsystem intakeSubsystem;
 	public static CatapultSubsystem catapultSubsystem;
+	public static PneumaticIntakeSubsystem pneumaticIntakeSubsystem;
 	
 	public static WiredCatGamepad gamepad;
 	public static WiredCatJoystick operator;
 	
 	//in degrees
-	public static final float INTAKE_ANGLE = -132f;
-	public static final float GROUND_ANGLE = -152f;
-	public static final float VERTICAL_ANGLE = -60f;
-	public static final float INTERIOR_ANGLE = -20f;
-	public static final float HIGH_GOAL_ANGLE = -30f;
+	public static float INTAKE_ANGLE;
+	public static float GROUND_ANGLE;
+	public static float VERTICAL_ANGLE;
+	public static float INTERIOR_ANGLE;
+	public static float HIGH_GOAL_ANGLE;
 	
 	//EDIT AT COMPETITON!!!!
-	public static final double LOW_BAR_ANGLE = 0;
-	public static final double DEFENSE_1_ANGLE = 0;
-	public static final double DEFENSE_2_ANGLE = 0;
-	public static final double DEFENSE_3_ANGLE = 0;
-	public static final double DEFENSE_4_ANGLE = 0;
+	public static double LOW_BAR_ANGLE = 0;
+	public static double DEFENSE_1_ANGLE = 0;
+	public static double DEFENSE_2_ANGLE = 0;
+	public static double DEFENSE_3_ANGLE = 0;
+	public static double DEFENSE_4_ANGLE = 0;
 	
 	public static boolean singlePlayerMode = false;
 	
@@ -65,6 +69,20 @@ public class Robot extends IterativeRobot {
 	private ImgServer imgServer;
 	
     public void robotInit() {
+		prefs = Preferences.getInstance();
+		
+		INTAKE_ANGLE = prefs.getFloat("Intake Angle", -134f);
+		GROUND_ANGLE = prefs.getFloat("Ground Angle", -150f);
+		VERTICAL_ANGLE = prefs.getFloat("Vertical Angle", -20f);
+		INTERIOR_ANGLE = prefs.getFloat("Interior Angle", -10f);
+		
+		LOW_BAR_ANGLE = prefs.getDouble("Low Bar Angle", 0);
+		DEFENSE_1_ANGLE = prefs.getDouble("Defense 1 Angle", 0);
+		DEFENSE_2_ANGLE = prefs.getDouble("Defense 2 Angle", 0);
+		DEFENSE_3_ANGLE = prefs.getDouble("Defense 3 Angle", 0);
+		DEFENSE_4_ANGLE = prefs.getDouble("Defense 4 Angle", 0);
+		
+		
 		
 		gamepad = new WiredCatGamepad(0);
 		operator = new WiredCatJoystick(1);
@@ -73,6 +91,7 @@ public class Robot extends IterativeRobot {
 		driveSubsystem = new DriveSubsystem();
 		intakeSubsystem = new IntakeSubsystem();
 		catapultSubsystem = new CatapultSubsystem();
+		pneumaticIntakeSubsystem = new PneumaticIntakeSubsystem();
 		
 		autoPosChooser = new SendableChooser();
 		autoPosChooser.addDefault("Low Bar", LOW_BAR_ANGLE);
