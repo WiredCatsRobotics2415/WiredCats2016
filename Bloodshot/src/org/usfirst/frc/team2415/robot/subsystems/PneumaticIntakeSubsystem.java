@@ -1,68 +1,72 @@
 package org.usfirst.frc.team2415.robot.subsystems;
 
 import org.usfirst.frc.team2415.robot.RobotMap;
+import org.usfirst.frc.team2415.robot.intakecommands.PneumaticIntakeCommand;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
 public class PneumaticIntakeSubsystem extends Subsystem {
     
-    private Solenoid interior, exterior;
+    private DoubleSolenoid longPiston, shortPiston;
     private DigitalInput leftIR, rightIR;
     private CANTalon intakeMotor;
-    public boolean[] intakeState;
+    public DoubleSolenoid.Value[] intakeState;
 
     public void PneumaticIntakeSubsystem(){
-    	interior = new Solenoid(RobotMap.INTAKE_SOLENOID_1);
-    	exterior = new Solenoid(RobotMap.INTAKE_SOLENOID_2);
+    	longPiston = new DoubleSolenoid(RobotMap.LONG_SOLENOID[0], RobotMap.LONG_SOLENOID[1]);
+    	shortPiston = new DoubleSolenoid(RobotMap.SHORT_SOLENOID[0], RobotMap.SHORT_SOLENOID[1]);
     }
     
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
+    	setDefaultCommand(new PneumaticIntakeCommand("Vertical"));
     }
     
-    public boolean[] setIntakeState(String state){
+    public DoubleSolenoid.Value[] setIntakeState(String state){
     	switch (state){
     	case "Interior":
-    		return new boolean[]{false,false};
+    		return new DoubleSolenoid.Value[]{Value.kReverse,Value.kReverse};
     	case "Intake":
-    		return new boolean[]{true,false};
+    		return new DoubleSolenoid.Value[]{Value.kForward,Value.kReverse};
     	case "Ground":
-    		return new boolean[]{true,true};
+    		return new DoubleSolenoid.Value[]{Value.kForward,Value.kForward};
     	default:
-    		return new boolean[]{false,false};
+    		return new DoubleSolenoid.Value[]{Value.kOff,Value.kOff};
     	}
     }
     
-    public String getIntakeState(boolean[] intakeState){
-    	if(this.intakeState.equals(new boolean[]{false,false})) {
+    public String getIntakeState(DoubleSolenoid.Value[] intakeState){
+    	if(this.intakeState.equals(new DoubleSolenoid.Value[]{Value.kReverse,Value.kReverse})) {
     		return "Interior";
-   		} else if(this.intakeState.equals(new boolean[]{true,false})) {
+   		} else if(this.intakeState.equals(new DoubleSolenoid.Value[]{Value.kForward,Value.kReverse})) {
    			return "Intake";
-   		} else if(this.intakeState.equals(new boolean[]{true,true})) {
-   			return "Interior";
+   		} else if(this.intakeState.equals(new DoubleSolenoid.Value[]{Value.kForward,Value.kForward})) {
+   			return "Ground";
    		} else {
    			return "ERROR";
     	}
     }
     
-    public void setPivot(boolean[] intakeState){
-    	interior.set(intakeState[0]);
-    	interior.set(intakeState[1]);
+    public void setPivot(DoubleSolenoid.Value[] intakeState){
+    	longPiston.set(intakeState[0]);
+    	shortPiston.set(intakeState[1]);
     }
     
     public void setIntakeSpeed(double speed){
     	intakeMotor.set(speed);
     }
     
-    public void getIntakeSpeed(){
-    	intakeMotor.get();
+    public double getIntakeSpeed(){
+    	return intakeMotor.get();
     }
     
     public boolean getIR(){
@@ -71,6 +75,12 @@ public class PneumaticIntakeSubsystem extends Subsystem {
     
     public double getIntakeCurrent(){
     	return intakeMotor.getOutputCurrent();
+    }
+    
+    public void updateStatus(){
+    	SmartDashboard.putString("Intake State", getIntakeState(intakeState));
+    	SmartDashboard.putNumber("Intake Speed", getIntakeSpeed());
+    	SmartDashboard.putNumber("Intake Current", getIntakeCurrent());
     }
 }
 
