@@ -41,10 +41,10 @@ public class PneumaticIntakeCommand extends Command {
 //			lastTime = time;
 //    	}
     	if(Robot.operator.buttons[6].get()) {
-    		Robot.intakeSubsystem.setSpinMotor(-1);
+    		Robot.pneumaticIntakeSubsystem.setIntakeSpeed(-1);
     	}
     	if(Robot.operator.buttons[2].get()) {
-    		Robot.intakeSubsystem.setSpinMotor(0.50);
+    		Robot.pneumaticIntakeSubsystem.setIntakeSpeed(0.50);
     	}
     }
 
