@@ -1,28 +1,30 @@
 package org.usfirst.frc.team2415.robot.intakecommands;
 
 import org.usfirst.frc.team2415.robot.Robot;
-import org.usfirst.frc.team2415.robot.WiredCatJoystick;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class ZeroIntakeCommand extends Command {
-
-
-	public static WiredCatJoystick operator;
+public class TogglePivotStateCommand extends Command {
 	
-    public ZeroIntakeCommand() {
+	static DoubleSolenoid.Value[] intakeState;
+	private static final double SAMPLE_TIME = 0.1;
+
+    public TogglePivotStateCommand(String intakeState) {
         // Use requires() here to declare subsystem dependencies
-    	operator = new WiredCatJoystick(1);
-    	requires(Robot.intakeSubsystem);
+        // eg. requires(chassis);
+    	requires(Robot.pivotSubsystem);
+    	Robot.pivotSubsystem.setIntakeState(intakeState);
+    	this.intakeState[0] = Robot.pivotSubsystem.intakeState[0];
+    	this.intakeState[1] = Robot.pivotSubsystem.intakeState[1];
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	if(Robot.intakeSubsystem.getIntakeCurrent() <= 6)Robot.intakeSubsystem.setIntakeMotor(-0.35);
-    	if(Math.abs(Robot.intakeSubsystem.getAngle()) > 0) Robot.intakeSubsystem.resetEncoder();
+    	Robot.pivotSubsystem.setPivot(intakeState);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -31,19 +33,15 @@ public class ZeroIntakeCommand extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return !operator.buttons[5].get() || (Robot.intakeSubsystem.getIntakeCurrent() >= 6);
+        return true;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.intakeSubsystem.stopIntakeMotor();
-    	Robot.intakeSubsystem.resetEncoder();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	Robot.intakeSubsystem.stopIntakeMotor();
-    	Robot.intakeSubsystem.resetEncoder();
     }
 }
