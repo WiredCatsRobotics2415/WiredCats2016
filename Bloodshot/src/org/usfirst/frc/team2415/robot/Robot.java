@@ -83,8 +83,6 @@ public class Robot extends IterativeRobot {
 		DEFENSE_3_ANGLE = prefs.getDouble("Defense 3 Angle", 0);
 		DEFENSE_4_ANGLE = prefs.getDouble("Defense 4 Angle", 0);
 		
-		
-		
 		gamepad = new WiredCatGamepad(0);
 		operator = new WiredCatJoystick(1);
 		compressor = new Compressor(RobotMap.PCM_ID);
@@ -111,6 +109,7 @@ public class Robot extends IterativeRobot {
 		
 //		Robot.intakeSubsystem.resetEncoder();
 		Robot.driveSubsystem.resetEncoders();
+//    	pneumaticIntakeSubsystem.setIntakeState("Interior");
 		
 		SmartDashboard.putData("Reset Drive Encoders", new ResetDriveEncodersCommand());
 //		SmartDashboard.putData("Reset Intake Encoders", new ResetIntakeEncodersCommand());
@@ -149,6 +148,7 @@ public class Robot extends IterativeRobot {
 
     public void autonomousInit() {
         // schedule the autonomous command (example)
+    	pneumaticIntakeSubsystem.setIntakeState("Interior");
     	driveSubsystem.resetYaw();
     	autoCommand = (Command)autoTypeChooser.getSelected();
     	autoCommand.start();

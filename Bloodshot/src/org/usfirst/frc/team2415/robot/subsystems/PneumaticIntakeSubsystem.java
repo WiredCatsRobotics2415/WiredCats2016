@@ -23,12 +23,13 @@ public class PneumaticIntakeSubsystem extends Subsystem {
     public void PneumaticIntakeSubsystem(){
     	longPiston = new DoubleSolenoid(RobotMap.LONG_SOLENOID[0], RobotMap.LONG_SOLENOID[1]);
     	shortPiston = new DoubleSolenoid(RobotMap.SHORT_SOLENOID[0], RobotMap.SHORT_SOLENOID[1]);
+    	intakeMotor = new CANTalon(RobotMap.SPIN_INTAKE_TALON);
     }
     
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
-    	setDefaultCommand(new PneumaticIntakeCommand("Vertical"));
+    	setDefaultCommand(new PneumaticIntakeCommand("Interior"));
     }
     
     public DoubleSolenoid.Value[] setIntakeState(String state){
