@@ -29,7 +29,7 @@ public class PneumaticIntakeCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(Robot.operator.buttons[7].get()) {
+    	if(Robot.operator.buttons[7].get() && !Robot.pneumaticIntakeSubsystem.getIR()) {
 			Robot.pneumaticIntakeSubsystem.setIntakeSpeed(0.45);
 		}
 //    	

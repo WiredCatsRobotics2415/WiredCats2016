@@ -38,6 +38,8 @@ public class PneumaticIntakeSubsystem extends Subsystem {
     		return new DoubleSolenoid.Value[]{Value.kReverse,Value.kReverse};
     	case "Intake":
     		return new DoubleSolenoid.Value[]{Value.kForward,Value.kReverse};
+    	case "Outake":
+    		return new DoubleSolenoid.Value[]{Value.kReverse,Value.kForward};
     	case "Ground":
     		return new DoubleSolenoid.Value[]{Value.kForward,Value.kForward};
     	default:
@@ -50,6 +52,8 @@ public class PneumaticIntakeSubsystem extends Subsystem {
     		return "Interior";
    		} else if(this.intakeState.equals(new DoubleSolenoid.Value[]{Value.kForward,Value.kReverse})) {
    			return "Intake";
+   		} else if(this.intakeState.equals(new DoubleSolenoid.Value[]{Value.kReverse,Value.kForward})) {
+   			return "Outake";
    		} else if(this.intakeState.equals(new DoubleSolenoid.Value[]{Value.kForward,Value.kForward})) {
    			return "Ground";
    		} else {

@@ -132,8 +132,8 @@ public class Robot extends IterativeRobot {
 		
 		operator.buttons[2].whileHeld(new PneumaticIntakeCommand("Interior"));
 		operator.buttons[3].whileHeld(new PneumaticIntakeCommand("Ground"));
-		operator.buttons[6].whileHeld(new PneumaticIntakeCommand("Interior"));
-		operator.buttons[7].whileHeld(new PneumaticIntakeCommand("Interior"));
+		operator.buttons[6].whileHeld(new PneumaticIntakeCommand("Outake"));
+		operator.buttons[7].whileHeld(new PneumaticIntakeCommand("Intake"));
 		
 		gamepad.leftBumper.whileHeld(new BreakCommand());
 		
