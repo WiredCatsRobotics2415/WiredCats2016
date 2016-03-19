@@ -35,11 +35,11 @@ public class PneumaticIntakeSubsystem extends Subsystem {
     public DoubleSolenoid.Value[] setIntakeState(String state){
     	switch (state){
     	case "Interior":
-    		return new DoubleSolenoid.Value[]{Value.kReverse,Value.kReverse};
+    		return new DoubleSolenoid.Value[]{Value.kOff,Value.kReverse};
     	case "Intake":
     		return new DoubleSolenoid.Value[]{Value.kForward,Value.kReverse};
     	case "Outake":
-    		return new DoubleSolenoid.Value[]{Value.kReverse,Value.kForward};
+    		return new DoubleSolenoid.Value[]{Value.kOff,Value.kForward};
     	case "Ground":
     		return new DoubleSolenoid.Value[]{Value.kForward,Value.kForward};
     	default:
