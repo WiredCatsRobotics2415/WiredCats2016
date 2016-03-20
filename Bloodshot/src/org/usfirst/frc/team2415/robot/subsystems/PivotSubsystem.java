@@ -58,13 +58,14 @@ public class PivotSubsystem extends Subsystem {
     }
     
     public String getIntakeState(){
-    	if(!longPiston.get() && !shortPiston1.get() && shortPiston2.get()) {
+    	boolean[] boolArray = new boolean[]{longPiston.get(),shortPiston1.get(),shortPiston2.get()};
+    	if(boolArray.equals(new boolean[]{false,false,true})) {
     		return "Interior";
-   		} else if(longPiston.get() && !shortPiston1.get() && shortPiston2.get()) {
+   		} else if(boolArray.equals(new boolean[]{true,false,true})) {
    			return "Intake";
-   		} else if(!longPiston.get() && shortPiston1.get() && !shortPiston2.get()) {
+   		} else if(boolArray.equals(new boolean[]{false,true,false})) {
    			return "Outake";
-   		} else if(longPiston.get() && shortPiston1.get() && !shortPiston2.get()) {
+   		} else if(boolArray.equals(new boolean[]{true,true,false})) {
    			return "Ground";
    		} else {
    			return "ERROR";

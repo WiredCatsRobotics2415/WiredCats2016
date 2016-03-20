@@ -45,6 +45,7 @@ public class IntakingSubsystem extends Subsystem {
     public void updateStatus(){
     	SmartDashboard.putNumber("Intake Speed", getIntakeSpeed());
     	SmartDashboard.putNumber("Intake Current", getIntakeCurrent());
+    	SmartDashboard.putBoolean("IR Sensor", getIR());
     }
 }
 
