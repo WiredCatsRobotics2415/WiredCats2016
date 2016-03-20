@@ -86,12 +86,12 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Reset Drive Encoders", new ResetDriveEncodersCommand());
 		SmartDashboard.putData("Reset Yaw", new ResetYawCommand());
 		
-		operator.buttons[2].whenPressed(new TogglePivotStateCommand("Interior"));
+		operator.buttons[2].whenPressed(new TogglePivotStateCommand(PivotSubsystem.INTERIOR));
 		operator.buttons[2].whileHeld(new IntakeCommand());
-		operator.buttons[3].whenPressed(new TogglePivotStateCommand("Ground"));
-		operator.buttons[6].whenPressed(new TogglePivotStateCommand("Outake"));
+		operator.buttons[3].whenPressed(new TogglePivotStateCommand(PivotSubsystem.GROUND));
+		operator.buttons[6].whenPressed(new TogglePivotStateCommand(PivotSubsystem.OUTTAKE));
 		operator.buttons[6].whileHeld(new IntakeCommand());
-		operator.buttons[7].whenPressed(new TogglePivotStateCommand("Intake"));
+		operator.buttons[7].whenPressed(new TogglePivotStateCommand(PivotSubsystem.INTAKE));
 		operator.buttons[7].whileHeld(new IntakeCommand());
 		
 		operator.buttons[4].whenPressed(new FireCatapultCloseCommand());

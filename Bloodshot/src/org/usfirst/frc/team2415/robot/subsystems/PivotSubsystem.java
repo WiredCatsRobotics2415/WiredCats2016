@@ -2,10 +2,9 @@ package org.usfirst.frc.team2415.robot.subsystems;
 
 import org.usfirst.frc.team2415.robot.RobotMap;
 
-import edu.wpi.first.wpilibj.CANTalon;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -14,12 +13,18 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class PivotSubsystem extends Subsystem {
     
-    private DoubleSolenoid longPiston, shortPiston;
-    public DoubleSolenoid.Value[] intakeState;
+    private Solenoid longPiston, shortPiston1, shortPiston2;
+    public boolean[] intakeState;
+    
+    public static final byte INTERIOR = 0;
+    public static final byte INTAKE = 1;
+    public static final byte OUTTAKE = 2;
+    public static final byte GROUND = 3;
 
     public PivotSubsystem(){
-    	longPiston = new DoubleSolenoid(RobotMap.LONG_SOLENOID[0], RobotMap.LONG_SOLENOID[1]);
-    	shortPiston = new DoubleSolenoid(RobotMap.SHORT_SOLENOID[0], RobotMap.SHORT_SOLENOID[1]);
+    	longPiston = new Solenoid(RobotMap.LONG_SOLENOID);
+    	shortPiston1 = new Solenoid(RobotMap.SHORT_SOLENOID[0]); //forward
+    	shortPiston2 = new Solenoid(RobotMap.SHORT_SOLENOID[1]); //backwards
     }
     
     public void initDefaultCommand() {
@@ -27,41 +32,49 @@ public class PivotSubsystem extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
     
-    public DoubleSolenoid.Value[] setIntakeState(String state){
+    public void setPivot(byte state){
     	switch (state){
-    	case "Interior":
-    		return new DoubleSolenoid.Value[]{Value.kReverse,Value.kReverse};
-    	case "Intake":
-    		return new DoubleSolenoid.Value[]{Value.kForward,Value.kReverse};
-    	case "Outake":
-    		return new DoubleSolenoid.Value[]{Value.kReverse,Value.kForward};
-    	case "Ground":
-    		return new DoubleSolenoid.Value[]{Value.kForward,Value.kForward};
+    	case INTERIOR:
+    		longPiston.set(false);
+    		shortPiston1.set(false);
+    		shortPiston2.set(true);
+    	case INTAKE:
+    		longPiston.set(true);
+    		shortPiston1.set(false);
+    		shortPiston2.set(true);
+    	case OUTTAKE:
+    		longPiston.set(false);
+    		shortPiston1.set(true);
+    		shortPiston2.set(false);
+    	case GROUND:
+    		longPiston.set(true);
+    		shortPiston1.set(true);
+    		shortPiston2.set(false);
     	default:
-    		return new DoubleSolenoid.Value[]{Value.kOff,Value.kOff};
+    		longPiston.set(false);
+    		shortPiston1.set(false);
+    		shortPiston2.set(true);
     	}
     }
     
-    public String getIntakeState(DoubleSolenoid.Value[] intakeState){
-    	if(this.intakeState.equals(new DoubleSolenoid.Value[]{Value.kReverse,Value.kReverse})) {
+    public String getIntakeState(){
+    	if(!longPiston.get() && !shortPiston1.get() && shortPiston2.get()) {
     		return "Interior";
-   		} else if(this.intakeState.equals(new DoubleSolenoid.Value[]{Value.kForward,Value.kReverse})) {
+   		} else if(longPiston.get() && !shortPiston1.get() && shortPiston2.get()) {
    			return "Intake";
-   		} else if(this.intakeState.equals(new DoubleSolenoid.Value[]{Value.kReverse,Value.kForward})) {
+   		} else if(!longPiston.get() && shortPiston1.get() && !shortPiston2.get()) {
    			return "Outake";
-   		} else if(this.intakeState.equals(new DoubleSolenoid.Value[]{Value.kForward,Value.kForward})) {
+   		} else if(longPiston.get() && shortPiston1.get() && !shortPiston2.get()) {
    			return "Ground";
    		} else {
    			return "ERROR";
     	}
     }
     
-    public void setPivot(DoubleSolenoid.Value[] intakeState){
-    	longPiston.set(intakeState[0]);
-    	shortPiston.set(intakeState[1]);
-    }
-    
     public void updateStatus(){
-    	SmartDashboard.putString("Intake State", getIntakeState(intakeState));
+    	SmartDashboard.putString("Intake State", getIntakeState());
+    	SmartDashboard.putBoolean("Long Piston", longPiston.get());
+    	SmartDashboard.putBoolean("Forward Short Piston", shortPiston1.get());
+    	SmartDashboard.putBoolean("Backward Short Piston", shortPiston2.get());
     }
 }

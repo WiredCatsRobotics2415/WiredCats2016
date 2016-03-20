@@ -10,16 +10,13 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class TogglePivotStateCommand extends Command {
 	
-	static DoubleSolenoid.Value[] intakeState;
-	private static final double SAMPLE_TIME = 0.1;
+	byte intakeState;
 
-    public TogglePivotStateCommand(String intakeState) {
+    public TogglePivotStateCommand(byte intakeState) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.pivotSubsystem);
-    	Robot.pivotSubsystem.setIntakeState(intakeState);
-    	this.intakeState[0] = Robot.pivotSubsystem.intakeState[0];
-    	this.intakeState[1] = Robot.pivotSubsystem.intakeState[1];
+    	this.intakeState = intakeState;
     }
 
     // Called just before this Command runs the first time
