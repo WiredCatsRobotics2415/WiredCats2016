@@ -1,19 +1,18 @@
-
-# Vaas
+# Big Daddy #
 ### Things Everyone Cares About:
 #### Current Ports: 
-Thing | Competition Bot | Practice Bot
---------|-----------------------|------------------
-left side talons (looking from the intake) | `5 & 3` | `5 & 3`
-right side talons (looking from the intake) |  `1 & 4` | `1 & 6`
-intake spin talon | `6` | `4`
-intake arm talon | `2` | `2`
-intake encoder | `0,1` | `4,5`
-intake button | `2` | `6`
-right drivetrain encoder | `3,4` | `0,1`
-left drivetrain encoder | `5,6` | `2,3`
-PCM | `20` | `20`
-Solenoids | `0 & 1` | `4 & 5`
+Thing | Bot
+--------|-----------------------
+left side talons (looking from the back to the intake) | `1 & 2`
+right side talons (looking from the back to the intake) |  `3 & 4`
+intake spin talon | `5` 
+intake pivot talon | `6`
+intake encoder | `0,1`
+intake IR sensors | `6,7`
+right drivetrain encoder | `2,3`
+left drivetrain encoder | `4,5`
+PCM | `20`
+catapult solenoids | '2,3'
 
 ### Control Scheme:
 #### Controller -
@@ -23,20 +22,19 @@ Solenoids | `0 & 1` | `4 & 5`
 #### Joystick -
 - Defaults to Vertical Position
 - Intake: `7` 
-  - will stop intaking while button is pressed
+  - will stop intaking while IR sensor is tripped
 - Outwards Outtake: `6`
-- Ground Position: `8`
-- Vertical Position: `9`
+- Ground Position: `3`
 - Intake Into Catapult: `2`
 - Shoot: `trigger`
-- Zero the Intake: `11`
+- Zero the Intake: `5`
 
 ![squidward future](https://s-media-cache-ak0.pinimg.com/236x/bc/f8/97/bcf89787b054ba512c777abfad16fff4.jpg)
-- [ ] tune intake PID if necessary
+- [x] tune intake PID if necessary
 - [x] make catapult not be the t-shirt cannon
-- [ ] update sensor base as necessary
+- [x] update sensor base as necessary
 - [ ] voltage sensing for intaking balls to replace intake button
 - [ ] timeout command
-- [ ] commands for crossing defenses in autonomous
+- [x] commands for crossing defenses in autonomous
 - [ ] vision
-- [ ] fine tune turn mode for shooting
+- [x] fine tune turn mode for shooting
