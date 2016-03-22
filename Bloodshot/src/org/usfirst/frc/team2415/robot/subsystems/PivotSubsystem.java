@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2415.robot.subsystems;
 
+import org.usfirst.frc.team2415.robot.Robot;
 import org.usfirst.frc.team2415.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -22,9 +23,9 @@ public class PivotSubsystem extends Subsystem {
     public static final byte GROUND = 3;
 
     public PivotSubsystem(){
-    	longPiston = new Solenoid(RobotMap.LONG_SOLENOID);
-    	shortPiston1 = new Solenoid(RobotMap.SHORT_SOLENOID[0]); //forward
-    	shortPiston2 = new Solenoid(RobotMap.SHORT_SOLENOID[1]); //backwards
+    	longPiston = new Solenoid(RobotMap.PCM_ID, RobotMap.LONG_SOLENOID);
+    	shortPiston1 = new Solenoid(RobotMap.PCM_ID, RobotMap.SHORT_SOLENOID[0]); //forward
+    	shortPiston2 = new Solenoid(RobotMap.PCM_ID, RobotMap.SHORT_SOLENOID[1]); //backwards
     }
     
     public void initDefaultCommand() {
@@ -33,28 +34,46 @@ public class PivotSubsystem extends Subsystem {
     }
     
     public void setPivot(byte state){
-    	switch (state){
-    	case INTERIOR:
-    		longPiston.set(false);
-    		shortPiston1.set(false);
-    		shortPiston2.set(true);
-    	case INTAKE:
+    	if(state == this.INTAKE){
     		longPiston.set(true);
     		shortPiston1.set(false);
     		shortPiston2.set(true);
-    	case OUTTAKE:
-    		longPiston.set(false);
-    		shortPiston1.set(true);
-    		shortPiston2.set(false);
-    	case GROUND:
+    	}
+    	if(state == this.GROUND){
     		longPiston.set(true);
     		shortPiston1.set(true);
     		shortPiston2.set(false);
-    	default:
+    	}
+    	if(state == this.INTERIOR){
     		longPiston.set(false);
     		shortPiston1.set(false);
     		shortPiston2.set(true);
     	}
+    	if(state == this.OUTTAKE){
+    		longPiston.set(false);
+    		shortPiston1.set(true);
+    		shortPiston2.set(false);
+    	}
+    	
+//    	switch (state){
+//    	case INTERIOR:
+//    	case INTAKE:
+//    		longPiston.set(true);
+//    		shortPiston1.set(false);
+//    		shortPiston2.set(true);
+//    	case OUTTAKE:
+//    		longPiston.set(false);
+//    		shortPiston1.set(true);
+//    		shortPiston2.set(false);
+//    	case GROUND:
+//    		longPiston.set(true);
+//    		shortPiston1.set(true);
+//    		shortPiston2.set(false);
+//    	default:
+//    		longPiston.set(false);
+//    		shortPiston1.set(false);
+//    		shortPiston2.set(true);
+//    	}
     }
     
     public String getIntakeState(){

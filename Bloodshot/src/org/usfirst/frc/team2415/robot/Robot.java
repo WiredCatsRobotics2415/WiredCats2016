@@ -65,6 +65,8 @@ public class Robot extends IterativeRobot {
 		
 		driveSubsystem = new DriveSubsystem();
 		catapultSubsystem = new CatapultSubsystem();
+		pivotSubsystem = new PivotSubsystem();
+		intakingSubsystem = new IntakingSubsystem();
 		
 		autoPosChooser = new SendableChooser();
 		autoPosChooser.addDefault("Low Bar", LOW_BAR_ANGLE);
