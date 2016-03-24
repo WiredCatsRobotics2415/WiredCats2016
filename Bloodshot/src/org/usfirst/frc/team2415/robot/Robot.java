@@ -17,6 +17,15 @@ import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.IntakeSubsystem;
 import org.usfirst.frc.team2415.robot.ImgServer;
 
+import org.opencv.core.Mat;
+import org.opencv.highgui.Highgui;
+import org.opencv.highgui.VideoCapture;
+import org.usfirst.frc.team2415.robot.autocommands.FindTowerAutonomousCommand;
+import com.ni.vision.NIVision;
+import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import edu.wpi.first.wpilibj.vision.USBCamera;
+
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -33,6 +42,21 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Robot extends IterativeRobot {
+	
+	static{
+		try{
+			System.load("/home/lvuser/lib_OpenCV/java/libopencv_java2410.so");
+		}catch(UnsatisfiedLinkError e){
+			e.printStackTrace();
+		}
+	}
+	
+	public static VideoCapture videoCapture;
+	public static USBCamera targetCam;  // create connection to camera
+	public static NIVision.Image img;
+	public static NIVision.RawData colorTable;
+	public static Mat imageMat = new Mat();
+
 
 	public static SendableChooser autoPosChooser, autoTypeChooser;
 	public static Command autoCommand;
@@ -113,12 +137,23 @@ public class Robot extends IterativeRobot {
 		
 		gamepad.leftBumper.whileHeld(new BreakCommand());
 		
+		
+		img = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0); // create frame buffer
+		colorTable = new NIVision.RawData();
+		
+		targetCam = new USBCamera("cam1");
+		targetCam.openCamera(); // open the camera connection
+    	targetCam.startCapture(); // start the frame capturing process (internal to USBCamera)
+    	targetCam.setBrightness(25);
+    	targetCam.setSize(320, 240);
 		//imgServer = new ImgServer("cam0", 2415);
     }
 	
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 		updateStatus();
+		targetCam.getImage(img);
+        CameraServer.getInstance().setImage(img);
 		//imgServer.showImg();
 	}
 
@@ -133,6 +168,8 @@ public class Robot extends IterativeRobot {
         Scheduler.getInstance().run();
 		//imgServer.showImg();
 		updateStatus();
+        targetCam.getImage(img);
+        CameraServer.getInstance().setImage(img);
 		
     }
 
