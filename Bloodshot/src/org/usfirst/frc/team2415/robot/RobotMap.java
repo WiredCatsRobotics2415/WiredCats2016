@@ -18,7 +18,7 @@ public class RobotMap {
     public static final int CATAPULT_SOLENOID_1 = 1;
     public static final int CATAPULT_SOLENOID_2 = 0;
 
-    public static final int LONG_SOLENOID = 3;
+    public static final int[] LONG_SOLENOID = {5,6};
     public static final int[] SHORT_SOLENOID = {4,2};
     
     public static final int[] CATAPULT_SOLENOIDS = {CATAPULT_SOLENOID_1, CATAPULT_SOLENOID_2};

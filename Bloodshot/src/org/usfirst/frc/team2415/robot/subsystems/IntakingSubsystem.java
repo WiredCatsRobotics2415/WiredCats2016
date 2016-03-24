@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class IntakingSubsystem extends Subsystem {
 
-    private DigitalInput leftIR, rightIR;
+    public static DigitalInput leftIR, rightIR;
     private CANTalon intakeMotor;
     
     public IntakingSubsystem(){

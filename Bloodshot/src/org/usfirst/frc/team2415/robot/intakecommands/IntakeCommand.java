@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2415.robot.intakecommands;
 
 import org.usfirst.frc.team2415.robot.Robot;
+import org.usfirst.frc.team2415.robot.subsystems.IntakingSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -25,13 +26,13 @@ public class IntakeCommand extends Command {
     protected void execute() { 
     	
     	if(Robot.operator.buttons[7].get() && !Robot.intakingSubsystem.getIR()) {
-		Robot.intakingSubsystem.setIntakeSpeed(0.45);
-    	}
-		if(Robot.operator.buttons[6].get()) {
+		Robot.intakingSubsystem.setIntakeSpeed(0.75);
+    	} else if(Robot.operator.buttons[6].get()) {
 			Robot.intakingSubsystem.setIntakeSpeed(-1);
-		}
-		if(Robot.operator.buttons[2].get()) {
+    	} else if(Robot.operator.buttons[2].get()) {
 			Robot.intakingSubsystem.setIntakeSpeed(0.50);
+		} else {
+			Robot.intakingSubsystem.setIntakeSpeed(0);
 		}
     }
 
