@@ -27,6 +27,9 @@ public class RobotMap {
     public static final int INTAKE_IR_LEFT = 6;
     public static final int INTAKE_IR_RIGHT = 7;
     
+    public static final int[] WINCH_LOCK = {0,0};
+    public static final int WINCH_MOTOR = 0;
+    
     public static final int PCM_ID = 20;
 	
 	/*Competition Port Values*/
