@@ -11,19 +11,24 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class StopAtDefenseCommand extends Command {
 	private final double SPEED;
+	private long start;
 	
 	public StopAtDefenseCommand(double speed){
     	requires(Robot.driveSubsystem);
     	SPEED = speed;
 	}
 	
-	protected void initialize() {}
+	protected void initialize() {
+		start = System.currentTimeMillis();
+	}
 
     private boolean isDone = false;
     protected void execute() {
     	Robot.driveSubsystem.setMotors(SPEED, -SPEED);
     	
-    	if(Math.abs(Robot.driveSubsystem.getPitch()) > 10){
+    	if((System.currentTimeMillis() - start)/1000.0 <= .75) return;
+    	
+    	if(Math.abs(Robot.driveSubsystem.getPitch()) > 4){
 			isDone = true;
 			Robot.driveSubsystem.setMotors(0, 0);
 			Robot.driveSubsystem.enableLeftBreakState();

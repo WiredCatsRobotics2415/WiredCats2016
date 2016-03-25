@@ -1,9 +1,9 @@
 
 package org.usfirst.frc.team2415.robot;
 
-import org.usfirst.frc.team2415.robot.autocommands.ImprovedRoughTerrainCommand;
 import org.usfirst.frc.team2415.robot.autocommands.PortcullisAutonomous;
 import org.usfirst.frc.team2415.robot.autocommands.RoughTerrainAutoCommand;
+import org.usfirst.frc.team2415.robot.autocommands.SimpleObstacles.RoughTerrainCommand;
 import org.usfirst.frc.team2415.robot.catapultcommands.FireCatapultCloseCommand;
 import org.usfirst.frc.team2415.robot.catapultcommands.FireCatapultCommand;
 import org.usfirst.frc.team2415.robot.catapultcommands.RestingCommand;
@@ -125,7 +125,7 @@ public class Robot extends IterativeRobot {
     public void autonomousInit() {
         // schedule the autonomous command (example)
     	driveSubsystem.resetYaw();
-    	autoCommand = new ImprovedRoughTerrainCommand(.5);//(Command)autoTypeChooser.getSelected();
+    	autoCommand = new RoughTerrainCommand();//(Command)autoTypeChooser.getSelected();
     	autoCommand.start();
     }
 
