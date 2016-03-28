@@ -15,8 +15,8 @@ public class RobotMap {
     public static final int PIVOT_INTAKE_TALON = 6;
     public static final int SPIN_INTAKE_TALON = 5;
     
-    public static final int CATAPULT_SOLENOID_1 = 2;
-    public static final int CATAPULT_SOLENOID_2 = 3;
+    public static final int CATAPULT_SOLENOID_1 = 0;
+    public static final int CATAPULT_SOLENOID_2 = 1;
     
     public static final int[] FIRE_SOLENOIDS = {CATAPULT_SOLENOID_1, CATAPULT_SOLENOID_2};
     

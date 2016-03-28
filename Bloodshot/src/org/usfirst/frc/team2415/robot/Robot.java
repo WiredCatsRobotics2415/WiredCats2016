@@ -1,6 +1,9 @@
 
 package org.usfirst.frc.team2415.robot;
 
+import org.opencv.core.Mat;
+import org.opencv.highgui.VideoCapture;
+import org.usfirst.frc.team2415.robot.autocommands.FindTowerAutonomousCommand;
 import org.usfirst.frc.team2415.robot.autocommands.PortcullisAutonomous;
 import org.usfirst.frc.team2415.robot.autocommands.RoughTerrainAutoCommand;
 import org.usfirst.frc.team2415.robot.catapultcommands.FireCatapultCloseCommand;
@@ -15,17 +18,12 @@ import org.usfirst.frc.team2415.robot.intakecommands.ZeroIntakeCommand;
 import org.usfirst.frc.team2415.robot.subsystems.CatapultSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.IntakeSubsystem;
-import org.usfirst.frc.team2415.robot.ImgServer;
 
-import org.opencv.core.Mat;
-import org.opencv.highgui.Highgui;
-import org.opencv.highgui.VideoCapture;
-import org.usfirst.frc.team2415.robot.autocommands.FindTowerAutonomousCommand;
 import com.ni.vision.NIVision;
-import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
-import edu.wpi.first.wpilibj.vision.USBCamera;
+import com.ni.vision.NIVision.ImageType;
+import com.ni.vision.NIVision.Point;
 
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -33,6 +31,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.vision.USBCamera;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -45,7 +44,7 @@ public class Robot extends IterativeRobot {
 	
 	static{
 		try{
-			System.load("/home/lvuser/lib_OpenCV/java/libopencv_java2410.so");
+			System.load("/home/lvuser/lib_OpenCV/java/native/libopencv_java2410.so");
 		}catch(UnsatisfiedLinkError e){
 			e.printStackTrace();
 		}
@@ -157,19 +156,49 @@ public class Robot extends IterativeRobot {
 		//imgServer.showImg();
 	}
 
+
+	public static final double SHOOTER_X = 320 - 131.597;
+	public static final double SHOOTER_Y = 240 - 164.425;
+	
+	NIVision.Point t1,t2,t3,t4;
+	
     public void autonomousInit() {
-        // schedule the autonomous command (example)
+    	t1 = t2 = t3 = t4 = new NIVision.Point();
+    	
+    	t1.x = (int)SHOOTER_X - 10;
+    	t1.y = (int)SHOOTER_Y;
+    	
+    	t2.x = (int)SHOOTER_X + 10;
+    	t2.y = (int)SHOOTER_Y;
+    	
+    	t3.x = (int)SHOOTER_X;
+    	t3.y = (int)SHOOTER_Y - 10;
+    	
+    	t4.x = (int)SHOOTER_X;
+    	t4.y = (int)SHOOTER_Y + 10;
+        
+    	// schedule the autonomous command (example);\
     	driveSubsystem.resetYaw();
-    	autoCommand = (Command)autoTypeChooser.getSelected();
+    	
+    	Robot.targetCam.getImage(Robot.img);
+		NIVision.imaqWriteJPEGFile(Robot.img, "/home/lvuser/idontknow.jpg", 2000, Robot.colorTable);
+    	
+    	
+    	autoCommand = new FindTowerAutonomousCommand();
     	autoCommand.start();
     }
-
+    
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
 		//imgServer.showImg();
 		updateStatus();
         targetCam.getImage(img);
-        CameraServer.getInstance().setImage(img);
+        NIVision.imaqWriteJPEGFile(Robot.img, "/home/lvuser/idontknow.jpg", 2000, Robot.colorTable);
+        
+        NIVision.imaqDrawLineOnImage(Robot.img, Robot.img, NIVision.DrawMode.DRAW_VALUE, t1, t2, 0);
+        NIVision.imaqDrawLineOnImage(Robot.img, Robot.img, NIVision.DrawMode.DRAW_VALUE, t3, t4, 0);
+		
+		CameraServer.getInstance().setImage(img);
 		
     }
 
@@ -184,6 +213,8 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
         updateStatus();
+		targetCam.getImage(img);
+        CameraServer.getInstance().setImage(img);
 		//imgServer.showImg();
         //imgServer.teleopShowImg();
     }

@@ -26,8 +26,8 @@ public class FindTowerAutonomousCommand extends Command {
 	
 	//these are the color scalars that limit what colors the processing looks for
 	//it goes from around gray to around lime green
-	public static final Scalar LOWER_BOUNDS = new Scalar(58,0,109),
-			UPPER_BOUNDS = new Scalar(93,255,240);
+	public static final Scalar LOWER_BOUNDS = new Scalar(0,0,200),
+			UPPER_BOUNDS = new Scalar(50,50,255);
 	
 	public static final Scalar BLACK = new Scalar(0,0,0);
 	
@@ -42,8 +42,8 @@ public class FindTowerAutonomousCommand extends Command {
 	public static final double CENTERX = 160; //X value of the center of the screen
 	public static final double CENTERY = 120; //Y value of the center of the screen
 	
-	public static final double SHOOTER_X = 0; //This is the X coordinate of the camera we will be able to shoot at
-	public static final double SHOOTER_Y = 0; //This is the Y coordinate of the camera we will be able to shoot at
+	public static final double SHOOTER_X = 235; //This is the X coordinate of the camera we will be able to shoot at
+	public static final double SHOOTER_Y = 93; //This is the Y coordinate of the camera we will be able to shoot at
 	
 	public static final double VERTICAL_FOV = 34.3; //Vertical FOV of the cam
 	public static final double HORIZONTAL_FOV = 61; //Horizontal FOV of the cam
@@ -72,7 +72,6 @@ public class FindTowerAutonomousCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	System.out.println("jesus");
     	matOriginal = new Mat();
 		matHSV = new Mat();
 		matThresh = new Mat();
@@ -85,23 +84,18 @@ public class FindTowerAutonomousCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	//save the image to a file
-    	Robot.targetCam.getImage(Robot.img);
-		NIVision.imaqWriteJPEGFile(Robot.img, "/home/lvuser/idontknow.jpg", 2000, Robot.colorTable);
     	
     	//targetCam.getImage(img);
-    	System.out.println("pleeeeeeeease");
     	
 //		This thing takes time to open
-		System.out.println("call the command");
     	
-    	System.out.println("is our lord and savior");
     	ArrayList<MatOfPoint> contours = new ArrayList<MatOfPoint>();
 		double distance, forwardDist, azimuth, distX, distY;
 //		frame counter
 		int FrameCount = 0;
 		long before = System.currentTimeMillis();
 //		only run for the specified time
-		while(FrameCount < 100){
+
 			contours.clear();
 			
 //			open the file
@@ -149,11 +143,9 @@ public class FindTowerAutonomousCommand extends Command {
 				targetX = rec.tl().x + rec.width / 2;
 				//targetX is the X coordinate of the center of the goal
 				
-				System.out.println("Initial TargetX: " + targetX);
-				targetY = ((2 * (targetY / matOriginal.height())) - 1);
-				distance = (TOP_TARGET_HEIGHT - TOP_CAMERA_HEIGHT) / 
-						Math.tan((targetY * VERTICAL_FOV / 2.0 + CAMERA_ANGLE) * Math.PI / 180);
-
+				System.out.println("Bottom Right Y: " + rec.br().y + ", " + "Bottom Right X: " + rec.br().x);
+				//targetY = ((2 * (targetY / matOriginal.height())) - 1);
+				
 //				angle to target...would not rely on this
 				
 				
@@ -161,48 +153,63 @@ public class FindTowerAutonomousCommand extends Command {
 				Point center = new Point(rec.br().x-rec.width / 2 - 15,rec.br().y - rec.height / 2);
 				Point centerw = new Point(rec.br().x-rec.width / 2 - 15,rec.br().y - rec.height / 2 - 20);
 		        
-				distX = targetX - CENTERX;
-				distY = targetY - CENTERY;
+				distX = targetX - SHOOTER_X;
+				distY = targetY - SHOOTER_Y;
 				
 //				drawing info on target
 				System.out.println("Desired X: " + targetX + ", " + "Desired Y: " + targetY);
-				System.out.println("distance: " + distance + ", " + "DistX: " + distX);
+				System.out.println("DistY: " + distY + ", " + "DistX: " + distX);
 			
-				if(Math.abs(distX) <= 5 && Math.abs(distY) <= 5){
+				if(Math.abs(distX) <= 5 && Math.abs(distY) <= 6){
+					System.out.println("VICTORY");
 					isDone = true;
 				}
-				else if(Math.abs(distX) > 5 && Math.abs(distY) <= 5){
-					if (stage == false) {Robot.driveSubsystem.setMotors(0, 0);}
-			        stage = true;
-				}
-				else if(Math.abs(distX) <= 5 && Math.abs(distY) > 5){
-					if (stage == true) {Robot.driveSubsystem.setMotors(0, 0);}
+				else if(Math.abs(distY) > 6){// && Math.abs(distX) <= 5){
+					//if (stage == true) {Robot.driveSubsystem.setMotors(0, 0);}
 			        stage = false;
+			        System.out.println("moving");
 				}
-				else if(Math.abs(distX) > 5 && Math.abs(distY) > 5){
-					if (stage == false) {Robot.driveSubsystem.setMotors(0, 0);}
+				else if(Math.abs(distY) <= 6){
 					stage = true;
 				}
+				else if(Math.abs(distX) <= 5){
+					stage = false;
+				}
+				else if(Math.abs(distX) > 5){// && Math.abs(distY) <= 2){
+					if (stage == false) {Robot.driveSubsystem.setMotors(0, 0);
+						long curr = System.currentTimeMillis();
+						while ((System.currentTimeMillis()-curr)/1000 < .25){}
+					}
+	        		stage = true;
+	        		System.out.println("turning");
+				}
+				
+				/*
+				else if(Math.abs(distX) > 5 && Math.abs(distY) > 2){
+					if (stage == false) {Robot.driveSubsystem.setMotors(0, 0);}
+					stage = true;
+			        System.out.println("turning");
+				}
+				*/
 				
 
 		        double turnPower = pid.pidOut(distX);
 		        double straightPower = pid.pidOut(distY);
-		        if(Math.abs(turnPower) > .25) turnPower = ((turnPower > 0) ? 1:-1) * .25;
-		        if(Math.abs(straightPower) > .25) straightPower = ((straightPower > 0) ? 1:-1) * .25;
+		        if(Math.abs(turnPower) > .4) turnPower = ((turnPower > 0) ? 1:-1) * .4;
+		        if(Math.abs(straightPower) > .2) straightPower = ((straightPower > 0) ? 1:-1) * .2;
 		        if(stage){
-		        	Robot.driveSubsystem.setMotors(-turnPower, -turnPower);
+		        	Robot.driveSubsystem.setMotors(turnPower, turnPower);
 		        }
 		        else if(!stage){
 		        	Robot.driveSubsystem.setMotors(straightPower, -straightPower);
 		        }
+		        
 		    
 			}
 			
 //			output an image for debugging
-			Highgui.imwrite("output.png", matOriginal);
-			FrameCount++;
-		}
-		IS_RUNNING = false;
+//			Highgui.imwrite("output.png", matOriginal);
+		
 	}
     	
 
