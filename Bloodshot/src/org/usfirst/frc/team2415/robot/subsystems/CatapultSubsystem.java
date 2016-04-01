@@ -1,7 +1,7 @@
 package org.usfirst.frc.team2415.robot.subsystems;
 
 import org.usfirst.frc.team2415.robot.RobotMap;
-import org.usfirst.frc.team2415.robot.catapultcommands.*;
+import org.usfirst.frc.team2415.robot.catapultcommands.RestingCommand;
 
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -19,10 +19,10 @@ public class CatapultSubsystem extends Subsystem {
 	public boolean isShooting;
 	
 	public CatapultSubsystem(){
-		solenoids = new Solenoid[RobotMap.FIRE_SOLENOIDS.length];
+		solenoids = new Solenoid[RobotMap.CATAPULT_SOLENOIDS.length];
 		
 		for(int i=0; i<solenoids.length; i++){
-			solenoids[i] = new Solenoid(RobotMap.PCM_ID, RobotMap.FIRE_SOLENOIDS[i]);
+			solenoids[i] = new Solenoid(RobotMap.PCM_ID, RobotMap.CATAPULT_SOLENOIDS[i]);
 		}
 		closeAll();
 		

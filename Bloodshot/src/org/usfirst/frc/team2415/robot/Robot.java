@@ -11,11 +11,11 @@ import org.usfirst.frc.team2415.robot.drivecommands.BreakCommand;
 import org.usfirst.frc.team2415.robot.drivecommands.ResetDriveEncodersCommand;
 import org.usfirst.frc.team2415.robot.drivecommands.ResetYawCommand;
 import org.usfirst.frc.team2415.robot.intakecommands.IntakeCommand;
-import org.usfirst.frc.team2415.robot.intakecommands.ResetIntakeEncodersCommand;
-import org.usfirst.frc.team2415.robot.intakecommands.ZeroIntakeCommand;
+import org.usfirst.frc.team2415.robot.intakecommands.TogglePivotStateCommand;
 import org.usfirst.frc.team2415.robot.subsystems.CatapultSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
-import org.usfirst.frc.team2415.robot.subsystems.IntakeSubsystem;
+import org.usfirst.frc.team2415.robot.subsystems.IntakingSubsystem;
+import org.usfirst.frc.team2415.robot.subsystems.PivotSubsystem;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -38,18 +38,12 @@ public class Robot extends IterativeRobot {
 	public static Command autoCommand;
 	
 	public static DriveSubsystem driveSubsystem;
-	public static IntakeSubsystem intakeSubsystem;
 	public static CatapultSubsystem catapultSubsystem;
+	public static PivotSubsystem pivotSubsystem;
+	public static IntakingSubsystem intakingSubsystem;
 	
 	public static WiredCatGamepad gamepad;
 	public static WiredCatJoystick operator;
-	
-	//in degrees
-	public static final float INTAKE_ANGLE = -132f;
-	public static final float GROUND_ANGLE = -152f;
-	public static final float VERTICAL_ANGLE = -60f;
-	public static final float INTERIOR_ANGLE = -20f;
-	public static final float HIGH_GOAL_ANGLE = -30f;
 	
 	//EDIT AT COMPETITON!!!!
 	public static final double LOW_BAR_ANGLE = 0;
@@ -71,8 +65,9 @@ public class Robot extends IterativeRobot {
 		compressor = new Compressor(RobotMap.PCM_ID);
 		
 		driveSubsystem = new DriveSubsystem();
-		intakeSubsystem = new IntakeSubsystem();
 		catapultSubsystem = new CatapultSubsystem();
+		pivotSubsystem = new PivotSubsystem();
+		intakingSubsystem = new IntakingSubsystem();
 		
 		autoPosChooser = new SendableChooser();
 		autoPosChooser.addDefault("Low Bar", LOW_BAR_ANGLE);
@@ -89,23 +84,19 @@ public class Robot extends IterativeRobot {
 		
 		SmartDashboard.putData(Scheduler.getInstance());
 		
-		Robot.intakeSubsystem.resetEncoder();
 		Robot.driveSubsystem.resetEncoders();
 		
 		SmartDashboard.putData("Reset Drive Encoders", new ResetDriveEncodersCommand());
-		SmartDashboard.putData("Reset Intake Encoders", new ResetIntakeEncodersCommand());
 		SmartDashboard.putData("Reset Yaw", new ResetYawCommand());
 
-		operator.buttons[5].whileHeld(new ZeroIntakeCommand());
-		operator.buttons[9].whileHeld(new IntakeCommand(HIGH_GOAL_ANGLE, 0));
-		operator.buttons[6].whileHeld(new IntakeCommand(VERTICAL_ANGLE, 0));
-		operator.buttons[6].whenInactive(new IntakeCommand(INTERIOR_ANGLE, 0));
-		operator.buttons[3].whileHeld(new IntakeCommand(GROUND_ANGLE, 0));
-		operator.buttons[3].whenInactive(new IntakeCommand(INTERIOR_ANGLE, 0));
-		operator.buttons[7].whileHeld(new IntakeCommand(INTAKE_ANGLE, 0));
-		operator.buttons[7].whenInactive(new IntakeCommand(INTERIOR_ANGLE, 0));
-		operator.buttons[2].whileHeld(new IntakeCommand(INTERIOR_ANGLE, .6));
-		operator.buttons[2].whenInactive(new IntakeCommand(INTERIOR_ANGLE, 0));
+		operator.buttons[2].whileHeld(new IntakeCommand());
+		operator.buttons[2].whenPressed(new TogglePivotStateCommand(PivotSubsystem.INTERIOR));
+		operator.buttons[3].whenPressed(new TogglePivotStateCommand(PivotSubsystem.GROUND));
+		operator.buttons[6].whileHeld(new IntakeCommand());
+		operator.buttons[6].whenPressed(new TogglePivotStateCommand(PivotSubsystem.OUTTAKE));
+		operator.buttons[7].whenPressed(new TogglePivotStateCommand(PivotSubsystem.INTAKE));
+		operator.buttons[7].whileHeld(new IntakeCommand());
+		
 		operator.buttons[4].whenPressed(new FireCatapultCloseCommand());
 		operator.buttons[4].whenInactive(new RestingCommand());
 		operator.buttons[1].whenPressed(new FireCatapultCommand());
@@ -157,7 +148,8 @@ public class Robot extends IterativeRobot {
     
     public void updateStatus() {
     	Robot.driveSubsystem.updateStatus();
-    	Robot.intakeSubsystem.updateStatus();
     	Robot.catapultSubsystem.updateStatus();
+    	Robot.intakingSubsystem.updateStatus();
+    	Robot.pivotSubsystem.updateStatus();
     }
 }
