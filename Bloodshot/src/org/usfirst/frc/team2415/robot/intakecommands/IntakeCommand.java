@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class IntakeCommand extends Command {
 
-	private double speed;
 	
     public IntakeCommand() {
         // Use requires() here to declare subsystem dependencies
@@ -20,6 +19,14 @@ public class IntakeCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	if(Robot.operator.buttons[2].get()){
+        	long startTime = System.currentTimeMillis();
+        	while((System.currentTimeMillis() - startTime)/1000.0 <= 0.65);
+    	}
+    	if(Robot.operator.buttons[6].get()){
+        	long startTime = System.currentTimeMillis();
+        	while((System.currentTimeMillis() - startTime)/1000.0 <= 0.65);
+    	}
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -38,7 +45,7 @@ public class IntakeCommand extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+    	return false;
     }
 
     // Called once after isFinished returns true

@@ -13,8 +13,8 @@ import org.usfirst.frc.team2415.robot.intakecommands.IntakeCommand;
 import org.usfirst.frc.team2415.robot.intakecommands.TogglePivotStateCommand;
 import org.usfirst.frc.team2415.robot.subsystems.CatapultSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
-import org.usfirst.frc.team2415.robot.subsystems.PivotSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.IntakingSubsystem;
+import org.usfirst.frc.team2415.robot.subsystems.PivotSubsystem;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -87,12 +87,12 @@ public class Robot extends IterativeRobot {
 		
 		SmartDashboard.putData("Reset Drive Encoders", new ResetDriveEncodersCommand());
 		SmartDashboard.putData("Reset Yaw", new ResetYawCommand());
-		
-		operator.buttons[2].whenPressed(new TogglePivotStateCommand(PivotSubsystem.INTERIOR));
+
 		operator.buttons[2].whileHeld(new IntakeCommand());
+		operator.buttons[2].whenPressed(new TogglePivotStateCommand(PivotSubsystem.INTERIOR));
 		operator.buttons[3].whenPressed(new TogglePivotStateCommand(PivotSubsystem.GROUND));
-		operator.buttons[6].whenPressed(new TogglePivotStateCommand(PivotSubsystem.OUTTAKE));
 		operator.buttons[6].whileHeld(new IntakeCommand());
+		operator.buttons[6].whenPressed(new TogglePivotStateCommand(PivotSubsystem.OUTTAKE));
 		operator.buttons[7].whenPressed(new TogglePivotStateCommand(PivotSubsystem.INTAKE));
 		operator.buttons[7].whileHeld(new IntakeCommand());
 		

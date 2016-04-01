@@ -59,42 +59,7 @@ public class PivotSubsystem extends Subsystem {
     		shortPiston1.set(true);
     		shortPiston2.set(false);
     	}
-    	
-//    	switch (state){
-//    	case INTERIOR:
-//    	case INTAKE:
-//    		longPiston.set(true);
-//    		shortPiston1.set(false);
-//    		shortPiston2.set(true);
-//    	case OUTTAKE:
-//    		longPiston.set(false);
-//    		shortPiston1.set(true);
-//    		shortPiston2.set(false);
-//    	case GROUND:
-//    		longPiston.set(true);
-//    		shortPiston1.set(true);
-//    		shortPiston2.set(false);
-//    	default:
-//    		longPiston.set(false);
-//    		shortPiston1.set(false);
-//    		shortPiston2.set(true);
-//    	}
     }
-    
-//    public String getIntakeState(){
-//    	boolean[] boolArray = new boolean[]{longPiston.get(),shortPiston1.get(),shortPiston2.get()};
-//    	if(boolArray.equals(new boolean[]{false,false,true})) {
-//    		return "Interior";
-//   		} else if(boolArray.equals(new boolean[]{true,false,true})) {
-//   			return "Intake";
-//   		} else if(boolArray.equals(new boolean[]{false,true,false})) {
-//   			return "Outake";
-//   		} else if(boolArray.equals(new boolean[]{true,true,false})) {
-//   			return "Ground";
-//   		} else {
-//   			return "ERROR";
-//    	}
-//    }
     
     public void updateStatus(){
 //    	SmartDashboard.putString("Intake State", getIntakeState());
