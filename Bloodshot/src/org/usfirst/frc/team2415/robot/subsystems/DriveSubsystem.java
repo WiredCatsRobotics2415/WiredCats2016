@@ -102,11 +102,11 @@ public class DriveSubsystem extends Subsystem {
     }
     
     public double getPitch(){
-    	return imu.getPitch();
+    	return imu.getRoll();
     }
     
     public double getRoll(){
-    	return imu.getRoll();
+    	return imu.getPitch();
     }
     
     public void resetYaw(){
