@@ -8,12 +8,17 @@ import org.usfirst.frc.team2415.robot.catapultcommands.RestingCommand;
 import org.usfirst.frc.team2415.robot.drivecommands.ResetDriveEncodersCommand;
 import org.usfirst.frc.team2415.robot.drivecommands.ResetYawCommand;
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.usfirst.frc.team2415.robot.intakecommands.IntakeCommand;
 import org.usfirst.frc.team2415.robot.intakecommands.TogglePivotStateCommand;
 import org.usfirst.frc.team2415.robot.subsystems.CatapultSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.IntakingSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.PivotSubsystem;
+=======
+import org.usfirst.frc.team2415.robot.subsystems.CatapultSubsystem;
+import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
+>>>>>>> ImprovedRoughTerrainAuto
 =======
 import org.usfirst.frc.team2415.robot.subsystems.CatapultSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
@@ -89,6 +94,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Reset Drive Encoders", new ResetDriveEncodersCommand());
 		SmartDashboard.putData("Reset Yaw", new ResetYawCommand());
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 		operator.buttons[2].whileHeld(new IntakeCommand());
 		operator.buttons[2].whenPressed(new TogglePivotStateCommand(PivotSubsystem.INTERIOR));
@@ -98,6 +104,8 @@ public class Robot extends IterativeRobot {
 		operator.buttons[7].whenPressed(new TogglePivotStateCommand(PivotSubsystem.INTAKE));
 		operator.buttons[7].whileHeld(new IntakeCommand());
 		
+=======
+>>>>>>> ImprovedRoughTerrainAuto
 =======
 >>>>>>> ImprovedRoughTerrainAuto
 		operator.buttons[4].whenPressed(new FireCatapultCloseCommand());
