@@ -1,28 +1,23 @@
 
 package org.usfirst.frc.team2415.robot;
 
+import org.usfirst.frc.team2415.robot.autocommands.SimpleObstacles.LowBarAutonomous;
+import org.usfirst.frc.team2415.robot.autocommands.SimpleObstacles.MoatCommand;
+import org.usfirst.frc.team2415.robot.autocommands.SimpleObstacles.RampartsCommand;
 import org.usfirst.frc.team2415.robot.autocommands.SimpleObstacles.RockWallCommand;
+import org.usfirst.frc.team2415.robot.autocommands.SimpleObstacles.RoughTerrainCommand;
 import org.usfirst.frc.team2415.robot.catapultcommands.FireCatapultCloseCommand;
 import org.usfirst.frc.team2415.robot.catapultcommands.FireCatapultCommand;
 import org.usfirst.frc.team2415.robot.catapultcommands.RestingCommand;
+import org.usfirst.frc.team2415.robot.drivecommands.BreakCommand;
 import org.usfirst.frc.team2415.robot.drivecommands.ResetDriveEncodersCommand;
 import org.usfirst.frc.team2415.robot.drivecommands.ResetYawCommand;
-<<<<<<< HEAD
-<<<<<<< HEAD
 import org.usfirst.frc.team2415.robot.intakecommands.IntakeCommand;
 import org.usfirst.frc.team2415.robot.intakecommands.TogglePivotStateCommand;
 import org.usfirst.frc.team2415.robot.subsystems.CatapultSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.IntakingSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.PivotSubsystem;
-=======
-import org.usfirst.frc.team2415.robot.subsystems.CatapultSubsystem;
-import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
->>>>>>> ImprovedRoughTerrainAuto
-=======
-import org.usfirst.frc.team2415.robot.subsystems.CatapultSubsystem;
-import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
->>>>>>> ImprovedRoughTerrainAuto
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -76,15 +71,12 @@ public class Robot extends IterativeRobot {
 		pivotSubsystem = new PivotSubsystem();
 		intakingSubsystem = new IntakingSubsystem();
 		
-		autoPosChooser = new SendableChooser();
-		autoPosChooser.addDefault("Low Bar", LOW_BAR_ANGLE);
-		autoPosChooser.addObject("Defense 1", DEFENSE_1_ANGLE);
-		autoPosChooser.addObject("Defense 2", DEFENSE_2_ANGLE);
-		autoPosChooser.addObject("Defense 3", DEFENSE_3_ANGLE);
-		autoPosChooser.addObject("Defense 4", DEFENSE_4_ANGLE);
-		SmartDashboard.putData("Auto Position Chooser", autoPosChooser);
-		
 		autoTypeChooser = new SendableChooser();
+		autoTypeChooser.addDefault("Low Bar", new LowBarAutonomous());
+		autoTypeChooser.addObject("Rough Terrain", new RoughTerrainCommand());
+		autoTypeChooser.addObject("Moat", new MoatCommand());
+		autoTypeChooser.addObject("Ramparts", new RampartsCommand());
+		autoTypeChooser.addObject("Rock Wall", new RockWallCommand());
 		SmartDashboard.putData("Auto Obstacle Type", autoTypeChooser);
 		
 		SmartDashboard.putData(Scheduler.getInstance());
@@ -93,9 +85,7 @@ public class Robot extends IterativeRobot {
 		
 		SmartDashboard.putData("Reset Drive Encoders", new ResetDriveEncodersCommand());
 		SmartDashboard.putData("Reset Yaw", new ResetYawCommand());
-<<<<<<< HEAD
-<<<<<<< HEAD
-
+		
 		operator.buttons[2].whileHeld(new IntakeCommand());
 		operator.buttons[2].whenPressed(new TogglePivotStateCommand(PivotSubsystem.INTERIOR));
 		operator.buttons[3].whenPressed(new TogglePivotStateCommand(PivotSubsystem.GROUND));
@@ -103,16 +93,12 @@ public class Robot extends IterativeRobot {
 		operator.buttons[6].whenPressed(new TogglePivotStateCommand(PivotSubsystem.OUTTAKE));
 		operator.buttons[7].whenPressed(new TogglePivotStateCommand(PivotSubsystem.INTAKE));
 		operator.buttons[7].whileHeld(new IntakeCommand());
-		
-=======
->>>>>>> ImprovedRoughTerrainAuto
-=======
->>>>>>> ImprovedRoughTerrainAuto
 		operator.buttons[4].whenPressed(new FireCatapultCloseCommand());
 		operator.buttons[4].whenInactive(new RestingCommand());
 		operator.buttons[1].whenPressed(new FireCatapultCommand());
 		operator.buttons[1].whenInactive(new RestingCommand());
-		//gamepad.leftBumper.whileHeld(new BreakCommand());
+		
+		gamepad.leftBumper.whileHeld(new BreakCommand());
 		
 		//imgServer = new ImgServer("cam0", 2415);
     }
@@ -120,19 +106,19 @@ public class Robot extends IterativeRobot {
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 		updateStatus();
-		//imgServer.showImg();
+		imgServer.showImg();
 	}
 
     public void autonomousInit() {
         // schedule the autonomous command (example)
     	driveSubsystem.resetYaw();
-    	autoCommand = new RockWallCommand();//(Command)autoTypeChooser.getSelected();
+    	autoCommand = (Command)autoTypeChooser.getSelected();
     	autoCommand.start();
     }
 
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
-		//imgServer.showImg();
+		imgServer.showImg();
 		updateStatus();
 		
     }
@@ -148,8 +134,8 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
         updateStatus();
-		//imgServer.showImg();
-        //imgServer.teleopShowImg();
+		imgServer.showImg();
+        imgServer.teleopShowImg();
     }
  
     public void testPeriodic() {
