@@ -11,12 +11,12 @@ import edu.wpi.first.wpilibj.command.Command;
  *	Drives the robot a given speed forwards over the moat, rock wall, rough terrain,
  *	and ramparts. The robot then stops when it knows that it has reached the other side. 
  */
-public class ImprovedRoughTerrainCommand extends Command {
-	private final double SPEED, SAMPLE_SIZE = 6 ;
+public class SimpleTraverseCommand extends Command {
+	private final double SPEED, SAMPLE_SIZE = 16;
 	
 	private ArrayList<Double> samples;
 	
-    public ImprovedRoughTerrainCommand(double speed) {
+    public SimpleTraverseCommand(double speed) {
     	requires(Robot.driveSubsystem);
     	SPEED = speed;
     	
@@ -24,6 +24,8 @@ public class ImprovedRoughTerrainCommand extends Command {
     }
 
     protected void initialize() {
+		Robot.driveSubsystem.disableLeftBreakState();
+		Robot.driveSubsystem.disableRightBreakState();
     }
     
     private boolean checked = false, started = false, isDone = false;
@@ -42,7 +44,9 @@ public class ImprovedRoughTerrainCommand extends Command {
     		if(samples.size() == SAMPLE_SIZE){
     			samples.remove(0);
     			samples.add(Robot.driveSubsystem.getPitch());
-    			if(DataAnalyzer.stdError(samples) < 0.01){
+    			double stdError = DataAnalyzer.stdError(samples);
+				System.out.println(stdError);
+    			if(DataAnalyzer.stdError(samples) < 0.1){
     				isDone = true;
     				Robot.driveSubsystem.setMotors(0, 0);
     				Robot.driveSubsystem.enableLeftBreakState();

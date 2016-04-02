@@ -1,6 +1,8 @@
-package org.usfirst.frc.team2415.robot.autocommands;
+package org.usfirst.frc.team2415.robot.autocommands.SimpleObstacles;
 
 import org.usfirst.frc.team2415.robot.Robot;
+import org.usfirst.frc.team2415.robot.autocommands.StraightDriveCommand;
+import org.usfirst.frc.team2415.robot.autocommands.WaitCommand;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 

@@ -1,21 +1,23 @@
 
 package org.usfirst.frc.team2415.robot;
 
-import org.usfirst.frc.team2415.robot.autocommands.ImprovedRoughTerrainCommand;
-import org.usfirst.frc.team2415.robot.autocommands.PortcullisAutonomous;
-import org.usfirst.frc.team2415.robot.autocommands.RoughTerrainAutoCommand;
+import org.usfirst.frc.team2415.robot.autocommands.SimpleObstacles.RockWallCommand;
 import org.usfirst.frc.team2415.robot.catapultcommands.FireCatapultCloseCommand;
 import org.usfirst.frc.team2415.robot.catapultcommands.FireCatapultCommand;
 import org.usfirst.frc.team2415.robot.catapultcommands.RestingCommand;
-import org.usfirst.frc.team2415.robot.drivecommands.BreakCommand;
 import org.usfirst.frc.team2415.robot.drivecommands.ResetDriveEncodersCommand;
 import org.usfirst.frc.team2415.robot.drivecommands.ResetYawCommand;
+<<<<<<< HEAD
 import org.usfirst.frc.team2415.robot.intakecommands.IntakeCommand;
 import org.usfirst.frc.team2415.robot.intakecommands.TogglePivotStateCommand;
 import org.usfirst.frc.team2415.robot.subsystems.CatapultSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.IntakingSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.PivotSubsystem;
+=======
+import org.usfirst.frc.team2415.robot.subsystems.CatapultSubsystem;
+import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
+>>>>>>> ImprovedRoughTerrainAuto
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -52,7 +54,7 @@ public class Robot extends IterativeRobot {
 	public static final double DEFENSE_3_ANGLE = 0;
 	public static final double DEFENSE_4_ANGLE = 0;
 	
-	public static boolean singlePlayerMode = false;
+	public static boolean singlePlayerMode = true;
 	
 	private Compressor compressor;
 	
@@ -78,8 +80,6 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Auto Position Chooser", autoPosChooser);
 		
 		autoTypeChooser = new SendableChooser();
-		autoTypeChooser.addDefault("Rough Terrain", new RoughTerrainAutoCommand((double)autoPosChooser.getSelected()));
-		autoTypeChooser.addObject("Portcullis", new PortcullisAutonomous((double)autoPosChooser.getSelected()));
 		SmartDashboard.putData("Auto Obstacle Type", autoTypeChooser);
 		
 		SmartDashboard.putData(Scheduler.getInstance());
@@ -88,6 +88,7 @@ public class Robot extends IterativeRobot {
 		
 		SmartDashboard.putData("Reset Drive Encoders", new ResetDriveEncodersCommand());
 		SmartDashboard.putData("Reset Yaw", new ResetYawCommand());
+<<<<<<< HEAD
 
 		operator.buttons[2].whileHeld(new IntakeCommand());
 		operator.buttons[2].whenPressed(new TogglePivotStateCommand(PivotSubsystem.INTERIOR));
@@ -97,12 +98,13 @@ public class Robot extends IterativeRobot {
 		operator.buttons[7].whenPressed(new TogglePivotStateCommand(PivotSubsystem.INTAKE));
 		operator.buttons[7].whileHeld(new IntakeCommand());
 		
+=======
+>>>>>>> ImprovedRoughTerrainAuto
 		operator.buttons[4].whenPressed(new FireCatapultCloseCommand());
 		operator.buttons[4].whenInactive(new RestingCommand());
 		operator.buttons[1].whenPressed(new FireCatapultCommand());
 		operator.buttons[1].whenInactive(new RestingCommand());
-	
-		gamepad.leftBumper.whileHeld(new BreakCommand());
+		//gamepad.leftBumper.whileHeld(new BreakCommand());
 		
 		//imgServer = new ImgServer("cam0", 2415);
     }
@@ -116,7 +118,7 @@ public class Robot extends IterativeRobot {
     public void autonomousInit() {
         // schedule the autonomous command (example)
     	driveSubsystem.resetYaw();
-    	autoCommand = new ImprovedRoughTerrainCommand(.5);//(Command)autoTypeChooser.getSelected();
+    	autoCommand = new RockWallCommand();//(Command)autoTypeChooser.getSelected();
     	autoCommand.start();
     }
 
