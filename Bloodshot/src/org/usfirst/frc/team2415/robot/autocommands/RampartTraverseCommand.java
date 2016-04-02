@@ -11,12 +11,12 @@ import edu.wpi.first.wpilibj.command.Command;
  *	Drives the robot a given speed forwards over the moat, rock wall, rough terrain,
  *	and ramparts. The robot then stops when it knows that it has reached the other side. 
  */
-public class SimpleTraverseCommand extends Command {
+public class RampartTraverseCommand extends Command {
 	private final double SPEED, SAMPLE_SIZE = 16;
 	
 	private ArrayList<Double> samples;
 	
-    public SimpleTraverseCommand(double speed) {
+    public RampartTraverseCommand(double speed) {
     	requires(Robot.driveSubsystem);
     	SPEED = speed;
     	
@@ -24,8 +24,6 @@ public class SimpleTraverseCommand extends Command {
     }
 
     protected void initialize() {
-		Robot.driveSubsystem.disableLeftBreakState();
-		Robot.driveSubsystem.disableRightBreakState();
     }
     
     private boolean checked = false, started = false, isDone = false;
