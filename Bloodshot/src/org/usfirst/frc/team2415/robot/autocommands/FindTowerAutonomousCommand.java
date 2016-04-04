@@ -26,12 +26,12 @@ public class FindTowerAutonomousCommand extends Command {
 	
 	//these are the color scalars that limit what colors the processing looks for
 	//it goes from around gray to around lime green
-	public static final Scalar LOWER_BOUNDS = new Scalar(0,0,200),
-			UPPER_BOUNDS = new Scalar(50,50,255);
+	public static final Scalar LOWER_BOUNDS = new Scalar(60,120,0),
+			UPPER_BOUNDS = new Scalar(190,255,60);
 	
 	public static final Scalar BLACK = new Scalar(0,0,0);
 	
-	public static Mat matOriginal, matHSV, matThresh, clusters, matHeirarchy;
+	public static Mat matOriginal, matHSV, matThresh, clusters, matHeirarchy, structElem;
 	
 	public static double distance;
 	
@@ -77,7 +77,9 @@ public class FindTowerAutonomousCommand extends Command {
 		matThresh = new Mat();
 		clusters = new Mat();
 		matHeirarchy = new Mat();
-				
+		
+		structElem = Imgproc.getStructuringElement(Imgproc.CV_SHAPE_ELLIPSE, new Size(5,5));
+		
 		double distance, forwardDist, azimuth, distX;
     }
 
@@ -105,8 +107,19 @@ public class FindTowerAutonomousCommand extends Command {
 //			matOriginal = Imgcodecs.imread("someFile.png");
 
 			//changes from BGR to HSV; easier to deal with
-			Imgproc.cvtColor(matOriginal,matHSV,Imgproc.COLOR_BGR2HSV);			
-			Core.inRange(matHSV, LOWER_BOUNDS, UPPER_BOUNDS, matThresh);
+//			Imgproc.cvtColor(matOriginal,matHSV,Imgproc.COLOR_RGB2HSV);			
+			Core.inRange(matOriginal, LOWER_BOUNDS, UPPER_BOUNDS, matThresh);
+			
+			Imgproc.dilate(matThresh, matThresh, structElem);
+			Imgproc.dilate(matThresh, matThresh, structElem);
+			Imgproc.dilate(matThresh, matThresh, structElem);
+			Imgproc.erode(matThresh, matThresh, structElem);
+			Imgproc.erode(matThresh, matThresh, structElem);
+			//Imgproc.erode(matThresh, matThresh, structElem);
+
+			Highgui.imwrite("/home/lvuser/bin.jpg", matThresh);
+
+			
 			Imgproc.findContours(matThresh, contours, matHeirarchy, Imgproc.RETR_EXTERNAL, 
 					Imgproc.CHAIN_APPROX_SIMPLE);
 			System.out.println("we have the contours");
@@ -193,17 +206,17 @@ public class FindTowerAutonomousCommand extends Command {
 				*/
 				
 
-		        double turnPower = pid.pidOut(distX);
-		        double straightPower = pid.pidOut(distY);
-		        if(Math.abs(turnPower) > .4) turnPower = ((turnPower > 0) ? 1:-1) * .4;
-		        if(Math.abs(straightPower) > .2) straightPower = ((straightPower > 0) ? 1:-1) * .2;
-		        if(stage){
-		        	Robot.driveSubsystem.setMotors(turnPower, turnPower);
-		        }
-		        else if(!stage){
-		        	Robot.driveSubsystem.setMotors(straightPower, -straightPower);
-		        }
-		        
+//		        double turnPower = pid.pidOut(distX);
+//		        double straightPower = pid.pidOut(distY);
+//		        if(Math.abs(turnPower) > .4) turnPower = ((turnPower > 0) ? 1:-1) * .4;
+//		        if(Math.abs(straightPower) > .2) straightPower = ((straightPower > 0) ? 1:-1) * .2;
+//		        if(stage){
+//		        	Robot.driveSubsystem.setMotors(turnPower, turnPower);
+//		        }
+//		        else if(!stage){
+//		        	Robot.driveSubsystem.setMotors(straightPower, -straightPower);
+//		        }
+//		        
 		    
 			}
 			

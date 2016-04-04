@@ -143,17 +143,22 @@ public class Robot extends IterativeRobot {
 		targetCam = new USBCamera("cam1");
 		targetCam.openCamera(); // open the camera connection
     	targetCam.startCapture(); // start the frame capturing process (internal to USBCamera)
-    	targetCam.setBrightness(25);
+    	targetCam.setBrightness(0);
+    	targetCam.setExposureManual(0);
+    	//targetCam.setWhiteBalanceManual(USBCamera.WhiteBalance.kFixedFlourescent2);
     	targetCam.setSize(320, 240);
 		//imgServer = new ImgServer("cam0", 2415);
+		
     }
 	
 	public void disabledPeriodic() {
+		
 		Scheduler.getInstance().run();
 		updateStatus();
 		targetCam.getImage(img);
         CameraServer.getInstance().setImage(img);
 		//imgServer.showImg();
+		
 	}
 
 
@@ -189,15 +194,15 @@ public class Robot extends IterativeRobot {
     }
     
     public void autonomousPeriodic() {
+    	
         Scheduler.getInstance().run();
 		//imgServer.showImg();
 		updateStatus();
         targetCam.getImage(img);
         NIVision.imaqWriteJPEGFile(Robot.img, "/home/lvuser/idontknow.jpg", 2000, Robot.colorTable);
-        
-        NIVision.imaqDrawLineOnImage(Robot.img, Robot.img, NIVision.DrawMode.DRAW_VALUE, t1, t2, 0);
-        NIVision.imaqDrawLineOnImage(Robot.img, Robot.img, NIVision.DrawMode.DRAW_VALUE, t3, t4, 0);
-		
+        try{
+		NIVision.imaqReadFile(img, "/home/lvuser/bin.jpg");
+        }catch(Exception e){}
 		CameraServer.getInstance().setImage(img);
 		
     }
@@ -217,6 +222,7 @@ public class Robot extends IterativeRobot {
         CameraServer.getInstance().setImage(img);
 		//imgServer.showImg();
         //imgServer.teleopShowImg();
+        
     }
  
     public void testPeriodic() {
