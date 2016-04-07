@@ -16,13 +16,9 @@ import org.usfirst.frc.team2415.robot.intakecommands.IntakeCommand;
 import org.usfirst.frc.team2415.robot.intakecommands.TogglePivotStateCommand;
 import org.usfirst.frc.team2415.robot.subsystems.CatapultSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
-<<<<<<< HEAD
 import org.usfirst.frc.team2415.robot.subsystems.HangerSubsystem;
-import org.usfirst.frc.team2415.robot.subsystems.IntakeSubsystem;
-=======
 import org.usfirst.frc.team2415.robot.subsystems.IntakingSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.PivotSubsystem;
->>>>>>> master
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -67,20 +63,9 @@ public class Robot extends IterativeRobot {
 		
 		driveSubsystem = new DriveSubsystem();
 		catapultSubsystem = new CatapultSubsystem();
-<<<<<<< HEAD
 		hangerSubsystem = new HangerSubsystem();
-		
-		autoPosChooser = new SendableChooser();
-		autoPosChooser.addDefault("Low Bar", LOW_BAR_ANGLE);
-		autoPosChooser.addObject("Defense 1", DEFENSE_1_ANGLE);
-		autoPosChooser.addObject("Defense 2", DEFENSE_2_ANGLE);
-		autoPosChooser.addObject("Defense 3", DEFENSE_3_ANGLE);
-		autoPosChooser.addObject("Defense 4", DEFENSE_4_ANGLE);
-		SmartDashboard.putData("Auto Position Chooser", autoPosChooser);
-=======
 		pivotSubsystem = new PivotSubsystem();
 		intakingSubsystem = new IntakingSubsystem();
->>>>>>> master
 		
 		autoTypeChooser = new SendableChooser();
 		autoTypeChooser.addDefault("Low Bar (needed testing)", new LowBarAutonomous());
