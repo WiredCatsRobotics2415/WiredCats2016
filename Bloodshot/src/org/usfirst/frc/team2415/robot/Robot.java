@@ -15,6 +15,7 @@ import org.usfirst.frc.team2415.robot.intakecommands.ResetIntakeEncodersCommand;
 import org.usfirst.frc.team2415.robot.intakecommands.ZeroIntakeCommand;
 import org.usfirst.frc.team2415.robot.subsystems.CatapultSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
+import org.usfirst.frc.team2415.robot.subsystems.HangerSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.IntakeSubsystem;
 
 import edu.wpi.first.wpilibj.Compressor;
@@ -40,6 +41,7 @@ public class Robot extends IterativeRobot {
 	public static DriveSubsystem driveSubsystem;
 	public static IntakeSubsystem intakeSubsystem;
 	public static CatapultSubsystem catapultSubsystem;
+	public static HangerSubsystem hangerSubsystem;
 	
 	public static WiredCatGamepad gamepad;
 	public static WiredCatJoystick operator;
@@ -73,6 +75,7 @@ public class Robot extends IterativeRobot {
 		driveSubsystem = new DriveSubsystem();
 		intakeSubsystem = new IntakeSubsystem();
 		catapultSubsystem = new CatapultSubsystem();
+		hangerSubsystem = new HangerSubsystem();
 		
 		autoPosChooser = new SendableChooser();
 		autoPosChooser.addDefault("Low Bar", LOW_BAR_ANGLE);

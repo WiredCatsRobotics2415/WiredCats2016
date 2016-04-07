@@ -31,7 +31,11 @@ public class HangerSubsystem extends Subsystem {
     public void winch(){
     	lock.set(false);
     	unlock.set(true);
-    	winchMotor.set(1);
+    	winchMotor.set(-0.3);
+    }
+    
+    public void winchMotor(double speed){
+    	winchMotor.set(speed);
     }
     
     public void stop(){
