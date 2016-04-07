@@ -7,7 +7,6 @@ import com.kauailabs.nav6.frc.IMU;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -154,6 +153,8 @@ public class DriveSubsystem extends Subsystem {
 		SmartDashboard.putNumber("Left Encoder", getLeftEncoder());
 		SmartDashboard.putNumber("Right Encoder", getRightEncoder());
 		SmartDashboard.putNumber("Yaw", getYaw());
+		SmartDashboard.putNumber("Pitch", getPitch());
+		SmartDashboard.putNumber("Roll", getRoll());
 		SmartDashboard.putNumber("Right Talon", getRightTal());
 		SmartDashboard.putNumber("Left Talon", getLeftTal());
 		SmartDashboard.putBoolean("Left Break State", getLeftBreakState());

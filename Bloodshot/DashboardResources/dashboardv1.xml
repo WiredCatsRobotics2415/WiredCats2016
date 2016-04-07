@@ -1,0 +1,104 @@
+<xml version="1.0">
+<dashboard>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.WebcamViewerExtension">
+		<location x="747" y="82"/>
+		<width>1686</width>
+		<height>1244</height>
+	</static-widget>
+	<widget field="Roll" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="1178"/>
+	</widget>
+	<widget field="Pitch" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="1145"/>
+	</widget>
+	<widget field="Diff" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="1112"/>
+	</widget>
+	<widget field="PID Error Value" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="1079"/>
+	</widget>
+	<widget field="Reset Intake Encoders" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="0" y="1033"/>
+	</widget>
+	<widget field="Intake Encoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="1000"/>
+	</widget>
+	<widget field="Intake Talon" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="967"/>
+	</widget>
+	<widget field="PID Output Value" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="934"/>
+	</widget>
+	<widget field="Pivot Talon Current" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="901"/>
+	</widget>
+	<widget field="Is Intake Button Pressed?" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="868"/>
+	</widget>
+	<widget field="Intake Angle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="835"/>
+	</widget>
+	<widget field="PID Setpoint" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="802"/>
+	</widget>
+	<widget field="Left Break State" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="21" y="606"/>
+	</widget>
+	<widget field="Auto Position Chooser" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
+		<location x="0" y="606"/>
+	</widget>
+	<widget field="Intake Speed" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="573"/>
+	</widget>
+	<widget field="Forward Short Piston" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="540"/>
+	</widget>
+	<widget field="Right Break State" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="507"/>
+	</widget>
+	<widget field="Intake Current" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="474"/>
+	</widget>
+	<widget field="Are The Solenoids Extended" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="441"/>
+	</widget>
+	<widget field="Yaw" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="408"/>
+	</widget>
+	<widget field="Backward Short Piston" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="375"/>
+	</widget>
+	<widget field="Scheduler" type="Scheduler" class="edu.wpi.first.smartdashboard.gui.elements.Scheduler">
+		<location x="0" y="348"/>
+	</widget>
+	<widget field="Left Encoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="315"/>
+	</widget>
+	<widget field="Left Talon" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="282"/>
+	</widget>
+	<widget field="Reset Yaw" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="0" y="236"/>
+	</widget>
+	<widget field="Right Talon" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="203"/>
+	</widget>
+	<widget field="Right Encoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="170"/>
+	</widget>
+	<widget field="Reset Drive Encoders" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="0" y="124"/>
+	</widget>
+	<widget field="IR Sensor" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="21" y="33"/>
+	</widget>
+	<widget field="Auto Obstacle Type" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
+		<location x="0" y="33"/>
+	</widget>
+	<widget field="Am I Shooting Right Now" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="0"/>
+	</widget>
+</dashboard>
+<live-window>
+</live-window>
+</xml>

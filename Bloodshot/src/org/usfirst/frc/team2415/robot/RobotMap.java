@@ -15,17 +15,19 @@ public class RobotMap {
     public static final int PIVOT_INTAKE_TALON = 6;
     public static final int SPIN_INTAKE_TALON = 5;
     
-    public static final int CATAPULT_SOLENOID_1 = 2;
-    public static final int CATAPULT_SOLENOID_2 = 3;
+    public static final int CATAPULT_SOLENOID_1 = 1;
+    public static final int CATAPULT_SOLENOID_2 = 0;
+
+    public static final int[] LONG_SOLENOID = {5,6};
+    public static final int[] SHORT_SOLENOID = {4,2};
     
-    public static final int[] FIRE_SOLENOIDS = {CATAPULT_SOLENOID_1, CATAPULT_SOLENOID_2};
+    public static final int[] CATAPULT_SOLENOIDS = {CATAPULT_SOLENOID_1, CATAPULT_SOLENOID_2};
     
     public static final int[] LEFT_ENCODER = {4,5};
     public static final int[] INTAKE_ENCODER = {0,1};
     
     public static final int[] RIGHT_ENCODER = {2,3};
-    public static final int INTAKE_IR_LEFT = 6;
-    public static final int INTAKE_IR_RIGHT = 7;
+    public static final int[] INTAKE_IR = {6,7};
     
     public static final int[] WINCH_LOCK = {0,0};
     public static final int WINCH_MOTOR = 0;

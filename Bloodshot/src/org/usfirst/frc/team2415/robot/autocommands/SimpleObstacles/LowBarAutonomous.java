@@ -1,6 +1,8 @@
-package org.usfirst.frc.team2415.robot.autocommands;
+package org.usfirst.frc.team2415.robot.autocommands.SimpleObstacles;
 
 import org.usfirst.frc.team2415.robot.Robot;
+import org.usfirst.frc.team2415.robot.autocommands.StraightDriveCommand;
+import org.usfirst.frc.team2415.robot.autocommands.WaitCommand;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -14,7 +16,7 @@ public class LowBarAutonomous extends CommandGroup {
 
     public  LowBarAutonomous() {
         addSequential(new StraightDriveCommand(DISTANCE1, .5));
-        addSequential(new WaitCommand(.25, Robot.driveSubsystem));
+        addSequential(new WaitCommand(1, Robot.driveSubsystem));
         addSequential(new StraightDriveCommand(DISTANCE2, .1));
     }
 }
