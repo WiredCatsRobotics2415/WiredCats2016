@@ -26,7 +26,7 @@ public class StopAtDefenseCommand extends Command {
     protected void execute() {
     	Robot.driveSubsystem.setMotors(SPEED, -SPEED);
     	
-    	if((System.currentTimeMillis() - start)/1000.0 <= 2) return;
+    	if((System.currentTimeMillis() - start)/1000.0 <= .5) return;
     	
     	if(Math.abs(Robot.driveSubsystem.getPitch()) > 4){
 			isDone = true;

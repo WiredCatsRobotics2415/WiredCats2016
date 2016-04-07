@@ -16,7 +16,7 @@ public class LowBarAutonomous extends CommandGroup {
 
     public  LowBarAutonomous() {
         addSequential(new StraightDriveCommand(DISTANCE1, .5));
-        addSequential(new WaitCommand(.25, Robot.driveSubsystem));
+        addSequential(new WaitCommand(1, Robot.driveSubsystem));
         addSequential(new StraightDriveCommand(DISTANCE2, .1));
     }
 }

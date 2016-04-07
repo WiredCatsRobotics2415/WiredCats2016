@@ -47,14 +47,7 @@ public class Robot extends IterativeRobot {
 	public static WiredCatGamepad gamepad;
 	public static WiredCatJoystick operator;
 	
-	//EDIT AT COMPETITON!!!!
-	public static final double LOW_BAR_ANGLE = 0;
-	public static final double DEFENSE_1_ANGLE = 0;
-	public static final double DEFENSE_2_ANGLE = 0;
-	public static final double DEFENSE_3_ANGLE = 0;
-	public static final double DEFENSE_4_ANGLE = 0;
-	
-	public static boolean singlePlayerMode = true;
+	public static boolean singlePlayerMode = false;
 	
 	private Compressor compressor;
 	
@@ -72,10 +65,10 @@ public class Robot extends IterativeRobot {
 		intakingSubsystem = new IntakingSubsystem();
 		
 		autoTypeChooser = new SendableChooser();
-		autoTypeChooser.addDefault("Low Bar", new LowBarAutonomous());
+		autoTypeChooser.addDefault("Low Bar (needed testing)", new LowBarAutonomous());
 		autoTypeChooser.addObject("Rough Terrain", new RoughTerrainCommand());
 		autoTypeChooser.addObject("Moat", new MoatCommand());
-		autoTypeChooser.addObject("Ramparts", new RampartsCommand());
+		autoTypeChooser.addObject("Ramparts (needed testing)", new RampartsCommand());
 		autoTypeChooser.addObject("Rock Wall", new RockWallCommand());
 		SmartDashboard.putData("Auto Obstacle Type", autoTypeChooser);
 		
@@ -105,7 +98,7 @@ public class Robot extends IterativeRobot {
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 		updateStatus();
-		imgServer.showImg();
+		//imgServer.showImg();
 	}
 
     public void autonomousInit() {
@@ -117,7 +110,7 @@ public class Robot extends IterativeRobot {
 
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
-		imgServer.showImg();
+		//imgServer.showImg();
 		updateStatus();
 		
     }
@@ -133,8 +126,8 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
         updateStatus();
-		imgServer.showImg();
-        imgServer.teleopShowImg();
+		//imgServer.showImg();
+        //imgServer.teleopShowImg();
     }
  
     public void testPeriodic() {
