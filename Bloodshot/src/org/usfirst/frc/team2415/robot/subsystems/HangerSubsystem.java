@@ -16,11 +16,13 @@ public class HangerSubsystem extends Subsystem {
 	
 	private Solenoid lock, unlock;
 	private CANTalon winchMotor;
+	private boolean isLocked;
 	
 	public HangerSubsystem(){
 		winchMotor = new CANTalon(RobotMap.WINCH_MOTOR);
 		lock = new Solenoid(RobotMap.PCM_ID, RobotMap.WINCH_LOCK[0]);
 		unlock = new Solenoid(RobotMap.PCM_ID, RobotMap.WINCH_LOCK[1]);
+		unlockWinch();
 	}
 	
     public void initDefaultCommand() {
@@ -36,6 +38,22 @@ public class HangerSubsystem extends Subsystem {
     
     public void winchMotor(double speed){
     	winchMotor.set(speed);
+    }
+    
+    public boolean isLocked(){
+    	return isLocked;
+    }
+    
+    public void lockWinch(){
+    	lock.set(true);
+    	unlock.set(false);
+    	isLocked = true;
+    }
+    
+    public void unlockWinch(){
+    	lock.set(false);
+    	unlock.set(true);
+    	isLocked = false;
     }
     
     public void stop(){

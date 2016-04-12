@@ -13,7 +13,7 @@ public class RoughTerrainCommand extends CommandGroup {
 		Robot.driveSubsystem.resetYaw();
 		addSequential(new SimpleTraverseCommand(.5));
 		addSequential(new WaitCommand(1, Robot.driveSubsystem));
-		addSequential(new StopAtDefenseCommand(-.25));
+		//addSequential(new StopAtDefenseCommand(-.25));
 	}
 	
 }

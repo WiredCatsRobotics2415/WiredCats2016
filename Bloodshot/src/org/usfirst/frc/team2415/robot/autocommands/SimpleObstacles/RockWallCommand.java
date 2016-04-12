@@ -13,7 +13,7 @@ public class RockWallCommand extends CommandGroup {
 		Robot.driveSubsystem.resetYaw();
 		addSequential(new SimpleTraverseCommand(1));
 		addSequential(new WaitCommand(1, Robot.driveSubsystem));
-		addSequential(new StopAtDefenseCommand(-.25));
+		//addSequential(new StopAtDefenseCommand(-.25));
 	}
 	
 }

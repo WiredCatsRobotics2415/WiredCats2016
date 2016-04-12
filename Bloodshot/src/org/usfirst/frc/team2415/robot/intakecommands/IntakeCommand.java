@@ -2,6 +2,7 @@ package org.usfirst.frc.team2415.robot.intakecommands;
 
 import org.usfirst.frc.team2415.robot.Robot;
 import org.usfirst.frc.team2415.robot.subsystems.IntakingSubsystem;
+import org.usfirst.frc.team2415.robot.subsystems.PivotSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -23,25 +24,27 @@ public class IntakeCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	if(Robot.operator.buttons[2].get() || Robot.operator.buttons[6].get()){
+    	
+    	if(Robot.operator.buttons[5].get() || Robot.operator.buttons[6].get()){
         	startTime = System.currentTimeMillis();
     	}
+    	Robot.intakingSubsystem.enableBreakMode();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() { 
     	
     	if(!checked && !isInstant){
-    		if((System.currentTimeMillis() - startTime) < 650) return;
+    		if((System.currentTimeMillis() - startTime) < 750) return;
     		checked = true;
     	}
     	
-    	if(Robot.operator.buttons[7].get() && !Robot.intakingSubsystem.getIR()) {
-		Robot.intakingSubsystem.setIntakeSpeed(0.75);
+    	if((Robot.pivotSubsystem.isIntaking() && !Robot.intakingSubsystem.getIR())) {
+    		Robot.intakingSubsystem.setIntakeSpeed(1);
     	} else if(Robot.operator.buttons[6].get()) {
 			Robot.intakingSubsystem.setIntakeSpeed(-1);
-    	} else if(Robot.operator.buttons[2].get()) {
-			Robot.intakingSubsystem.setIntakeSpeed(0.50 );
+    	} else if(Robot.operator.buttons[5].get()) {
+			Robot.intakingSubsystem.setIntakeSpeed(0.5 );
 		} else {
 			Robot.intakingSubsystem.setIntakeSpeed(0);
 		}
@@ -49,6 +52,10 @@ public class IntakeCommand extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
+    		if(Robot.pivotSubsystem.isIntaking()){
+    			if(Robot.intakingSubsystem.getIR()) return true;
+    			else return false;
+    		}
     	return false;
     }
 

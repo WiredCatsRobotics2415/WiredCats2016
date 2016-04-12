@@ -26,6 +26,8 @@ public class WiredCatGamepad extends Joystick{
 		b_button = new JoystickButton(this, 3);
 		y_button = new JoystickButton(this, 4);
 		
+		
+		
 		leftBumper = new JoystickButton(this, 5);
 		rightBumper = new JoystickButton(this, 6);
 		

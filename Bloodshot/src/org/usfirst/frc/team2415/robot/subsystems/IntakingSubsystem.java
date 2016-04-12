@@ -26,6 +26,10 @@ public class IntakingSubsystem extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
     
+    public void enableBreakMode(){
+    	intakeMotor.enableBrakeMode(true);
+    }
+    
     public void setIntakeSpeed(double speed){
     	intakeMotor.set(speed);
     }
@@ -46,6 +50,9 @@ public class IntakingSubsystem extends Subsystem {
     	SmartDashboard.putNumber("Intake Speed", getIntakeSpeed());
     	SmartDashboard.putNumber("Intake Current", getIntakeCurrent());
     	SmartDashboard.putBoolean("IR Sensor", getIR());
+
+    	SmartDashboard.putBoolean("Left IR Sensor", leftIR.get());
+    	SmartDashboard.putBoolean("Right IR Sensor", rightIR.get());
     }
 }
 

@@ -1,21 +1,24 @@
 
 package org.usfirst.frc.team2415.robot;
 
+import org.usfirst.frc.team2415.robot.autocommands.MindlessTraverseCommand;
 import org.usfirst.frc.team2415.robot.autocommands.SimpleObstacles.LowBarAutonomous;
 import org.usfirst.frc.team2415.robot.autocommands.SimpleObstacles.MoatCommand;
 import org.usfirst.frc.team2415.robot.autocommands.SimpleObstacles.RampartsCommand;
 import org.usfirst.frc.team2415.robot.autocommands.SimpleObstacles.RockWallCommand;
 import org.usfirst.frc.team2415.robot.autocommands.SimpleObstacles.RoughTerrainCommand;
-import org.usfirst.frc.team2415.robot.catapultcommands.FireCatapultCloseCommand;
 import org.usfirst.frc.team2415.robot.catapultcommands.FireCatapultCommand;
 import org.usfirst.frc.team2415.robot.catapultcommands.RestingCommand;
 import org.usfirst.frc.team2415.robot.drivecommands.BreakCommand;
 import org.usfirst.frc.team2415.robot.drivecommands.ResetDriveEncodersCommand;
 import org.usfirst.frc.team2415.robot.drivecommands.ResetYawCommand;
+import org.usfirst.frc.team2415.robot.flashlightcommands.TurnOnLightCommand;
+import org.usfirst.frc.team2415.robot.intakecommands.IntakeAndFlipCommand;
 import org.usfirst.frc.team2415.robot.intakecommands.IntakeCommand;
 import org.usfirst.frc.team2415.robot.intakecommands.TogglePivotStateCommand;
 import org.usfirst.frc.team2415.robot.subsystems.CatapultSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
+import org.usfirst.frc.team2415.robot.subsystems.FlashlightSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.HangerSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.IntakingSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.PivotSubsystem;
@@ -45,6 +48,7 @@ public class Robot extends IterativeRobot {
 	public static HangerSubsystem hangerSubsystem;
 	public static PivotSubsystem pivotSubsystem;
 	public static IntakingSubsystem intakingSubsystem;
+	public static FlashlightSubsystem flashlightSubsystem;
 	
 	public static WiredCatGamepad gamepad;
 	public static WiredCatJoystick operator;
@@ -63,9 +67,10 @@ public class Robot extends IterativeRobot {
 		
 		driveSubsystem = new DriveSubsystem();
 		catapultSubsystem = new CatapultSubsystem();
-		hangerSubsystem = new HangerSubsystem();
+		//hangerSubsystem = new HangerSubsystem();
 		pivotSubsystem = new PivotSubsystem();
 		intakingSubsystem = new IntakingSubsystem();
+		flashlightSubsystem = new FlashlightSubsystem();
 		
 		autoTypeChooser = new SendableChooser();
 		autoTypeChooser.addDefault("Low Bar (needed testing)", new LowBarAutonomous());
@@ -81,19 +86,25 @@ public class Robot extends IterativeRobot {
 		
 		SmartDashboard.putData("Reset Drive Encoders", new ResetDriveEncodersCommand());
 		SmartDashboard.putData("Reset Yaw", new ResetYawCommand());
-		operator.buttons[2].whileHeld(new IntakeCommand(false));
-		operator.buttons[2].whenPressed(new TogglePivotStateCommand(PivotSubsystem.INTERIOR));
+		operator.buttons[5].whileHeld(new IntakeCommand(false));
+		operator.buttons[5].whenPressed(new TogglePivotStateCommand(PivotSubsystem.INTERIOR));
 		operator.buttons[3].whenPressed(new TogglePivotStateCommand(PivotSubsystem.GROUND));
 		operator.buttons[6].whileHeld(new IntakeCommand(false));
 		operator.buttons[6].whenPressed(new TogglePivotStateCommand(PivotSubsystem.OUTTAKE));
-		operator.buttons[7].whenPressed(new TogglePivotStateCommand(PivotSubsystem.INTAKE));
-		operator.buttons[7].whileHeld(new IntakeCommand(true));
-		operator.buttons[4].whenPressed(new FireCatapultCloseCommand());
-		operator.buttons[4].whenInactive(new RestingCommand());
+//		operator.buttons[7].whenPressed(new TogglePivotStateCommand(PivotSubsystem.INTAKE));
+//		operator.buttons[7].whileHeld(new IntakeCommand(true));
+		operator.buttons[7].whenPressed(new IntakeAndFlipCommand());
+//		operator.buttons[4].whenPressed(new FireCatapultCloseCommand());
+//		operator.buttons[4].whenInactive(new RestingCommand());
 		operator.buttons[1].whenPressed(new FireCatapultCommand());
 		operator.buttons[1].whenInactive(new RestingCommand());
+		operator.buttons[2].whenPressed(new TogglePivotStateCommand(PivotSubsystem.OUTTAKE));
+		operator.buttons[4].whenPressed(new TurnOnLightCommand());;
 		
 		gamepad.leftBumper.whileHeld(new BreakCommand());
+		
+//		gamepad.a_button.whileHeld(new HangMeBBCommand());
+//		gamepad.b_button.whenPressed(new ReleaseHangerCommand());
 		
 		//imgServer = new ImgServer("cam0", 2415);
     }
@@ -107,7 +118,9 @@ public class Robot extends IterativeRobot {
     public void autonomousInit() {
         // schedule the autonomous command (example)
     	driveSubsystem.resetYaw();
-    	autoCommand = (Command)autoTypeChooser.getSelected();
+    	autoCommand = new MindlessTraverseCommand();
+//    	autoCommand = new LowBarAutonomous();
+//    	autoCommand = new WaitCommand(14, driveSubsystem);
     	autoCommand.start();
     }
 
