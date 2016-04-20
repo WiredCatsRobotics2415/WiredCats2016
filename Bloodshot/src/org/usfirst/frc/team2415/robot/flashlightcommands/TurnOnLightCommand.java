@@ -11,7 +11,7 @@ public class TurnOnLightCommand extends Command {
 
     public TurnOnLightCommand() {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.flashlightSubsystem);
+        requires(Robot.opticSubsystem);
     }
 
     // Called just before this Command runs the first time
@@ -20,7 +20,7 @@ public class TurnOnLightCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.flashlightSubsystem.itsLit();
+    	Robot.opticSubsystem.itsLit();
     }
 
     // Make this return true when this Command no longer needs to run execute()

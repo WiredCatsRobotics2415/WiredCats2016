@@ -1,8 +1,8 @@
 package org.usfirst.frc.team2415.robot.intakecommands;
 
+import java.util.ArrayList;
+
 import org.usfirst.frc.team2415.robot.Robot;
-import org.usfirst.frc.team2415.robot.subsystems.IntakingSubsystem;
-import org.usfirst.frc.team2415.robot.subsystems.PivotSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -11,9 +11,9 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class IntakeCommand extends Command {
 
-	long startTime;
+	long startTime, intakeStart;
 	
-	boolean checked = false, isInstant;
+	boolean checked = false, isInstant, notStart;
 	
     public IntakeCommand(boolean isInstant) {
         // Use requires() here to declare subsystem dependencies
@@ -29,22 +29,24 @@ public class IntakeCommand extends Command {
         	startTime = System.currentTimeMillis();
     	}
     	Robot.intakingSubsystem.enableBreakMode();
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
-    protected void execute() { 
-    	
+    protected void execute() {
     	if(!checked && !isInstant){
     		if((System.currentTimeMillis() - startTime) < 750) return;
     		checked = true;
     	}
-    	
-    	if((Robot.pivotSubsystem.isIntaking() && !Robot.intakingSubsystem.getIR())) {
-    		Robot.intakingSubsystem.setIntakeSpeed(1);
+    	    	
+    	if(Robot.pivotSubsystem.isIntaking()) {
+    		Robot.intakingSubsystem.setIntakeSpeed(.75);
     	} else if(Robot.operator.buttons[6].get()) {
 			Robot.intakingSubsystem.setIntakeSpeed(-1);
     	} else if(Robot.operator.buttons[5].get()) {
-			Robot.intakingSubsystem.setIntakeSpeed(0.5 );
+			Robot.intakingSubsystem.setIntakeSpeed(0.5);
+		}else if(Robot.operator.buttons[10].get()) {
+			Robot.intakingSubsystem.setIntakeSpeed(0.5);
 		} else {
 			Robot.intakingSubsystem.setIntakeSpeed(0);
 		}
@@ -53,7 +55,13 @@ public class IntakeCommand extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     		if(Robot.pivotSubsystem.isIntaking()){
-    			if(Robot.intakingSubsystem.getIR()) return true;
+    			if(Robot.intakingSubsystem.getIR()){
+    				if(notStart){
+    					intakeStart = System.currentTimeMillis();
+    					notStart = false;
+    				}else if((System.currentTimeMillis() - intakeStart)/1000.0 >= .6) return true;
+//    				return true;
+    			}
     			else return false;
     		}
     	return false;

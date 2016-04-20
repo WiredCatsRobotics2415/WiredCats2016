@@ -21,6 +21,7 @@ import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.FlashlightSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.HangerSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.IntakingSubsystem;
+import org.usfirst.frc.team2415.robot.subsystems.OpticSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.PivotSubsystem;
 
 import edu.wpi.first.wpilibj.Compressor;
@@ -49,6 +50,7 @@ public class Robot extends IterativeRobot {
 	public static PivotSubsystem pivotSubsystem;
 	public static IntakingSubsystem intakingSubsystem;
 	public static FlashlightSubsystem flashlightSubsystem;
+	public static OpticSubsystem opticSubsystem;
 	
 	public static WiredCatGamepad gamepad;
 	public static WiredCatJoystick operator;
@@ -57,7 +59,7 @@ public class Robot extends IterativeRobot {
 	
 	private Compressor compressor;
 	
-	private ImgServer imgServer;
+//	private ImgServer imgServer;
 	
     public void robotInit() {
 		
@@ -70,7 +72,13 @@ public class Robot extends IterativeRobot {
 		//hangerSubsystem = new HangerSubsystem();
 		pivotSubsystem = new PivotSubsystem();
 		intakingSubsystem = new IntakingSubsystem();
-		flashlightSubsystem = new FlashlightSubsystem();
+		opticSubsystem = new OpticSubsystem();
+		
+		autoPosChooser = new SendableChooser();
+		autoPosChooser.addObject("2 Pos", true);
+		autoPosChooser.addObject("3 Pos", true);
+		autoPosChooser.addObject("4 Pos", true);
+		autoPosChooser.addObject("5 Pos", true);
 		
 		autoTypeChooser = new SendableChooser();
 		autoTypeChooser.addDefault("Low Bar (needed testing)", new LowBarAutonomous());
@@ -99,26 +107,27 @@ public class Robot extends IterativeRobot {
 		operator.buttons[1].whenPressed(new FireCatapultCommand());
 		operator.buttons[1].whenInactive(new RestingCommand());
 		operator.buttons[2].whenPressed(new TogglePivotStateCommand(PivotSubsystem.OUTTAKE));
-		operator.buttons[4].whenPressed(new TurnOnLightCommand());;
+		operator.buttons[4].whenPressed(new TurnOnLightCommand());
 		
 		gamepad.leftBumper.whileHeld(new BreakCommand());
 		
 //		gamepad.a_button.whileHeld(new HangMeBBCommand());
 //		gamepad.b_button.whenPressed(new ReleaseHangerCommand());
 		
-		//imgServer = new ImgServer("cam0", 2415);
+//		imgServer = new ImgServer("cam0", 2415);
     }
 	
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 		updateStatus();
-		//imgServer.showImg();
+//		imgServer.showImg();
 	}
 
     public void autonomousInit() {
         // schedule the autonomous command (example)
     	driveSubsystem.resetYaw();
     	autoCommand = new MindlessTraverseCommand();
+//    	autoCommand = new PixyAutoCommand();
 //    	autoCommand = new LowBarAutonomous();
 //    	autoCommand = new WaitCommand(14, driveSubsystem);
     	autoCommand.start();
@@ -126,7 +135,7 @@ public class Robot extends IterativeRobot {
 
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
-		//imgServer.showImg();
+//		imgServer.showImg();
 		updateStatus();
 		
     }
@@ -142,7 +151,7 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
         updateStatus();
-		//imgServer.showImg();
+//		imgServer.showImg();
         //imgServer.teleopShowImg();
     }
  
