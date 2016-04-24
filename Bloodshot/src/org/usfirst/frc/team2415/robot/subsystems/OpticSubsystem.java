@@ -20,7 +20,7 @@ public class OpticSubsystem extends Subsystem {
 
 	private Relay lightSwitch;
 	private boolean isLit;
-	private AnalogInput pixyCam;
+	public AnalogInput pixyCam;
 	private DigitalInput pixyCamBool;
 	
 	public OpticSubsystem(){
@@ -49,11 +49,8 @@ public class OpticSubsystem extends Subsystem {
     	return isLit;
     }
     
-    public double[] camAverage(){
-    	double[] arr = new double[2];
-    	arr[0] = pixyCam.getVoltage();
-    	arr[1] = pixyCam.getValue();
-    	return arr;
+    public double camVoltage(){
+    	return pixyCam.getVoltage();
     }
     //Checks the digital output of the pixy cam to see if there even is an image that fits within the color parameters
     public boolean camBool(){

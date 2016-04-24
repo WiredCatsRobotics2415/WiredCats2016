@@ -2,6 +2,7 @@
 package org.usfirst.frc.team2415.robot;
 
 import org.usfirst.frc.team2415.robot.autocommands.MindlessTraverseCommand;
+import org.usfirst.frc.team2415.robot.autocommands.PixyAutoCommand;
 import org.usfirst.frc.team2415.robot.autocommands.SimpleObstacles.LowBarAutonomous;
 import org.usfirst.frc.team2415.robot.autocommands.SimpleObstacles.MoatCommand;
 import org.usfirst.frc.team2415.robot.autocommands.SimpleObstacles.RampartsCommand;
@@ -18,7 +19,6 @@ import org.usfirst.frc.team2415.robot.intakecommands.IntakeCommand;
 import org.usfirst.frc.team2415.robot.intakecommands.TogglePivotStateCommand;
 import org.usfirst.frc.team2415.robot.subsystems.CatapultSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
-import org.usfirst.frc.team2415.robot.subsystems.FlashlightSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.HangerSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.IntakingSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.OpticSubsystem;
@@ -49,13 +49,12 @@ public class Robot extends IterativeRobot {
 	public static HangerSubsystem hangerSubsystem;
 	public static PivotSubsystem pivotSubsystem;
 	public static IntakingSubsystem intakingSubsystem;
-	public static FlashlightSubsystem flashlightSubsystem;
 	public static OpticSubsystem opticSubsystem;
 	
 	public static WiredCatGamepad gamepad;
 	public static WiredCatJoystick operator;
 	
-	public static boolean singlePlayerMode = false;
+	public static boolean singlePlayerMode = true;
 	
 	private Compressor compressor;
 	
@@ -126,8 +125,8 @@ public class Robot extends IterativeRobot {
     public void autonomousInit() {
         // schedule the autonomous command (example)
     	driveSubsystem.resetYaw();
-    	autoCommand = new MindlessTraverseCommand();
-//    	autoCommand = new PixyAutoCommand();
+//    	autoCommand = new MindlessTraverseCommand();
+    	autoCommand = new PixyAutoCommand();
 //    	autoCommand = new LowBarAutonomous();
 //    	autoCommand = new WaitCommand(14, driveSubsystem);
     	autoCommand.start();
