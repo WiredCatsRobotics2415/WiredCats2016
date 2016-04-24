@@ -1,7 +1,7 @@
 
 package org.usfirst.frc.team2415.robot;
 
-import org.usfirst.frc.team2415.robot.autocommands.MindlessTraverseCommand;
+import org.usfirst.frc.team2415.robot.autocommands.PixyAlignCommand;
 import org.usfirst.frc.team2415.robot.autocommands.PixyAutoCommand;
 import org.usfirst.frc.team2415.robot.autocommands.SimpleObstacles.LowBarAutonomous;
 import org.usfirst.frc.team2415.robot.autocommands.SimpleObstacles.MoatCommand;
@@ -103,7 +103,8 @@ public class Robot extends IterativeRobot {
 		operator.buttons[7].whenPressed(new IntakeAndFlipCommand());
 //		operator.buttons[4].whenPressed(new FireCatapultCloseCommand());
 //		operator.buttons[4].whenInactive(new RestingCommand());
-		operator.buttons[1].whenPressed(new FireCatapultCommand());
+		operator.buttons[1].whileHeld(new PixyAlignCommand());
+		operator.buttons[1].whenReleased(new FireCatapultCommand());
 		operator.buttons[1].whenInactive(new RestingCommand());
 		operator.buttons[2].whenPressed(new TogglePivotStateCommand(PivotSubsystem.OUTTAKE));
 		operator.buttons[4].whenPressed(new TurnOnLightCommand());
