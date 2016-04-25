@@ -11,10 +11,14 @@ public class MindlessTraverseCommand extends Command {
 	
 	long start;
 	boolean isDone = false;
+	private double speed;
+	private double duration;
 	
-    public MindlessTraverseCommand() {
+    public MindlessTraverseCommand(double speed, double duration) {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.driveSubsystem);
+        this.speed = speed;
+        this.duration = duration;
     }
 
     // Called just before this Command runs the first time
@@ -27,8 +31,8 @@ public class MindlessTraverseCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.driveSubsystem.setMotors(1, -1);
-    	if((System.currentTimeMillis() - start)/1000.0 >= 2.25) isDone = true;
+    	Robot.driveSubsystem.setMotors(speed, -speed);
+    	if((System.currentTimeMillis() - start)/1000.0 >= duration) isDone = true;
     }
 
     // Make this return true when this Command no longer needs to run execute()

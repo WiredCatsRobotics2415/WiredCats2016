@@ -126,7 +126,7 @@ public class Robot extends IterativeRobot {
     public void autonomousInit() {
         // schedule the autonomous command (example)
     	driveSubsystem.resetYaw();
-    	autoCommand = new MindlessTraverseCommand();
+    	autoCommand = new MindlessTraverseCommand(1, 2.25);
 //    	autoCommand = new PixyAutoCommand();
 //    	autoCommand = new LowBarAutonomous();
 //    	autoCommand = new WaitCommand(14, driveSubsystem);
