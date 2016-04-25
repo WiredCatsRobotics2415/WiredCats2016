@@ -19,6 +19,8 @@ public class ChevalAutonomousCommand extends CommandGroup {
         addParallel(new TogglePivotStateCommand(PivotSubsystem.GROUND));
         addSequential(new StraightDriveCommand(-.25, .2));
         addSequential(new WaitCommand(.25, Robot.driveSubsystem));
+    	addSequential(new TogglePivotStateCommand(PivotSubsystem.GROUND));
+        addSequential(new WaitCommand(.25, Robot.driveSubsystem));
         addSequential(new MindlessTraverseCommand(.2, 1.5));
     }
 }
