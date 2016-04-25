@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class TurnOnLightCommand extends Command {
+public class GetLitCommand extends Command {
 
-    public TurnOnLightCommand() {
+    public GetLitCommand() {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.opticSubsystem);
     }
@@ -20,12 +20,12 @@ public class TurnOnLightCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.opticSubsystem.itsLit();
+    	Robot.opticSubsystem.itsNotLit();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return !Robot.operator.buttons[4].get();
+        return false;
     }
 
     // Called once after isFinished returns true

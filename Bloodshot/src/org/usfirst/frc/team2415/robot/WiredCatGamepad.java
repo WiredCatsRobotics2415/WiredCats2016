@@ -29,10 +29,7 @@ public class WiredCatGamepad extends Joystick{
 		
 		
 		leftBumper = new JoystickButton(this, 5);
-		rightBumper = new JoystickButton(this, 6);
-		
-		leftTrigger = new JoystickButton(this, 7);
-		rightTrigger = new JoystickButton(this, 8);	
+		rightBumper = new JoystickButton(this, 6);	
 	}
 	
 	public double leftY(){
@@ -49,5 +46,13 @@ public class WiredCatGamepad extends Joystick{
 	
 	public double rightX(){
 		return this.getRawAxis(4);
+	}
+	
+	public double leftTrigger(){
+		return this.getRawAxis(3);
+	}
+	
+	public double rightTrigger(){
+		return this.getRawAxis(2);
 	}
 }

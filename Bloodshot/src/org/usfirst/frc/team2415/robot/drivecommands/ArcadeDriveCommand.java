@@ -58,11 +58,7 @@ public class ArcadeDriveCommand extends Command {
 //    	if(Math.abs(left) >= 1) Robot.driveSubsystem.enableRightBreakState();
 //    	if(Math.abs(right) >= 1) Robot.driveSubsystem.enableLeftBreakState();
     	
-    	if(Robot.gamepad.rightBumper.get()){
-        	Robot.driveSubsystem.setMotors(left*0.25, -right*0.25);
-    	} else {
-        	Robot.driveSubsystem.setMotors(left, -right);
-    	}
+        	Robot.driveSubsystem.setMotors(left*(1-Robot.gamepad.rightTrigger()), -right*(1-Robot.gamepad.rightTrigger()));
     }
 
     // Make this return true when this Command no longer needs to run execute()

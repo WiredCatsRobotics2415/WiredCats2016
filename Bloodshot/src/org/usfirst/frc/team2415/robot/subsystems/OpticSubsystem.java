@@ -1,7 +1,7 @@
 package org.usfirst.frc.team2415.robot.subsystems;
 
 import org.usfirst.frc.team2415.robot.RobotMap;
-import org.usfirst.frc.team2415.robot.flashlightcommands.TurnOffLightCommand;
+import org.usfirst.frc.team2415.robot.flashlightcommands.GetLitCommand;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.AnalogOutput;
@@ -32,7 +32,7 @@ public class OpticSubsystem extends Subsystem {
 	
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-    	setDefaultCommand(new TurnOffLightCommand());
+    	setDefaultCommand(new GetLitCommand());
     }
     
     public void itsLit(){

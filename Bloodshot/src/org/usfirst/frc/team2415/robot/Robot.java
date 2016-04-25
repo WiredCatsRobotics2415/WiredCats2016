@@ -13,7 +13,7 @@ import org.usfirst.frc.team2415.robot.catapultcommands.RestingCommand;
 import org.usfirst.frc.team2415.robot.drivecommands.BreakCommand;
 import org.usfirst.frc.team2415.robot.drivecommands.ResetDriveEncodersCommand;
 import org.usfirst.frc.team2415.robot.drivecommands.ResetYawCommand;
-import org.usfirst.frc.team2415.robot.flashlightcommands.TurnOnLightCommand;
+import org.usfirst.frc.team2415.robot.flashlightcommands.GetUnlitCommand;
 import org.usfirst.frc.team2415.robot.intakecommands.IntakeAndFlipCommand;
 import org.usfirst.frc.team2415.robot.intakecommands.IntakeCommand;
 import org.usfirst.frc.team2415.robot.intakecommands.TogglePivotStateCommand;
@@ -93,6 +93,7 @@ public class Robot extends IterativeRobot {
 		
 		SmartDashboard.putData("Reset Drive Encoders", new ResetDriveEncodersCommand());
 		SmartDashboard.putData("Reset Yaw", new ResetYawCommand());
+		
 		operator.buttons[5].whileHeld(new IntakeCommand(false));
 		operator.buttons[5].whenPressed(new TogglePivotStateCommand(PivotSubsystem.INTERIOR));
 		operator.buttons[3].whenPressed(new TogglePivotStateCommand(PivotSubsystem.GROUND));
@@ -101,18 +102,25 @@ public class Robot extends IterativeRobot {
 //		operator.buttons[7].whenPressed(new TogglePivotStateCommand(PivotSubsystem.INTAKE));
 //		operator.buttons[7].whileHeld(new IntakeCommand(true));
 		operator.buttons[7].whenPressed(new IntakeAndFlipCommand());
-//		operator.buttons[4].whenPressed(new FireCatapultCloseCommand());
-//		operator.buttons[4].whenInactive(new RestingCommand());
-		operator.buttons[1].whileHeld(new PixyAlignCommand());
-		operator.buttons[1].whenReleased(new FireCatapultCommand());
-		operator.buttons[1].whenInactive(new RestingCommand());
+		if(singlePlayerMode){
+			operator.buttons[1].whileHeld(new PixyAlignCommand());
+			operator.buttons[1].whenReleased(new FireCatapultCommand());
+			operator.buttons[1].whenInactive(new RestingCommand());
+			operator.buttons[4].whenPressed(new GetUnlitCommand());
+		}
 		operator.buttons[2].whenPressed(new TogglePivotStateCommand(PivotSubsystem.OUTTAKE));
-		operator.buttons[4].whenPressed(new TurnOnLightCommand());
 		
-		gamepad.leftBumper.whileHeld(new BreakCommand());
+		gamepad.b_button.whileHeld(new BreakCommand());
+		if(!singlePlayerMode){
+			gamepad.a_button.whileHeld(new PixyAlignCommand());
+			gamepad.a_button.whenReleased(new FireCatapultCommand());
+			gamepad.a_button.whenInactive(new RestingCommand());
+			gamepad.leftBumper.whenPressed(new GetUnlitCommand());
+			gamepad.leftBumper.whenReleased(new FireCatapultCommand());
+			gamepad.leftBumper.whenInactive(new RestingCommand());
+		}
 		
-//		gamepad.a_button.whileHeld(new HangMeBBCommand());
-//		gamepad.b_button.whenPressed(new ReleaseHangerCommand());
+		
 		
 //		imgServer = new ImgServer("cam0", 2415);
     }
@@ -164,5 +172,7 @@ public class Robot extends IterativeRobot {
     	Robot.catapultSubsystem.updateStatus();
     	Robot.intakingSubsystem.updateStatus();
     	Robot.pivotSubsystem.updateStatus();
+    	
+    	SmartDashboard.putBoolean("Single Player Mode?", singlePlayerMode);
     }
 }
