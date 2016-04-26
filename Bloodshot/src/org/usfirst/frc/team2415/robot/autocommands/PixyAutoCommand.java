@@ -18,7 +18,7 @@ public class PixyAutoCommand extends Command {
 	private double motorPower, error, stdError = 0;
 	private boolean isDone = false;
 	
-	private static final double STEADY_STATE_TOLERANCE = .02;
+	private static final double STEADY_STATE_TOLERANCE = .025;
 	private static final int SAMPLE_SIZE = 6;
 
 	private PID pid;
@@ -28,7 +28,7 @@ public class PixyAutoCommand extends Command {
 	
     public PixyAutoCommand() {
     	requires(Robot.opticSubsystem);
-    	pid = new PID(2,0,0.1);
+    	pid = new PID(2.1,0.6,0.3);
     	samples = new ArrayList<Double>();
     }
 
@@ -46,11 +46,9 @@ public class PixyAutoCommand extends Command {
 
     	
 //    	System.out.println("Voltage: " + voltage + "\tError: " + error);
-    	/*
-    	while(voltage <= .025){
-    		Robot.driveSubsystem.setMotors(.2*(double)Robot.autoPosChooser.getSelected(), .2*(double)Robot.autoPosChooser.getSelected());
-    	}
-    	*/
+//    	while(voltage <= .04){
+//    		Robot.driveSubsystem.setMotors(-.1,-.1);//(double)Robot.autoPosChooser.getSelected(), .2*(double)Robot.autoPosChooser.getSelected());
+//    	}
 //    	
 //    	if(samples.size() >= SAMPLE_SIZE){
 //    		samples.remove(0);

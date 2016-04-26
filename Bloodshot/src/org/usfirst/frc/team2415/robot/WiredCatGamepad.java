@@ -21,9 +21,9 @@ public class WiredCatGamepad extends Joystick{
 	public WiredCatGamepad(int port) {
 		super(port);
 		
-		x_button = new JoystickButton(this, 1);
-		a_button = new JoystickButton(this, 2);
-		b_button = new JoystickButton(this, 3);
+		a_button = new JoystickButton(this, 1);
+		b_button = new JoystickButton(this, 2);
+		x_button = new JoystickButton(this, 3);
 		y_button = new JoystickButton(this, 4);
 		
 		
