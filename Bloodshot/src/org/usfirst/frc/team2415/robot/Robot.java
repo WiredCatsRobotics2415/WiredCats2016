@@ -99,26 +99,21 @@ public class Robot extends IterativeRobot {
 		operator.buttons[3].whenPressed(new TogglePivotStateCommand(PivotSubsystem.GROUND));
 		operator.buttons[6].whileHeld(new IntakeCommand(false));
 		operator.buttons[6].whenPressed(new TogglePivotStateCommand(PivotSubsystem.OUTTAKE));
-//		operator.buttons[7].whenPressed(new TogglePivotStateCommand(PivotSubsystem.INTAKE));
-//		operator.buttons[7].whileHeld(new IntakeCommand(true));
 		operator.buttons[7].whenPressed(new IntakeAndFlipCommand());
-		//SinglePlayer
-//			operator.buttons[1].whileHeld(new PixyAlignCommand());
-//			operator.buttons[1].whenReleased(new FireCatapultCommand());
-//			operator.buttons[1].whenInactive(new RestingCommand());
-//			operator.buttons[4].whenPressed(new GetUnlitCommand());
-		//Multiplayer
+		if(singlePlayerMode){
+			operator.buttons[1].whileHeld(new PixyAlignCommand());
+			operator.buttons[1].whenReleased(new FireCatapultCommand());
+			operator.buttons[1].whenInactive(new RestingCommand());
+		} else {
 			gamepad.a_button.whileHeld(new PixyAlignCommand());
-			if(!gamepad.x_button.get()) {
-				gamepad.a_button.whenReleased(new FireCatapultCommand());
-			}
-			gamepad.a_button.whenInactive(new RestingCommand());
-			gamepad.leftBumper.whenPressed(new GetUnlitCommand());
-			gamepad.leftBumper.whenReleased(new FireCatapultCommand());
+			gamepad.leftBumper.whenPressed(new FireCatapultCommand());
 			gamepad.leftBumper.whenInactive(new RestingCommand());
-			
+		}
 		operator.buttons[2].whenPressed(new TogglePivotStateCommand(PivotSubsystem.OUTTAKE));
+		operator.buttons[4].whenPressed(new GetUnlitCommand());
+		
 		gamepad.b_button.whileHeld(new BreakCommand());
+		
 		
 		
 		
@@ -135,8 +130,7 @@ public class Robot extends IterativeRobot {
         // schedule the autonomous command (example)
     	driveSubsystem.resetYaw();
 //    	autoCommand = new MindlessTraverseCommand();
-//    	autoCommand = new PixyAutoCommand();
-    	autoCommand = new RockWallCommand();
+    	autoCommand = new PixyAutoCommand();
 //    	autoCommand = new LowBarAutonomous();
 //    	autoCommand = new WaitCommand(14, driveSubsystem);
     	autoCommand.start();

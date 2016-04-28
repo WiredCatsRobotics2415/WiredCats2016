@@ -28,7 +28,7 @@ public class PixyAlignCommand extends Command {
 	
     public PixyAlignCommand() {
     	requires(Robot.opticSubsystem);
-    	pid = new PID(2,0,0.1);//ravichangedthisfrom.1to.3totest
+    	pid = new PID(2,0,0.1);
     	samples = new ArrayList<Double>();
     }
 
@@ -46,29 +46,28 @@ public class PixyAlignCommand extends Command {
 
     	
 //    	System.out.println("Voltage: " + voltage + "\tError: " + error);
-    	
-//    	while(voltage <= .025){
-//    		Robot.driveSubsystem.setMotors(.1,.1);//(double)Robot.autoPosChooser.getSelected(), .2*(double)Robot.autoPosChooser.getSelected());
-//    	}
-    	
+    	/*
+    	while(voltage <= .025){
+    		Robot.driveSubsystem.setMotors(.2*(double)Robot.autoPosChooser.getSelected(), .2*(double)Robot.autoPosChooser.getSelected());
+    	}
+    	*/
 //    	
 //    	if(samples.size() >= SAMPLE_SIZE){
 //    		samples.remove(0);
 //    		samples.add(error);
 //    		stdError = DataAnalyzer.stdError(samples);
 //    	}else samples.add(error);
+    	
     	if(Math.abs(error) < STEADY_STATE_TOLERANCE) isDone = true;
-
 //    	if(stdError <= STEADY_STATE_TOLERANCE && stdError != 0) isDone = true;
+    	
     	motorPower = pid.pidOut(error);
-		motorPower = (Math.abs(motorPower) > 1) ? .5*(Math.signum(motorPower)) : motorPower;
-		Robot.driveSubsystem.setMotors(-motorPower, -motorPower);
-//    	System.out.println(motorPower);
+    	motorPower = (Math.abs(motorPower) > 1) ? .5*(Math.signum(motorPower)) : motorPower;
+    	Robot.driveSubsystem.setMotors(-motorPower, -motorPower);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-//    	System.out.println("Es finito");
         return false;
     }
 
