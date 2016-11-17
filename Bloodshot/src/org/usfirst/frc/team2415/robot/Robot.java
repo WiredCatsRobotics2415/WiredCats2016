@@ -1,8 +1,8 @@
 
 package org.usfirst.frc.team2415.robot;
 
+import org.usfirst.frc.team2415.robot.autocommands.MindlessTraverseCommand;
 import org.usfirst.frc.team2415.robot.autocommands.PixyAlignCommand;
-import org.usfirst.frc.team2415.robot.autocommands.PixyAutoCommand;
 import org.usfirst.frc.team2415.robot.autocommands.SimpleObstacles.LowBarAutonomous;
 import org.usfirst.frc.team2415.robot.autocommands.SimpleObstacles.MoatCommand;
 import org.usfirst.frc.team2415.robot.autocommands.SimpleObstacles.RampartsCommand;
@@ -54,7 +54,8 @@ public class Robot extends IterativeRobot {
 	public static WiredCatGamepad gamepad;
 	public static WiredCatJoystick operator;
 	
-	public static boolean singlePlayerMode = false;
+	public static boolean singleJoystickMode = false;
+	public static boolean singleGamepadMode = true;
 	
 	private Compressor compressor;
 	
@@ -100,10 +101,20 @@ public class Robot extends IterativeRobot {
 		operator.buttons[6].whileHeld(new IntakeCommand(false));
 		operator.buttons[6].whenPressed(new TogglePivotStateCommand(PivotSubsystem.OUTTAKE));
 		operator.buttons[7].whenPressed(new IntakeAndFlipCommand());
-		if(singlePlayerMode){
-			operator.buttons[1].whileHeld(new PixyAlignCommand());
+		if(singleJoystickMode){
+//			operator.buttons[1].whileHeld(new PixyAlignCommand());
 			operator.buttons[1].whenReleased(new FireCatapultCommand());
 			operator.buttons[1].whenInactive(new RestingCommand());
+		} else if(singleGamepadMode){
+			gamepad.y_button.whileHeld(new IntakeCommand(false));
+			gamepad.y_button.whenPressed(new TogglePivotStateCommand(PivotSubsystem.INTERIOR));
+			gamepad.b_button.whenPressed(new TogglePivotStateCommand(PivotSubsystem.GROUND));
+			gamepad.x_button.whileHeld(new IntakeCommand(false));
+			gamepad.x_button.whenPressed(new TogglePivotStateCommand(PivotSubsystem.OUTTAKE));
+			gamepad.a_button.whenPressed(new IntakeAndFlipCommand());
+			gamepad.rightBumper.whileHeld(new GetUnlitCommand());
+			gamepad.leftBumper.whenPressed(new FireCatapultCommand());
+			gamepad.leftBumper.whenInactive(new RestingCommand());
 		} else {
 			gamepad.a_button.whileHeld(new PixyAlignCommand());
 			gamepad.leftBumper.whenPressed(new FireCatapultCommand());
@@ -129,8 +140,8 @@ public class Robot extends IterativeRobot {
     public void autonomousInit() {
         // schedule the autonomous command (example)
     	driveSubsystem.resetYaw();
-//    	autoCommand = new MindlessTraverseCommand();
-    	autoCommand = new PixyAutoCommand();
+    	autoCommand = new MindlessTraverseCommand();
+//    	autoCommand = new PixyAutoCommand();
 //    	autoCommand = new LowBarAutonomous();
 //    	autoCommand = new WaitCommand(14, driveSubsystem);
     	autoCommand.start();
@@ -164,10 +175,11 @@ public class Robot extends IterativeRobot {
     
     public void updateStatus() {
     	Robot.driveSubsystem.updateStatus();
-    	Robot.catapultSubsystem.updateStatus();
-    	Robot.intakingSubsystem.updateStatus();
-    	Robot.pivotSubsystem.updateStatus();
+//    	Robot.catapultSubsystem.updateStatus();
+//    	Robot.intakingSubsystem.updateStatus();
+//    	Robot.pivotSubsystem.updateStatus();
+//    	Robot.opticSubsystem.updateStatus();
     	
-    	SmartDashboard.putBoolean("Single Player Mode?", singlePlayerMode);
+    	SmartDashboard.putBoolean("Single Player Mode?", singleJoystickMode);
     }
 }

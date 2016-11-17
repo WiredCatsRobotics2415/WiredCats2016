@@ -16,6 +16,7 @@ public class IntakingSubsystem extends Subsystem {
 
     public static DigitalInput leftIR, rightIR;
     private CANTalon intakeMotor;
+    public static boolean currentBool;
     
     ArrayList<Boolean> samples;
 	private final int SAMPLE_SIZE = 6;
@@ -53,10 +54,15 @@ public class IntakingSubsystem extends Subsystem {
     	return intakeMotor.getOutputCurrent();
     }
     
+    public boolean getCurrentBool(double cap){
+    	return intakeMotor.getOutputCurrent() > cap;
+    }
+    
     public void updateStatus(){
     	SmartDashboard.putNumber("Intake Speed", getIntakeSpeed());
     	SmartDashboard.putNumber("Intake Current", getIntakeCurrent());
     	SmartDashboard.putBoolean("IR Sensor", getIR());
+    	SmartDashboard.putNumber("Intake Voltage", intakeMotor.getOutputVoltage());
 
     	SmartDashboard.putBoolean("Left IR Sensor", leftIR.get());
     	SmartDashboard.putBoolean("Right IR Sensor", rightIR.get());

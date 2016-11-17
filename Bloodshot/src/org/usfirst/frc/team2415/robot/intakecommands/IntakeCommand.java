@@ -3,6 +3,7 @@ package org.usfirst.frc.team2415.robot.intakecommands;
 import java.util.ArrayList;
 
 import org.usfirst.frc.team2415.robot.Robot;
+import org.usfirst.frc.team2415.robot.subsystems.IntakingSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -25,7 +26,7 @@ public class IntakeCommand extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	
-    	if(Robot.operator.buttons[5].get() || Robot.operator.buttons[6].get()){
+    	if(Robot.operator.buttons[5].get() || Robot.operator.buttons[6].get() || Robot.gamepad.x_button.get() || Robot.gamepad.y_button.get()){
         	startTime = System.currentTimeMillis();
     	}
     	Robot.intakingSubsystem.enableBreakMode();
@@ -41,12 +42,21 @@ public class IntakeCommand extends Command {
     	    	
     	if(Robot.pivotSubsystem.isIntaking()) {
     		Robot.intakingSubsystem.setIntakeSpeed(.75);
-    	} else if(Robot.operator.buttons[6].get()) {
+    	} else if(Robot.operator.buttons[6].get() || Robot.gamepad.x_button.get()) {
 			Robot.intakingSubsystem.setIntakeSpeed(-1);
+    		IntakingSubsystem.currentBool = false;
+    	} else if(Robot.singleGamepadMode && Robot.gamepad.x_button.get()) {
+			Robot.intakingSubsystem.setIntakeSpeed(-1);
+    		IntakingSubsystem.currentBool = false;
     	} else if(Robot.operator.buttons[5].get()) {
 			Robot.intakingSubsystem.setIntakeSpeed(0.5);
-		}else if(Robot.operator.buttons[10].get()) {
+    		IntakingSubsystem.currentBool = false;
+    	} else if(Robot.singleGamepadMode && Robot.gamepad.y_button.get()) {
 			Robot.intakingSubsystem.setIntakeSpeed(0.5);
+    		IntakingSubsystem.currentBool = false;
+		} else if(Robot.operator.buttons[10].get()) {
+			Robot.intakingSubsystem.setIntakeSpeed(0.5);
+    		IntakingSubsystem.currentBool = false;
 		} else {
 			Robot.intakingSubsystem.setIntakeSpeed(0);
 		}
@@ -55,12 +65,14 @@ public class IntakeCommand extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     		if(Robot.pivotSubsystem.isIntaking()){
-    			if(Robot.intakingSubsystem.getIR()){
+    			IntakingSubsystem.currentBool = Robot.intakingSubsystem.getCurrentBool(7);
+    			if(IntakingSubsystem.currentBool){
     				if(notStart){
     					intakeStart = System.currentTimeMillis();
     					notStart = false;
-    				}else if((System.currentTimeMillis() - intakeStart)/1000.0 >= .6) return true;
-//    				return true;
+    				}else if((System.currentTimeMillis() - intakeStart)/1000.0 >= .6){
+    					return true;
+    				}
     			}
     			else return false;
     		}

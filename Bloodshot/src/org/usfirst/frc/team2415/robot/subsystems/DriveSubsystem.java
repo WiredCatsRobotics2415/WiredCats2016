@@ -133,6 +133,10 @@ public class DriveSubsystem extends Subsystem {
     	leftTalTwo.enableBrakeMode(false);
     }
     
+    public double maxCurrent(){
+    	return Math.max(leftTalOne.getOutputCurrent(), rightTalOne.getOutputCurrent());
+    }
+    
     /**
      * Get's the break state of the right side
      * @return True if break is on, false if coast is on
@@ -150,15 +154,19 @@ public class DriveSubsystem extends Subsystem {
     }
 
 	public void updateStatus() {
-		SmartDashboard.putNumber("Left Encoder", getLeftEncoder());
-		SmartDashboard.putNumber("Right Encoder", getRightEncoder());
-		SmartDashboard.putNumber("Yaw", getYaw());
-		SmartDashboard.putNumber("Pitch", getPitch());
-		SmartDashboard.putNumber("Roll", getRoll());
-		SmartDashboard.putNumber("Right Talon", getRightTal());
-		SmartDashboard.putNumber("Left Talon", getLeftTal());
-		SmartDashboard.putBoolean("Left Break State", getLeftBreakState());
-		SmartDashboard.putBoolean("Right Break State", getRightBreakState());
+//		SmartDashboard.putNumber("Left Encoder", getLeftEncoder());
+//		SmartDashboard.putNumber("Right Encoder", getRightEncoder());
+//		SmartDashboard.putNumber("Yaw", getYaw());
+//		SmartDashboard.putNumber("Pitch", getPitch());
+//		SmartDashboard.putNumber("Roll", getRoll());
+//		SmartDashboard.putNumber("Right Talon", getRightTal());
+//		SmartDashboard.putNumber("Left Talon", getLeftTal());
+//		SmartDashboard.putBoolean("Left Break State", getLeftBreakState());
+//		SmartDashboard.putBoolean("Right Break State", getRightBreakState());
+		
+		SmartDashboard.putNumber("Left Current", leftTalOne.getOutputCurrent());
+		SmartDashboard.putNumber("Right Current", rightTalOne.getOutputCurrent());
+		SmartDashboard.putBoolean("Current Speed", maxCurrent() >= 15);
 		
 	}
 }

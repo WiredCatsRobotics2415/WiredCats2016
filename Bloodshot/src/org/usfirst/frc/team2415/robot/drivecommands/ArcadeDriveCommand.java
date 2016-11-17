@@ -38,7 +38,7 @@ public class ArcadeDriveCommand extends Command {
     	
     	double leftY, rightX;
     	
-    	if(Robot.singlePlayerMode){
+    	if(Robot.singleJoystickMode){
     		leftY = -Robot.operator.Y();
         	rightX = Robot.operator.X();
     	} else {
@@ -58,7 +58,8 @@ public class ArcadeDriveCommand extends Command {
 //    	if(Math.abs(left) >= 1) Robot.driveSubsystem.enableRightBreakState();
 //    	if(Math.abs(right) >= 1) Robot.driveSubsystem.enableLeftBreakState();
     	
-        	Robot.driveSubsystem.setMotors(left*(1-Robot.gamepad.rightTrigger()), -right*(1-Robot.gamepad.rightTrigger()));
+    	if(Robot.driveSubsystem.maxCurrent() <= 15) Robot.driveSubsystem.setMotors(left*(1-Robot.gamepad.rightTrigger()), -right*(1-Robot.gamepad.rightTrigger()));
+    	else Robot.driveSubsystem.setMotors(.5*left*(1-Robot.gamepad.rightTrigger()), -.5*right*(1-Robot.gamepad.rightTrigger()));
     }
 
     // Make this return true when this Command no longer needs to run execute()

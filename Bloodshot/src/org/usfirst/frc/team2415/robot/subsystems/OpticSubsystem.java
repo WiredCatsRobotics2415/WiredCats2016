@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -55,6 +56,11 @@ public class OpticSubsystem extends Subsystem {
     //Checks the digital output of the pixy cam to see if there even is an image that fits within the color parameters
     public boolean camBool(){
     	return pixyCamBool.get();
+    }
+    
+    public void updateStatus(){
+    	SmartDashboard.putNumber("Pixy Voltage", camVoltage());
+    	SmartDashboard.putBoolean("Pixy Boolean", camBool());
     }
 }
 
