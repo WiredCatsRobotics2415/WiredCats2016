@@ -174,9 +174,9 @@ public class Robot extends IterativeRobot {
     }
     
     public void updateStatus() {
-    	Robot.driveSubsystem.updateStatus();
+//    	Robot.driveSubsystem.updateStatus();
 //    	Robot.catapultSubsystem.updateStatus();
-//    	Robot.intakingSubsystem.updateStatus();
+    	Robot.intakingSubsystem.updateStatus();
 //    	Robot.pivotSubsystem.updateStatus();
 //    	Robot.opticSubsystem.updateStatus();
     	

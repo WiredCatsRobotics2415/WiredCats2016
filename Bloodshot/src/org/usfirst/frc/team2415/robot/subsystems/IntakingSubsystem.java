@@ -63,7 +63,7 @@ public class IntakingSubsystem extends Subsystem {
     	SmartDashboard.putNumber("Intake Current", getIntakeCurrent());
     	SmartDashboard.putBoolean("IR Sensor", getIR());
     	SmartDashboard.putNumber("Intake Voltage", intakeMotor.getOutputVoltage());
-
+    	SmartDashboard.putBoolean("Intake Boolean", getCurrentBool(5));
     	SmartDashboard.putBoolean("Left IR Sensor", leftIR.get());
     	SmartDashboard.putBoolean("Right IR Sensor", rightIR.get());
     }

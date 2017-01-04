@@ -12,9 +12,13 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class IntakeCommand extends Command {
 
-	long startTime, intakeStart;
+	long startTime, intakeStart, initTime;
 	
 	boolean checked = false, isInstant, notStart;
+	
+	boolean currentCheckTime(){
+		return (System.currentTimeMillis() - initTime)/1000.0 >= .6;
+	}
 	
     public IntakeCommand(boolean isInstant) {
         // Use requires() here to declare subsystem dependencies
@@ -25,7 +29,7 @@ public class IntakeCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	
+    	initTime = System.currentTimeMillis();
     	if(Robot.operator.buttons[5].get() || Robot.operator.buttons[6].get() || Robot.gamepad.x_button.get() || Robot.gamepad.y_button.get()){
         	startTime = System.currentTimeMillis();
     	}
@@ -64,8 +68,8 @@ public class IntakeCommand extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    		if(Robot.pivotSubsystem.isIntaking()){
-    			IntakingSubsystem.currentBool = Robot.intakingSubsystem.getCurrentBool(7);
+    		if(Robot.pivotSubsystem.isIntaking() && currentCheckTime()){
+    			IntakingSubsystem.currentBool = Robot.intakingSubsystem.getCurrentBool(5);
     			if(IntakingSubsystem.currentBool){
     				if(notStart){
     					intakeStart = System.currentTimeMillis();
