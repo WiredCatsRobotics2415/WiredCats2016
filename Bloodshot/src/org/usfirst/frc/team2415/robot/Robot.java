@@ -26,6 +26,7 @@ import org.usfirst.frc.team2415.robot.subsystems.PivotSubsystem;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -60,6 +61,11 @@ public class Robot extends IterativeRobot {
 	private Compressor compressor;
 	
 //	private ImgServer imgServer;
+	
+	public static Preferences prefs;
+	
+	double armUpPosition;
+	double armDownPosition;
 	
     public void robotInit() {
 		
@@ -125,7 +131,9 @@ public class Robot extends IterativeRobot {
 		
 		gamepad.b_button.whileHeld(new BreakCommand());
 		
-		
+		prefs = Preferences.getInstance();
+		armUpPosition = prefs.getDouble("ArmUpPosition", 1.0);
+		armDownPosition = prefs.getDouble("ArmDownPosition", 4.);
 		
 		
 //		imgServer = new ImgServer("cam0", 2415);
@@ -165,6 +173,7 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
         updateStatus();
+
 //		imgServer.showImg();
         //imgServer.teleopShowImg();
     }
@@ -174,12 +183,16 @@ public class Robot extends IterativeRobot {
     }
     
     public void updateStatus() {
-//    	Robot.driveSubsystem.updateStatus();
+		prefs = Preferences.getInstance();
+    	
+    	Robot.driveSubsystem.updateStatus();
 //    	Robot.catapultSubsystem.updateStatus();
     	Robot.intakingSubsystem.updateStatus();
 //    	Robot.pivotSubsystem.updateStatus();
 //    	Robot.opticSubsystem.updateStatus();
     	
     	SmartDashboard.putBoolean("Single Player Mode?", singleJoystickMode);
+    	SmartDashboard.putNumber("Arm Up Position", armUpPosition);
+    	SmartDashboard.putNumber("Arm Down Position", armDownPosition);
     }
 }

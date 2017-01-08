@@ -12,7 +12,8 @@ public class WiredCatGamepad extends Joystick{
 	
 	
 	public JoystickButton 	a_button, b_button,
-							x_button, y_button;
+							x_button, y_button,
+							back, start;
 	
 	public JoystickButton leftBumper, rightBumper;
 	
@@ -26,10 +27,12 @@ public class WiredCatGamepad extends Joystick{
 		x_button = new JoystickButton(this, 3);
 		y_button = new JoystickButton(this, 4);
 		
-		
-		
 		leftBumper = new JoystickButton(this, 5);
-		rightBumper = new JoystickButton(this, 6);	
+		rightBumper = new JoystickButton(this, 6);
+		
+
+		back = new JoystickButton(this, 7);
+		start = new JoystickButton(this, 8);
 	}
 	
 	public double leftY(){

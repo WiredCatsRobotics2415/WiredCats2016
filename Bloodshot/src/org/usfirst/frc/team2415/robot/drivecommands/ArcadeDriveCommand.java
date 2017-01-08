@@ -5,6 +5,7 @@ import org.usfirst.frc.team2415.robot.WiredCatGamepad;
 import org.usfirst.frc.team2415.robot.WiredCatJoystick;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -58,8 +59,23 @@ public class ArcadeDriveCommand extends Command {
 //    	if(Math.abs(left) >= 1) Robot.driveSubsystem.enableRightBreakState();
 //    	if(Math.abs(right) >= 1) Robot.driveSubsystem.enableLeftBreakState();
     	
-    	if(Robot.driveSubsystem.maxCurrent() <= 15) Robot.driveSubsystem.setMotors(left*(1-Robot.gamepad.rightTrigger()), -right*(1-Robot.gamepad.rightTrigger()));
-    	else Robot.driveSubsystem.setMotors(.5*left*(1-Robot.gamepad.rightTrigger()), -.5*right*(1-Robot.gamepad.rightTrigger()));
+    	if(Robot.gamepad.start.get()) Robot.driveSubsystem.CheezyEnabled = !Robot.driveSubsystem.CheezyEnabled;
+    	
+    	if(Robot.driveSubsystem.CheezyEnabled){
+    		double max = Math.max(Math.abs(left), Math.abs(right));
+    		if (max > 1){
+    			left /= max;
+    			right /= max;
+    		}
+    	}
+
+    	SmartDashboard.putNumber("Left Val", left);
+    	SmartDashboard.putNumber("Right Val", -right);
+    	
+    	Robot.driveSubsystem.setMotors(left, -right);
+    	
+//    	if(Robot.driveSubsystem.maxCurrent() <= 15) Robot.driveSubsystem.setMotors(left*(1-Robot.gamepad.rightTrigger()), -right*(1-Robot.gamepad.rightTrigger()));
+//    	else Robot.driveSubsystem.setMotors(.5*left*(1-Robot.gamepad.rightTrigger()), -.5*right*(1-Robot.gamepad.rightTrigger()));
     }
 
     // Make this return true when this Command no longer needs to run execute()

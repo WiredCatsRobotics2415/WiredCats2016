@@ -3,11 +3,11 @@ package org.usfirst.frc.team2415.robot.subsystems;
 import org.usfirst.frc.team2415.robot.RobotMap;
 import org.usfirst.frc.team2415.robot.drivecommands.ArcadeDriveCommand;
 
-import com.kauailabs.nav6.frc.IMU;
+import com.ctre.CANTalon;
+import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -24,9 +24,11 @@ public class DriveSubsystem extends Subsystem {
 	
 	private final byte REFRESH_RATE = 50;
 	
+	public boolean CheezyEnabled = false;
+	
 	public CANTalon leftTalOne, leftTalTwo, rightTalOne, rightTalTwo;
 	private Encoder rightEncoder, leftEncoder;
-	private IMU imu;
+	private AHRS ahrs;
 	public static final double 	TICKS_PER_REV = 120, WHEEL_RADIUS = 4,
 								WHEEL_TRACK = 25 + (3./16);	//radius and track in inches
 	
@@ -43,9 +45,8 @@ public class DriveSubsystem extends Subsystem {
 		
 		resetEncoders();
 		
-		SerialPort imuSerialPort = new SerialPort(BAUD_RATE, SerialPort.Port.kMXP);
-		imu = new IMU(imuSerialPort, REFRESH_RATE);
-		imu.zeroYaw();
+		ahrs = new AHRS(SPI.Port.kMXP);
+		ahrs.zeroYaw();
 		
 
 		LiveWindow.addActuator("Drive Subsystem", "Left Back Talon", leftTalOne);
@@ -98,19 +99,19 @@ public class DriveSubsystem extends Subsystem {
     }
     
     public double getYaw(){
-    	return imu.getYaw();
+    	return ahrs.getYaw();
     }
     
     public double getPitch(){
-    	return imu.getPitch();
+    	return ahrs.getPitch();
     }
     
     public double getRoll(){
-    	return imu.getRoll();
+    	return ahrs.getRoll();
     }
     
     public void resetYaw(){
-    	imu.zeroYaw();
+    	ahrs.zeroYaw();
     }
     
     public void enableRightBreakState(){
@@ -159,14 +160,16 @@ public class DriveSubsystem extends Subsystem {
 //		SmartDashboard.putNumber("Yaw", getYaw());
 //		SmartDashboard.putNumber("Pitch", getPitch());
 //		SmartDashboard.putNumber("Roll", getRoll());
-//		SmartDashboard.putNumber("Right Talon", getRightTal());
-//		SmartDashboard.putNumber("Left Talon", getLeftTal());
+		SmartDashboard.putNumber("Right Talon", getRightTal());
+		SmartDashboard.putNumber("Left Talon", getLeftTal());
 //		SmartDashboard.putBoolean("Left Break State", getLeftBreakState());
 //		SmartDashboard.putBoolean("Right Break State", getRightBreakState());
 		
 		SmartDashboard.putNumber("Left Current", leftTalOne.getOutputCurrent());
 		SmartDashboard.putNumber("Right Current", rightTalOne.getOutputCurrent());
 		SmartDashboard.putBoolean("Current Speed", maxCurrent() >= 15);
+		
+		SmartDashboard.putBoolean("Cheesy Drive?", CheezyEnabled);
 		
 	}
 }
