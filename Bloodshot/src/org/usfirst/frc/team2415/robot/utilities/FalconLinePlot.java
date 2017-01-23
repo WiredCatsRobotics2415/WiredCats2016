@@ -1,6 +1,18 @@
 package org.usfirst.frc.team2415.robot.utilities;
 
-import java.awt.*;
+import java.awt.AWTException;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Rectangle;
+import java.awt.RenderingHints;
+import java.awt.Robot;
+import java.awt.Stroke;
+import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.ClipboardOwner;
 import java.awt.datatransfer.DataFlavor;
@@ -10,13 +22,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.geom.*;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.LinkedList;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 
 /**
  * This class is a basic plotting class using the Java AWT interface. It has basic features which allow the user 
@@ -41,7 +58,7 @@ import javax.swing.*;
  *
  */
  
-class FalconLinePlot extends JPanel implements ClipboardOwner{
+public class FalconLinePlot extends JPanel implements ClipboardOwner{
   
     
 	private static final long serialVersionUID = 3205256608145459434L;
@@ -291,7 +308,7 @@ class FalconLinePlot extends JPanel implements ClipboardOwner{
         
     }
     
-    void setXTic(double lowerBound, double upperBound, double stepSize)
+    public void setXTic(double lowerBound, double upperBound, double stepSize)
     {
     	this.userSetXTic = true;
     	

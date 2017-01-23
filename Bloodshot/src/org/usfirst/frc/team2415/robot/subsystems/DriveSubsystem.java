@@ -4,6 +4,7 @@ import org.usfirst.frc.team2415.robot.RobotMap;
 import org.usfirst.frc.team2415.robot.drivecommands.ArcadeDriveCommand;
 
 import com.ctre.CANTalon;
+import com.ctre.CANTalon.FeedbackDevice;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Encoder;

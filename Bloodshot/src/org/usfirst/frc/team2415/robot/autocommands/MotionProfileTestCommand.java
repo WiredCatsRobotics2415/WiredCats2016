@@ -22,8 +22,8 @@ public class MotionProfileTestCommand extends Command {
 	    {19, 12}
 	}; 
 
-	double totalTime = 8; //max seconds we want to drive the path
-	double timeStep = 0.1; //period of control loop on Rio, seconds
+	double totalTime = 10; //max seconds we want to drive the path
+	double timeStep = 0.2; //period of control loop on Rio, seconds
 	double robotTrackWidth = 2; //distance between left and right wheels, feet
 
 	FalconPathPlanner path = new FalconPathPlanner(waypoints);
@@ -57,15 +57,17 @@ public class MotionProfileTestCommand extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return left.size() == 0 && right.size() == 0;
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.driveSubsystem.setMotors(0, 0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	Robot.driveSubsystem.setMotors(0, 0);
     }
 }
