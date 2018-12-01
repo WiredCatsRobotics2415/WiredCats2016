@@ -44,9 +44,9 @@ public class IntakeCommand extends Command {
     	} else if(Robot.operator.buttons[6].get()) {
 			Robot.intakingSubsystem.setIntakeSpeed(-1);
     	} else if(Robot.operator.buttons[5].get()) {
-			Robot.intakingSubsystem.setIntakeSpeed(0.5);
+			Robot.intakingSubsystem.setIntakeSpeed(0.75);
 		}else if(Robot.operator.buttons[10].get()) {
-			Robot.intakingSubsystem.setIntakeSpeed(0.5);
+			Robot.intakingSubsystem.setIntakeSpeed(0.75);
 		} else {
 			Robot.intakingSubsystem.setIntakeSpeed(0);
 		}

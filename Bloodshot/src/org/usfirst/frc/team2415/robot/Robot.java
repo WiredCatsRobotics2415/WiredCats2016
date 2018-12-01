@@ -68,7 +68,6 @@ public class Robot extends IterativeRobot {
 		
 		driveSubsystem = new DriveSubsystem();
 		catapultSubsystem = new CatapultSubsystem();
-		//hangerSubsystem = new HangerSubsystem();
 		pivotSubsystem = new PivotSubsystem();
 		intakingSubsystem = new IntakingSubsystem();
 		opticSubsystem = new OpticSubsystem();
@@ -93,31 +92,12 @@ public class Robot extends IterativeRobot {
 		
 		SmartDashboard.putData("Reset Drive Encoders", new ResetDriveEncodersCommand());
 		SmartDashboard.putData("Reset Yaw", new ResetYawCommand());
-		
-		operator.buttons[5].whileHeld(new IntakeCommand(false));
-		operator.buttons[5].whenPressed(new TogglePivotStateCommand(PivotSubsystem.INTERIOR));
-		operator.buttons[3].whenPressed(new TogglePivotStateCommand(PivotSubsystem.GROUND));
-		operator.buttons[6].whileHeld(new IntakeCommand(false));
-		operator.buttons[6].whenPressed(new TogglePivotStateCommand(PivotSubsystem.OUTTAKE));
-		operator.buttons[7].whenPressed(new IntakeAndFlipCommand());
-		if(singlePlayerMode){
-			operator.buttons[1].whileHeld(new PixyAlignCommand());
-			operator.buttons[1].whenReleased(new FireCatapultCommand());
-			operator.buttons[1].whenInactive(new RestingCommand());
-		} else {
-			gamepad.a_button.whileHeld(new PixyAlignCommand());
-			gamepad.leftBumper.whenPressed(new FireCatapultCommand());
-			gamepad.leftBumper.whenInactive(new RestingCommand());
-		}
-		operator.buttons[2].whenPressed(new TogglePivotStateCommand(PivotSubsystem.OUTTAKE));
-		operator.buttons[4].whenPressed(new GetUnlitCommand());
-		
-		gamepad.b_button.whileHeld(new BreakCommand());
-		
-		
-		
-		
-//		imgServer = new ImgServer("cam0", 2415);
+
+		gamepad.leftBumper.whenPressed(new FireCatapultCommand());
+		gamepad.leftBumper.whenInactive(new RestingCommand());
+		gamepad.a_button.whenPressed(new TogglePivotStateCommand(PivotSubsystem.INTAKE));
+		gamepad.b_button.whenPressed(new TogglePivotStateCommand(PivotSubsystem.INTERIOR));
+
     }
 	
 	public void disabledPeriodic() {

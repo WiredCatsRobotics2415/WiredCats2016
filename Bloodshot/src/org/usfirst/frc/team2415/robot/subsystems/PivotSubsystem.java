@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2415.robot.subsystems;
 
+import org.usfirst.frc.team2415.robot.Robot;
 import org.usfirst.frc.team2415.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.Solenoid;
@@ -41,6 +42,7 @@ public class PivotSubsystem extends Subsystem {
     		shortPiston1.set(false);
     		shortPiston2.set(true);
     		intakeState = this.INTAKE;
+    			Robot.intakingSubsystem.setIntakeSpeed(0.75);
 //    		if(!Robot.intakingSubsystem.getIR()) {
 //    			Robot.intakingSubsystem.setIntakeSpeed(1);
 //    		}
@@ -59,6 +61,7 @@ public class PivotSubsystem extends Subsystem {
     		shortPiston1.set(false);
     		shortPiston2.set(true);
     		intakeState = this.INTERIOR;
+    		Robot.intakingSubsystem.setIntakeSpeed(0);
     	}
     	if(state == this.OUTTAKE){
     		longPiston1.set(false);
@@ -66,6 +69,7 @@ public class PivotSubsystem extends Subsystem {
     		shortPiston1.set(true);
     		shortPiston2.set(false);
     		intakeState = this.OUTTAKE;
+    		Robot.intakingSubsystem.setIntakeSpeed(-0.75);
     	}
     }
     

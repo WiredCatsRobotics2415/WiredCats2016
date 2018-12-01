@@ -3,9 +3,9 @@ package org.usfirst.frc.team2415.robot.subsystems;
 import org.usfirst.frc.team2415.robot.RobotMap;
 import org.usfirst.frc.team2415.robot.drivecommands.ArcadeDriveCommand;
 
+import com.ctre.CANTalon;
 import com.kauailabs.nav6.frc.IMU;
 
-import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.command.Subsystem;
