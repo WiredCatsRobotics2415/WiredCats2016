@@ -90,7 +90,7 @@ public class PivotSubsystem extends Subsystem {
     }
     
     public void updateStatus(){
-    	SmartDashboard.putBoolean("Forward Short Piston", shortPiston1.get());
-    	SmartDashboard.putBoolean("Backward Short Piston", shortPiston2.get());
+//    	SmartDashboard.putBoolean("Forward Short Piston", shortPiston1.get());
+//    	SmartDashboard.putBoolean("Backward Short Piston", shortPiston2.get());
     }
 }

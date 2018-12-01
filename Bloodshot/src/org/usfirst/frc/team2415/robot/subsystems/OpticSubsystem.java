@@ -35,6 +35,14 @@ public class OpticSubsystem extends Subsystem {
     	setDefaultCommand(new GetLitCommand());
     }
     
+    public void malmbergSwitch(){
+    	if (isLit) {
+    		itsNotLit();
+    	} else {
+    		itsLit();
+    	}
+    }
+    
     public void itsLit(){
     	lightSwitch.set(Value.kOn);
     	isLit = true;

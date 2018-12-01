@@ -4,7 +4,8 @@ import java.util.ArrayList;
 
 import org.usfirst.frc.team2415.robot.RobotMap;
 
-import com.ctre.CANTalon;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -16,7 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class IntakingSubsystem extends Subsystem {
 
     public static DigitalInput leftIR, rightIR;
-    private CANTalon intakeMotor;
+    private WPI_TalonSRX intakeMotor;
     
     ArrayList<Boolean> samples;
 	private final int SAMPLE_SIZE = 6;
@@ -24,7 +25,7 @@ public class IntakingSubsystem extends Subsystem {
     public IntakingSubsystem(){
     	leftIR = new DigitalInput(RobotMap.INTAKE_IR[0]);
     	rightIR = new DigitalInput(RobotMap.INTAKE_IR[1]);
-    	intakeMotor = new CANTalon(RobotMap.SPIN_INTAKE_TALON);
+    	intakeMotor = new WPI_TalonSRX(RobotMap.SPIN_INTAKE_TALON);
 
     	samples = new ArrayList<Boolean>();
     }
@@ -35,7 +36,7 @@ public class IntakingSubsystem extends Subsystem {
     }
     
     public void enableBreakMode(){
-    	intakeMotor.enableBrakeMode(true);
+    	intakeMotor.setNeutralMode(NeutralMode.Brake);
     }
     
     public void setIntakeSpeed(double speed){
@@ -55,12 +56,12 @@ public class IntakingSubsystem extends Subsystem {
     }
     
     public void updateStatus(){
-    	SmartDashboard.putNumber("Intake Speed", getIntakeSpeed());
-    	SmartDashboard.putNumber("Intake Current", getIntakeCurrent());
-    	SmartDashboard.putBoolean("IR Sensor", getIR());
-
-    	SmartDashboard.putBoolean("Left IR Sensor", leftIR.get());
-    	SmartDashboard.putBoolean("Right IR Sensor", rightIR.get());
+//    	SmartDashboard.putNumber("Intake Speed", getIntakeSpeed());
+//    	SmartDashboard.putNumber("Intake Current", getIntakeCurrent());
+//    	SmartDashboard.putBoolean("IR Sensor", getIR());
+//
+//    	SmartDashboard.putBoolean("Left IR Sensor", leftIR.get());
+//    	SmartDashboard.putBoolean("Right IR Sensor", rightIR.get());
     }
 }
 
