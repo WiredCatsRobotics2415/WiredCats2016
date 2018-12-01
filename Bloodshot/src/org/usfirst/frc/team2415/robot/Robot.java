@@ -1,16 +1,8 @@
 
 package org.usfirst.frc.team2415.robot;
 
-import org.usfirst.frc.team2415.robot.autocommands.PixyAutoCommand;
-import org.usfirst.frc.team2415.robot.autocommands.SimpleObstacles.LowBarAutonomous;
-import org.usfirst.frc.team2415.robot.autocommands.SimpleObstacles.MoatCommand;
-import org.usfirst.frc.team2415.robot.autocommands.SimpleObstacles.RampartsCommand;
-import org.usfirst.frc.team2415.robot.autocommands.SimpleObstacles.RockWallCommand;
-import org.usfirst.frc.team2415.robot.autocommands.SimpleObstacles.RoughTerrainCommand;
 import org.usfirst.frc.team2415.robot.catapultcommands.FireCatapultCommand;
 import org.usfirst.frc.team2415.robot.catapultcommands.RestingCommand;
-import org.usfirst.frc.team2415.robot.drivecommands.ResetDriveEncodersCommand;
-import org.usfirst.frc.team2415.robot.drivecommands.ResetYawCommand;
 import org.usfirst.frc.team2415.robot.flashlightcommands.MalmbergSwitch;
 import org.usfirst.frc.team2415.robot.intakecommands.TogglePivotStateCommand;
 import org.usfirst.frc.team2415.robot.subsystems.CatapultSubsystem;
@@ -86,8 +78,8 @@ public class Robot extends IterativeRobot {
 
     public void autonomousInit() {
         // schedule the autonomous command (example)
-    	autoCommand = new PixyAutoCommand();
-    	autoCommand.start();
+//    	autoCommand = new PixyAutoCommand();
+//    	autoCommand.start();
     }
 
     public void autonomousPeriodic() {
