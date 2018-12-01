@@ -13,7 +13,7 @@ public class RobotMap {
     public static final int RIGHT_TALON_FRONT = 4;
     
     public static final int PIVOT_INTAKE_TALON = 6;
-    public static final int SPIN_INTAKE_TALON = 15;
+    public static final int SPIN_INTAKE_TALON = 5;
     
     public static final int CATAPULT_SOLENOID_1 = 7;
     public static final int CATAPULT_SOLENOID_2 = 0;

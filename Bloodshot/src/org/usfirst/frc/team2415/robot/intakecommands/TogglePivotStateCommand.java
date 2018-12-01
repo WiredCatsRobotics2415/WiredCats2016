@@ -2,7 +2,6 @@ package org.usfirst.frc.team2415.robot.intakecommands;
 
 import org.usfirst.frc.team2415.robot.Robot;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**

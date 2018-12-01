@@ -4,6 +4,7 @@ package org.usfirst.frc.team2415.robot;
 import org.usfirst.frc.team2415.robot.catapultcommands.FireCatapultCommand;
 import org.usfirst.frc.team2415.robot.catapultcommands.RestingCommand;
 import org.usfirst.frc.team2415.robot.flashlightcommands.MalmbergSwitch;
+import org.usfirst.frc.team2415.robot.flashlightcommands.TurnOff;
 import org.usfirst.frc.team2415.robot.intakecommands.TogglePivotStateCommand;
 import org.usfirst.frc.team2415.robot.subsystems.CatapultSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
@@ -64,9 +65,19 @@ public class Robot extends IterativeRobot {
 
 		gamepad.leftBumper.whenPressed(new FireCatapultCommand());
 		gamepad.leftBumper.whenInactive(new RestingCommand());
+//		if (gamepad.getRawAxis(2) > 0.65) {
+//			Robot.pivotSubsystem.setPivot(PivotSubsystem.INTAKE);
+//		} else if (gamepad.getRawAxis(3) > 0.65) {
+//			Robot.pivotSubsystem.setPivot(PivotSubsystem.INTERIOR);
+//		}
 		gamepad.a_button.whenPressed(new TogglePivotStateCommand(PivotSubsystem.INTAKE));
 		gamepad.b_button.whenPressed(new TogglePivotStateCommand(PivotSubsystem.INTERIOR));
-		gamepad.y_button.whenPressed(new MalmbergSwitch());
+		if (Robot.opticSubsystem.isLit()) {
+			gamepad.y_button.whenPressed(new TurnOff());
+		} else {
+			gamepad.y_button.whenPressed(new MalmbergSwitch());
+		}
+		gamepad.x_button.whenPressed(new TurnOff());
 
     }
 	
@@ -102,6 +113,14 @@ public class Robot extends IterativeRobot {
 //        updateStatus();
 //		imgServer.showImg();
         //imgServer.teleopShowImg();
+//        System.out.println(Robot.opticSubsystem.isLit());
+        System.out.println(Robot.intakingSubsystem.getIR());
+        
+        //needs a timer of about 0.5-0.7 seconds
+        if (Robot.intakingSubsystem.getIR()) {
+    		Robot.pivotSubsystem.setPivot(Robot.pivotSubsystem.INTERIOR);
+    	}
+        
     }
  
     public void testPeriodic() {
