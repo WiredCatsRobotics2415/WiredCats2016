@@ -18,6 +18,7 @@ public class PivotSubsystem extends Subsystem {
     public static final byte INTAKE = 1;
     public static final byte OUTTAKE = 2;
     public static final byte GROUND = 3;
+//    public static final byte FEED = 4;
     
     private byte lastState;
     

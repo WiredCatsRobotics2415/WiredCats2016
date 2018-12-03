@@ -26,10 +26,10 @@ public class RobotMap {
     public static final int[] LEFT_ENCODER = {4,5};
     
     public static final int[] RIGHT_ENCODER = {2,3};
-    public static final int[] INTAKE_IR = {6,1};
+    public static final int[] INTAKE_IR = {0,1}; //6,1
     
-    public static final int[] WINCH_LOCK = {0,3};
-    public static final int WINCH_MOTOR = 0;
+//    public static final int[] WINCH_LOCK = {0,3};
+//    public static final int WINCH_MOTOR = 0;
     
     public static final int LIGHTSWITCH_PORT = 0;
     

@@ -45,11 +45,13 @@ public class OpticSubsystem extends Subsystem {
     
     public void itsLit(){
     	lightSwitch.set(Value.kOn);
+//    	lightSwitch.setDirection(Relay.Direction.kForward);
     	isLit = true;
     }
     
     public void itsNotLit(){
     	lightSwitch.set(Value.kOff);
+//    	lightSwitch.setDirection(Relay.Direction.kReverse);
     	isLit = false;
     }
     

@@ -3,8 +3,6 @@ package org.usfirst.frc.team2415.robot;
 
 import org.usfirst.frc.team2415.robot.catapultcommands.FireCatapultCommand;
 import org.usfirst.frc.team2415.robot.catapultcommands.RestingCommand;
-import org.usfirst.frc.team2415.robot.flashlightcommands.MalmbergSwitch;
-import org.usfirst.frc.team2415.robot.flashlightcommands.TurnOff;
 import org.usfirst.frc.team2415.robot.intakecommands.TogglePivotStateCommand;
 import org.usfirst.frc.team2415.robot.subsystems.CatapultSubsystem;
 import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
@@ -42,9 +40,13 @@ public class Robot extends IterativeRobot {
 	
 	private Compressor compressor;
 	
+	public long sensed;
+	
 //	private ImgServer imgServer;
 	
     public void robotInit() {
+    	
+    	sensed = System.currentTimeMillis();
 		
 		gamepad = new WiredCatGamepad(0);
 		operator = new WiredCatJoystick(1);
@@ -54,7 +56,7 @@ public class Robot extends IterativeRobot {
 		catapultSubsystem = new CatapultSubsystem();
 		pivotSubsystem = new PivotSubsystem();
 		intakingSubsystem = new IntakingSubsystem();
-		opticSubsystem = new OpticSubsystem();
+//		opticSubsystem = new OpticSubsystem();
 		
 		SmartDashboard.putData(Scheduler.getInstance());
 		
@@ -72,12 +74,12 @@ public class Robot extends IterativeRobot {
 //		}
 		gamepad.a_button.whenPressed(new TogglePivotStateCommand(PivotSubsystem.INTAKE));
 		gamepad.b_button.whenPressed(new TogglePivotStateCommand(PivotSubsystem.INTERIOR));
-		if (Robot.opticSubsystem.isLit()) {
-			gamepad.y_button.whenPressed(new TurnOff());
-		} else {
-			gamepad.y_button.whenPressed(new MalmbergSwitch());
-		}
-		gamepad.x_button.whenPressed(new TurnOff());
+//		if (Robot.opticSubsystem.isLit()) {
+//			gamepad.y_button.whenPressed(new TurnOff());
+//		} else {
+//			gamepad.y_button.whenPressed(new MalmbergSwitch());
+//		}
+//		gamepad.x_button.whenPressed(new TurnOff());
 
     }
 	
@@ -114,12 +116,18 @@ public class Robot extends IterativeRobot {
 //		imgServer.showImg();
         //imgServer.teleopShowImg();
 //        System.out.println(Robot.opticSubsystem.isLit());
-        System.out.println(Robot.intakingSubsystem.getIR());
-        
-        //needs a timer of about 0.5-0.7 seconds
-        if (Robot.intakingSubsystem.getIR()) {
-    		Robot.pivotSubsystem.setPivot(Robot.pivotSubsystem.INTERIOR);
-    	}
+//        System.out.println(Robot.intakingSubsystem.getIR());
+//        
+//        //needs a timer of about 0.5-0.7 seconds
+//        if (!Robot.intakingSubsystem.getIR()) {
+//        	sensed = System.currentTimeMillis();
+//    	}
+//        
+//        if (System.currentTimeMillis() - sensed > 300) {
+//        	Robot.pivotSubsystem.setPivot(Robot.pivotSubsystem.FEED);
+//        } else {
+////        	Robot.pivotSubsystem.setPivot(Robot.pivotSubsystem.INTERIOR);
+//        }
         
     }
  
