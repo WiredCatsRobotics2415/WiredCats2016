@@ -27,7 +27,7 @@ public class DriveSubsystem extends Subsystem {
 	private final byte REFRESH_RATE = 50;
 	
 	public WPI_TalonSRX leftTalOne, leftTalTwo, rightTalOne, rightTalTwo;
-	private Encoder rightEncoder, leftEncoder;
+//	private Encoder rightEncoder, leftEncoder;
 //	private IMU imu;
 	public static final double 	TICKS_PER_REV = 120, WHEEL_RADIUS = 4,
 								WHEEL_TRACK = 25 + (3./16);	//radius and track in inches
@@ -40,10 +40,10 @@ public class DriveSubsystem extends Subsystem {
 		rightTalOne = new WPI_TalonSRX(RobotMap.RIGHT_TALON_BACK);
 		rightTalTwo = new WPI_TalonSRX(RobotMap.RIGHT_TALON_FRONT);
 		
-		rightEncoder = new Encoder(RobotMap.RIGHT_ENCODER[0],RobotMap.RIGHT_ENCODER[1]);
-		leftEncoder = new Encoder(RobotMap.LEFT_ENCODER[0],RobotMap.LEFT_ENCODER[1]);
-		
-		resetEncoders();
+//		rightEncoder = new Encoder(RobotMap.RIGHT_ENCODER[0],RobotMap.RIGHT_ENCODER[1]);
+//		leftEncoder = new Encoder(RobotMap.LEFT_ENCODER[0],RobotMap.LEFT_ENCODER[1]);
+//		
+//		resetEncoders();
 		
 //		SerialPort imuSerialPort = new SerialPort(BAUD_RATE, SerialPort.Port.kMXP);
 //		imu = new IMU(imuSerialPort, REFRESH_RATE);
@@ -77,19 +77,19 @@ public class DriveSubsystem extends Subsystem {
     	return rightTalOne.get();
     }
     
-    public double getRightEncoder(){
-    	return -rightEncoder.get();
-    }
-    
-   
-    public double getLeftEncoder(){
-    	return leftEncoder.get();
-    }
-    
-    public void resetEncoders(){
-    	leftEncoder.reset();
-    	rightEncoder.reset();
-    }
+//    public double getRightEncoder(){
+//    	return -rightEncoder.get();
+//    }
+//    
+//   
+//    public double getLeftEncoder(){
+//    	return leftEncoder.get();
+//    }
+//    
+//    public void resetEncoders(){
+//    	leftEncoder.reset();
+//    	rightEncoder.reset();
+//    }
     
 //    public double getYaw(){
 //    	return imu.getYaw();

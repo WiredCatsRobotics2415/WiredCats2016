@@ -60,20 +60,22 @@ public class Robot extends IterativeRobot {
 		
 		SmartDashboard.putData(Scheduler.getInstance());
 		
-		Robot.driveSubsystem.resetEncoders();
+//		Robot.driveSubsystem.resetEncoders();
 		
 //		SmartDashboard.putData("Reset Drive Encoders", new ResetDriveEncodersCommand());
 //		SmartDashboard.putData("Reset Yaw", new ResetYawCommand());
 
-		gamepad.leftBumper.whenPressed(new FireCatapultCommand());
-		gamepad.leftBumper.whenInactive(new RestingCommand());
+		gamepad.rightBumper.whenPressed(new FireCatapultCommand());
+		gamepad.rightBumper.whenInactive(new RestingCommand());
 //		if (gamepad.getRawAxis(2) > 0.65) {
 //			Robot.pivotSubsystem.setPivot(PivotSubsystem.INTAKE);
 //		} else if (gamepad.getRawAxis(3) > 0.65) {
 //			Robot.pivotSubsystem.setPivot(PivotSubsystem.INTERIOR);
 //		}
+		
 		gamepad.a_button.whenPressed(new TogglePivotStateCommand(PivotSubsystem.INTAKE));
-		gamepad.b_button.whenPressed(new TogglePivotStateCommand(PivotSubsystem.INTERIOR));
+		
+		gamepad.leftBumper.whenPressed(new TogglePivotStateCommand(PivotSubsystem.INTERIOR));
 //		if (Robot.opticSubsystem.isLit()) {
 //			gamepad.y_button.whenPressed(new TurnOff());
 //		} else {
@@ -128,6 +130,28 @@ public class Robot extends IterativeRobot {
 //        } else {
 ////        	Robot.pivotSubsystem.setPivot(Robot.pivotSubsystem.INTERIOR);
 //        }
+        if (gamepad.getRawAxis(2) > 0.6) {
+			Robot.pivotSubsystem.setPivot(PivotSubsystem.INTAKE);
+		}
+        
+        double leftY, rightX;
+		leftY = -Robot.gamepad.leftY();
+    	rightX = Robot.gamepad.rightX();
+    	
+    	if(Math.abs(leftY) < 0.05) leftY = 0;
+    	if(Math.abs(rightX) < 0.05) rightX = 0;
+    	
+    	leftY = 0.75*Math.pow(leftY, 3) + (1 - 0.75)*leftY;
+    	rightX = 0.75*Math.pow(rightX, 3) + (1 - 0.75)*rightX;
+    	
+    	double left = leftY*0.95 + rightX*1.3;
+    	double right =  leftY*0.95 - rightX*1.3;
+    	
+//    	if(Math.abs(left) >= 1) Robot.driveSubsystem.enableRightBreakState();
+//    	if(Math.abs(right) >= 1) Robot.driveSubsystem.enableLeftBreakState();
+    	
+        	Robot.driveSubsystem.setMotors(left, -right);
+        
         
     }
  
